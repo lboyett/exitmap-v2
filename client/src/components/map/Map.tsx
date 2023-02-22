@@ -10,8 +10,6 @@ const center = {
 };
 
 export default function Map() {
-  const [map, setMap] = useState(null);
-
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
