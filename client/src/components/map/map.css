@@ -1,0 +1,6 @@
+.map-container {
+  max-width: 95vw;
+  height: 80vh;
+  margin: 1rem auto;
+  border-radius: 10px;
+}
