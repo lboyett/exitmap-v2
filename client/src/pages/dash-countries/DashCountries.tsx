@@ -49,8 +49,8 @@ function DashCountries() {
                 color={out_500}
                 border="1px solid"
                 _hover={{
-                  borderColor: "txt.300",
-                  color: "txt.300",
+                  borderColor: txt_300,
+                  color: txt_300,
                 }}
               >
                 <Image src={countryImage} loading="lazy" />
