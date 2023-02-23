@@ -46,7 +46,16 @@ h3 {
 
 .name-placeholder {
   display: none;
-  margin-left: 0!important; /* Chakra has the margin property as "!important", so I had to do !important to override it. */
+  margin-left: 0 !important; /* Chakra has the margin property as "!important", so I had to do !important to override it. */
+}
+
+.navbar-icon,
+.navbar-icon > * {
+  background: none !important;
+}
+
+.navbar-menu-list {
+  border: 1px solid black;
 }
 
 @media (min-width: 1000px) {
