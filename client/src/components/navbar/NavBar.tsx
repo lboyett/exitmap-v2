@@ -31,7 +31,7 @@ export default function NavBar() {
       <Spacer />
       <Box className="avatar-placeholder" bg="txt.500"></Box>
       <Heading as="h3" className="name-placeholder" color="txt.500">
-        Luke Boyett
+        Jackson Boyett
       </Heading>
     </Flex>
   );

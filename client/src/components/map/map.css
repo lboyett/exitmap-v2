@@ -3,4 +3,7 @@
   height: 80vh;
   margin: 1rem auto;
   border-radius: 10px;
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
