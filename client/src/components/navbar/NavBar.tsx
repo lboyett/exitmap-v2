@@ -52,30 +52,24 @@ export default function NavBar(props: NavBarProps) {
             borderColor="txt.500"
           >
             <MenuItem bg="bg.500" onClick={() => navigate("/home")}>
-              Home
+              HOME
             </MenuItem>
             <MenuItem bg="bg.500" onClick={() => navigate("/countries")}>
-              Exits
+              EXITS
             </MenuItem>
             <MenuItem bg="bg.500" onClick={() => navigate("/submit")}>
-              Submit Exit
+              SUBMIT EXIT
             </MenuItem>
           </MenuList>
         </Menu>
-        <Heading
-          as="h2"
-          color="txt.500"
-          borderBottom="1px solid black"
-          borderBottomColor="txt.500"
-          onClick={() => navigate("/home")}
-        >
-          Home
+        <Heading as="h2" color="txt.500" onClick={() => navigate("/home")}>
+          HOME
         </Heading>
         <Heading as="h2" color="txt.500" onClick={() => navigate("/countries")}>
-          Exits
+          EXITS
         </Heading>
         <Heading as="h2" color="txt.500" onClick={() => navigate("/submit")}>
-          Submit Exit
+          SUBMIT EXIT
         </Heading>
       </HStack>
       <Spacer />

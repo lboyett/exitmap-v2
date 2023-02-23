@@ -1,0 +1,77 @@
+import Exit from "../../type-definitions/exit";
+
+let exitSampleData: Exit[];
+
+export default exitSampleData = [
+  {
+    _id: 1,
+    name: "Perrine Bridge",
+    description: "Easy beginner object",
+    exit_type: "span",
+    experience_required: "beginner",
+    legality: "legal",
+    bust_factor: "na",
+    height_impact: 486,
+    height_landing: 486,
+    lat: 42.60084,
+    lng: -114.453515,
+    city: "Twin Falls",
+    state: "Idaho",
+    country_name: "United States",
+    country_code: "US",
+    hiking_time: 25,
+    approach_diff: "easy",
+    access_approach:
+      "Easy walk out to the bridge. Either climb out or walk out",
+    landing_area:
+      "Can land in two directions. Beginners frequently land in the trees",
+    is_deleted: false,
+  },
+  {
+    _id: 2,
+    name: "Tombstone",
+    description:
+      "This is the classic jump in Moab. For many people, it the first cliff that they jump. A beautiful cliff face that looks just like a Tombstone, when you jump this exit, you hope its name is not any kind of foreshadowing.",
+    exit_type: "earth",
+    experience_required: "intermediate",
+    legality: "legal",
+    bust_factor: "na",
+    height_impact: 515,
+    height_landing: 550,
+    lat: 38.52926,
+    lng: -109.593778,
+    city: "Moab",
+    state: "Utah",
+    country_name: "United States",
+    country_code: "US",
+    hiking_time: 45,
+    approach_diff: "medium",
+    access_approach: "Not a hard hike but can be somewhat confusing",
+    landing_area:
+      "Fairly large landing area. Avoid landing on the road because it is technically not legal.",
+    is_deleted: false,
+  },
+  {
+    _id: 3,
+    name: "Der Rotenfels",
+    description:
+      "This is the classic jump in Moab. For many people, it the first cliff that they jump. A beautiful cliff face that looks just like a Tombstone, when you jump this exit, you hope its name is not any kind of foreshadowing.",
+    exit_type: "earth",
+    experience_required: "intermediate",
+    legality: "legal",
+    bust_factor: "na",
+    height_impact: 550,
+    height_landing: 600,
+    lat: 49.8173328,
+    lng: 7.8311917,
+    city: "Bad Kreuznach",
+    state: "Rhineland-Pfalz",
+    country_name: "Germany",
+    country_code: "DE",
+    hiking_time: 10,
+    approach_diff: "easy",
+    access_approach: "Easy approach to an overlook balcony at the exit.",
+    landing_area: "Easy landing area. Flight over a river.",
+    is_deleted: false,
+  },
+];
