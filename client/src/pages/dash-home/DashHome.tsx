@@ -6,7 +6,7 @@ import "./dash-home.css";
 export default function DashHome() {
   return (
     <div className="dash-home">
-      <NavBar />
+      <NavBar/>
       <Map />
     </div>
   );
