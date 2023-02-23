@@ -5,7 +5,7 @@ import {
   MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
-import { useColorModeValue } from "@chakra-ui/react";
+import { useColorModeValue, Text } from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import exitSampleData from "./map-sample-data";
@@ -72,8 +72,8 @@ export default function Map() {
                   {activeMarker === exit._id ? (
                     <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
                       <div className="info-box-content">
-                        <div>{exit.name}</div>
-                        <div>{exit.height_impact}</div>
+                        <Text color="black">{exit.name}</Text>
+                        <Text color="black">{exit.height_impact} ft</Text>
                       </div>
                     </InfoWindowF>
                   ) : null}
