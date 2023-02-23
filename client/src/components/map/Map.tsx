@@ -5,6 +5,7 @@ import {
   MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
+import { Flex } from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import exitSampleData from "./map-sample-data";
@@ -19,6 +20,7 @@ export default function Map() {
   const [center, setCenter] = useState<Coordinates>({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState<number>(7);
   const [exits, setExits] = useState<Exit[]>();
+  const [activeMarker, setActiveMarker] = useState<number>(0);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -37,9 +39,19 @@ export default function Map() {
     }
   }, []);
 
+  function handleMarkerClick(id: number) {
+    if (exits)
+      exits.forEach((exit) => {
+        if (exit._id === id) {
+          setActiveMarker(id);
+        }
+      });
+  }
+
   if (isLoaded) {
     return (
       <GoogleMap
+        data-testid="google-map"
         mapContainerClassName="map-container"
         center={center}
         zoom={zoom}
@@ -49,9 +61,19 @@ export default function Map() {
           ? exits.map((exit) => {
               return (
                 <MarkerF
+                  onClick={() => handleMarkerClick(exit._id)}
                   key={exit._id}
                   position={{ lat: exit.lat, lng: exit.lng }}
-                ></MarkerF>
+                >
+                  {activeMarker === exit._id ? (
+                    <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
+                      <div className="info-box-content">
+                        <div>{exit.name}</div>
+                        <div>{exit.height_impact}</div>
+                      </div>
+                    </InfoWindowF>
+                  ) : null}
+                </MarkerF>
               );
             })
           : null}

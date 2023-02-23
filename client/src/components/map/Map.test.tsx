@@ -1,6 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import Map from "./Map";
 
-it('should equal Map', () => {
-	expect('Map').toBe('Map');
-})
+describe("map", () => {
+  it("should load when page renders", () => {
+    render(<Map />);
+    //qconst map = screen.getByTestId("google-map");
+  });
+});
