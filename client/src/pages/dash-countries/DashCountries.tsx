@@ -8,6 +8,7 @@ import {
   Heading,
   Flex,
   Spacer,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import "./dash-countries.css";
 import { countriesList } from "../../data/countries-data";
@@ -19,15 +20,21 @@ function DashCountries() {
     lettersArr.push(String.fromCharCode(i));
   }
 
+  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
+  const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
+  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const out_500 = useColorModeValue("out_light.500", "out_dark.500");
+  const lightMode = useColorModeValue(true, false);
+
   return (
     <div className="dash-countries">
       <NavBar currentPage="exits" />
       <Box className="content">
         <UnorderedList
           className="letter-bar"
-          color="out.500"
+          color={out_500}
           border="1px solid"
-          background="bg.500"
+          background={bg_500}
         >
           {lettersArr.map((letter) => {
             return <ListItem key={letter}>{letter}</ListItem>;
@@ -39,7 +46,7 @@ function DashCountries() {
               <ListItem
                 className="country-card"
                 key={country.country}
-                color="out.500"
+                color={out_500}
                 border="1px solid"
                 _hover={{
                   borderColor: "txt.300",

@@ -5,7 +5,7 @@ import {
   MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
-import { Flex } from "@chakra-ui/react";
+import { useColorModeValue } from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import exitSampleData from "./map-sample-data";
@@ -21,6 +21,10 @@ export default function Map() {
   const [zoom, setZoom] = useState<number>(7);
   const [exits, setExits] = useState<Exit[]>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
+
+  const lightMode = useColorModeValue(true, false);
+
+  const mapStyle = lightMode ? null : darkMapStyle;
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -55,7 +59,7 @@ export default function Map() {
         mapContainerClassName="map-container"
         center={center}
         zoom={zoom}
-        options={{ styles: darkMapStyle, backgroundColor: "gray" }}
+        options={{ styles: mapStyle, backgroundColor: "gray" }}
       >
         {exits
           ? exits.map((exit) => {

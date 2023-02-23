@@ -11,8 +11,10 @@ import {
   MenuItem,
   IconButton,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { MoonIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
@@ -23,39 +25,46 @@ interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function NavBar(props: NavBarProps) {
+  const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   const page = props.currentPage;
+  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
+  const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
+  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const lightMode = useColorModeValue(true, false);
 
   return (
-    <Flex className="navbar" bg="bg.500">
+    <Flex
+      className="navbar"
+      bg={bg_500}
+      border={lightMode ? `1px solid` : "none"}
+    >
       <Heading
         className="logo"
         as="h1"
-        color="txt.500"
-        _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+        color={txt_500}
+        _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
         onClick={() => navigate("/home")}
       >
         ExitMap
       </Heading>
       <HStack className="navbar-links">
         <Menu>
-          <Box color="txt.500" className="navbar-icon">
+          <Box color={txt_500} className="navbar-icon">
             <MenuButton
               as={IconButton}
               icon={<FontAwesomeIcon icon={faBars} size={"xl"} />}
-            >
-              Actions
-            </MenuButton>
+            />
           </Box>
           <MenuList
             className="navbar-menu-list"
-            bg="bg.500"
-            color="txt.500"
-            borderColor="txt.500"
+            bg={bg_500}
+            color={txt_500}
+            borderColor={txt_500}
           >
             <MenuItem
-              bg="bg.500"
-              _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+              bg={bg_500}
+              _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
               onClick={() => navigate("/home")}
             >
               <Text borderBottom={page === "home" ? "1px solid" : "hidden"}>
@@ -63,8 +72,8 @@ export default function NavBar(props: NavBarProps) {
               </Text>
             </MenuItem>
             <MenuItem
-              bg="bg.500"
-              _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+              bg={bg_500}
+              _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
               onClick={() => navigate("/countries")}
             >
               <Text borderBottom={page === "exits" ? "1px solid" : "hidden"}>
@@ -72,8 +81,8 @@ export default function NavBar(props: NavBarProps) {
               </Text>
             </MenuItem>
             <MenuItem
-              bg="bg.500"
-              _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+              bg={bg_500}
+              _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
               onClick={() => navigate("/submit")}
             >
               <Text borderBottom={page === "submit" ? "1px solid" : "hidden"}>
@@ -84,8 +93,8 @@ export default function NavBar(props: NavBarProps) {
         </Menu>
         <Heading
           as="h2"
-          color="txt.500"
-          _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+          color={txt_500}
+          _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
           onClick={() => navigate("/home")}
           borderBottom={page === "home" ? "1px solid" : "hidden"}
         >
@@ -93,8 +102,8 @@ export default function NavBar(props: NavBarProps) {
         </Heading>
         <Heading
           as="h2"
-          color="txt.500"
-          _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+          color={txt_500}
+          _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
           onClick={() => navigate("/countries")}
           borderBottom={page === "exits" ? "1px solid" : "hidden"}
         >
@@ -102,8 +111,8 @@ export default function NavBar(props: NavBarProps) {
         </Heading>
         <Heading
           as="h2"
-          color="txt.500"
-          _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+          color={txt_500}
+          _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
           onClick={() => navigate("/submit")}
           borderBottom={page === "submit" ? "1px solid" : "hidden"}
         >
@@ -112,19 +121,22 @@ export default function NavBar(props: NavBarProps) {
       </HStack>
       <Spacer />
       <Box
+        onClick={() => {
+          toggleColorMode();
+        }}
         className="darkmode-icon"
-        color="txt.500"
-        borderColor="txt.500"
+        color={txt_500}
+        borderColor={txt_500}
         _hover={{
-          color: "txt.300",
-          borderColor: "txt.300",
+          color: txt_300,
+          borderColor: txt_300,
           boxShadow: `0px 0px 5px`,
         }}
       >
-        <MoonIcon boxSize={5} />
+        {lightMode ? <SunIcon boxSize={5} /> : <MoonIcon boxSize={5} />}
       </Box>
-      <Box className="avatar-placeholder" bg="txt.500"></Box>
-      <Heading as="h3" className="name-placeholder" color="txt.500">
+      <Box className="avatar-placeholder" bg={txt_500}></Box>
+      <Heading as="h3" className="name-placeholder" color={txt_500}>
         Jackson Boyett
       </Heading>
     </Flex>
