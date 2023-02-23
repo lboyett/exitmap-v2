@@ -18,5 +18,8 @@ export const theme = extendTheme({
       400: "#e9c685",
       500: "#CCAE76",
     },
+    out: {
+      500: "white",
+    },
   },
 });

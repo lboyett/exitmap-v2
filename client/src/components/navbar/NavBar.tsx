@@ -32,6 +32,7 @@ export default function NavBar(props: NavBarProps) {
         className="logo"
         as="h1"
         color="txt.500"
+        _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
         onClick={() => navigate("/home")}
       >
         ExitMap
@@ -111,7 +112,7 @@ export default function NavBar(props: NavBarProps) {
       </HStack>
       <Spacer />
       <Box
-        className="icon"
+        className="darkmode-icon"
         color="txt.500"
         borderColor="txt.500"
         _hover={{
