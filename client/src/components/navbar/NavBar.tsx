@@ -9,13 +9,9 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
   IconButton,
 } from "@chakra-ui/react";
+import { MoonIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
@@ -73,6 +69,18 @@ export default function NavBar(props: NavBarProps) {
         </Heading>
       </HStack>
       <Spacer />
+      <Box
+        className="icon"
+        color="txt.500"
+        borderColor="txt.500"
+        _hover={{
+          color: "txt.300",
+          borderColor: "txt.300",
+          boxShadow: `0px 0px 5px`,
+        }}
+      >
+        <MoonIcon boxSize={5} />
+      </Box>
       <Box className="avatar-placeholder" bg="txt.500"></Box>
       <Heading as="h3" className="name-placeholder" color="txt.500">
         Jackson Boyett

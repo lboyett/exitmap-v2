@@ -5,6 +5,6 @@ import Map from "./Map";
 describe("map", () => {
   it("should load when page renders", () => {
     render(<Map />);
-    //qconst map = screen.getByTestId("google-map");
+    //const map = screen.getByTestId("google-map");
   });
 });

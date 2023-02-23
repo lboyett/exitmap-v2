@@ -58,6 +58,15 @@ h3 {
   border: 1px solid black;
 }
 
+.icon {
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid white;
+  margin: 0 0.5rem;
+  padding: 0.5vw;
+}
+
 @media (min-width: 1000px) {
   .navbar-icon {
     display: none;
