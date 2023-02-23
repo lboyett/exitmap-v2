@@ -13,8 +13,11 @@ import {
 import "./dash-countries.css";
 import { countriesList } from "../../data/countries-data";
 import countryImage from "../../assets/country-image.jpeg";
+import { useNavigate } from "react-router-dom";
 
 function DashCountries() {
+  const navigate = useNavigate();
+  
   const lettersArr = [] as string[];
   for (let i = 65; i < 91; i++) {
     lettersArr.push(String.fromCharCode(i));
@@ -52,6 +55,7 @@ function DashCountries() {
                   borderColor: txt_300,
                   color: txt_300,
                 }}
+                onClick={() => navigate(country.country)}
               >
                 <Image src={countryImage} loading="lazy" />
                 <Flex direction="column">

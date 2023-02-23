@@ -4,6 +4,7 @@ import Login from "./pages/login/Login";
 import DashHome from "./pages/dash-home/DashHome";
 import DashSubmit from "./pages/dash-submit/DashSubmit";
 import DashCountries from "./pages/dash-countries/DashCountries";
+import Country from "./pages/dash-countries/country/Country";
 import { Routes, Route } from "react-router-dom";
 import "./app.css";
 
@@ -17,6 +18,7 @@ function App() {
         <Route path='home' element={<DashHome />} />
         <Route path='submit' element={<DashSubmit />} />
         <Route path='countries' element={<DashCountries />} />
+        <Route path='countries/:country' element={<Country />} />
       </Routes>
     </div>
   );
