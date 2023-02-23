@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBar";
 function DashCountries() {
   return (
     <div className="dash-countries">
-      <NavBar />
+      <NavBar currentPage="exits" />
       Dash Countries
     </div>
   );

@@ -3,7 +3,7 @@ import NavBar from "../../components/navbar/NavBar";
 function DashSubmit() {
   return (
     <div className="dash-submit">
-      <NavBar />
+      <NavBar currentPage="submit" />
       Dash Submit
     </div>
   );

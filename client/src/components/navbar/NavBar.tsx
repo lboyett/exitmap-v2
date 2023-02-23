@@ -10,16 +10,21 @@ import {
   MenuList,
   MenuItem,
   IconButton,
+  Text,
 } from "@chakra-ui/react";
 import { MoonIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
-interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {}
+type CurrentPage = "home" | "exits" | "submit";
+interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
+  currentPage?: CurrentPage;
+}
 
 export default function NavBar(props: NavBarProps) {
   const navigate = useNavigate();
+  const page = props.currentPage;
 
   return (
     <Flex className="navbar" bg="bg.500">
@@ -47,24 +52,60 @@ export default function NavBar(props: NavBarProps) {
             color="txt.500"
             borderColor="txt.500"
           >
-            <MenuItem bg="bg.500" onClick={() => navigate("/home")}>
-              HOME
+            <MenuItem
+              bg="bg.500"
+              _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+              onClick={() => navigate("/home")}
+            >
+              <Text borderBottom={page === "home" ? "1px solid" : "hidden"}>
+                HOME
+              </Text>
             </MenuItem>
-            <MenuItem bg="bg.500" onClick={() => navigate("/countries")}>
-              EXITS
+            <MenuItem
+              bg="bg.500"
+              _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+              onClick={() => navigate("/countries")}
+            >
+              <Text borderBottom={page === "exits" ? "1px solid" : "hidden"}>
+                EXITS
+              </Text>
             </MenuItem>
-            <MenuItem bg="bg.500" onClick={() => navigate("/submit")}>
-              SUBMIT EXIT
+            <MenuItem
+              bg="bg.500"
+              _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+              onClick={() => navigate("/submit")}
+            >
+              <Text borderBottom={page === "submit" ? "1px solid" : "hidden"}>
+                SUBMIT EXIT
+              </Text>
             </MenuItem>
           </MenuList>
         </Menu>
-        <Heading as="h2" color="txt.500" onClick={() => navigate("/home")}>
+        <Heading
+          as="h2"
+          color="txt.500"
+          _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+          onClick={() => navigate("/home")}
+          borderBottom={page === "home" ? "1px solid" : "hidden"}
+        >
           HOME
         </Heading>
-        <Heading as="h2" color="txt.500" onClick={() => navigate("/countries")}>
+        <Heading
+          as="h2"
+          color="txt.500"
+          _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+          onClick={() => navigate("/countries")}
+          borderBottom={page === "exits" ? "1px solid" : "hidden"}
+        >
           EXITS
         </Heading>
-        <Heading as="h2" color="txt.500" onClick={() => navigate("/submit")}>
+        <Heading
+          as="h2"
+          color="txt.500"
+          _hover={{ color: "txt.300", textShadow: "0px 0px 3px" }}
+          onClick={() => navigate("/submit")}
+          borderBottom={page === "submit" ? "1px solid" : "hidden"}
+        >
           SUBMIT EXIT
         </Heading>
       </HStack>
