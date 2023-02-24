@@ -3,31 +3,23 @@ import {
   Box,
   UnorderedList,
   ListItem,
-  Text,
-  Image,
-  Heading,
-  Flex,
-  Spacer,
   useColorModeValue,
 } from "@chakra-ui/react";
 import "./dash-countries.css";
 import { countriesList } from "../../data/countries-data";
-import countryImage from "../../assets/country-image.jpeg";
 import { useNavigate } from "react-router-dom";
+import CountryCard from "../../components/country-card/CountryCard";
 
 function DashCountries() {
   const navigate = useNavigate();
-  
+
   const lettersArr = [] as string[];
   for (let i = 65; i < 91; i++) {
     lettersArr.push(String.fromCharCode(i));
   }
 
-  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
-  const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
-  const lightMode = useColorModeValue(true, false);
 
   return (
     <div className="dash-countries">
@@ -45,30 +37,7 @@ function DashCountries() {
         </UnorderedList>
         <UnorderedList className="country-list">
           {countriesList.map((country) => {
-            return (
-              <ListItem
-                className="country-card"
-                key={country.country}
-                color={out_500}
-                border="1px solid"
-                _hover={{
-                  borderColor: txt_300,
-                  color: txt_300,
-                }}
-                onClick={() => navigate(country.country)}
-              >
-                <Image src={countryImage} loading="lazy" />
-                <Flex direction="column">
-                  <Heading as="h4">{country.country}</Heading>
-                  <Spacer />
-                  <Flex>
-                    <Text>{country.continent}</Text>
-                    <Spacer />
-                    <Text>3 jumps</Text>
-                  </Flex>
-                </Flex>
-              </ListItem>
-            );
+            return <CountryCard country={country} />;
           })}
         </UnorderedList>
       </Box>

@@ -3,7 +3,7 @@ import NavBar from "../../../components/navbar/NavBar";
 import { useColorModeValue, UnorderedList, ListItem } from "@chakra-ui/react";
 import "./country.css";
 import { statesArr } from "../../../data/states-data";
-import ExitCard from "../../../components/exitCard/exitCard";
+import ExitCard from "../../../components/exit-card/ExitCard";
 
 function Country() {
   let { country } = useParams();
@@ -28,7 +28,13 @@ function Country() {
         })}
       </UnorderedList>
       <UnorderedList>
-      <ExitCard name='El Capitan' description='This was the first object in the world to be jumped.' height={3000} legality='illegal' hikingTime={6}/>
+        <ExitCard
+          name="El Capitan"
+          description="This was the first object in the world to be jumped."
+          height={3000}
+          legality="illegal"
+          hikingTime={6}
+        />
       </UnorderedList>
       <div className="exits-container"></div>
     </div>
