@@ -21,7 +21,7 @@ interface ExitCardProps {
   description: string;
   height: number;
   legality: string;
-  hikingTime: number;
+  hikingtime: number;
 }
 
 function ExitCard(props: ExitCardProps) {
@@ -58,7 +58,7 @@ function ExitCard(props: ExitCardProps) {
         <Grid
           className="exit-card-grid"
           templateColumns="3fr 1fr"
-          templateRows={"1fr 1fr 0.5fr"}
+          templateRows={"0.5fr 1fr 0.5fr"}
         >
           <Heading as="h4">{props.name}</Heading>
           <Text
@@ -74,7 +74,7 @@ function ExitCard(props: ExitCardProps) {
           <Flex className="exit-card-hiking">
             <FaHiking className="exit-card-hiking-icon" />
             <Text className="exit-card-hiking-time">
-              {props.hikingTime} hrs
+              {props.hikingtime} hrs
             </Text>
           </Flex>
         </Grid>

@@ -1,6 +1,6 @@
 .exit-card {
   border-radius: 10px;
-  min-height: clamp(13rem, 12vw, 10rem);
+  min-height: clamp(10rem, 12vw, 10rem);
   width: clamp(23rem, 46vw, 50rem);
   overflow: hidden;
   display: flex;
@@ -19,6 +19,7 @@
   font-size: clamp(1.8rem, 3vw, 3rem) !important;
   font-weight: 400 !important;
   white-space: nowrap;
+  max-width: 300px;
 }
 
 .exit-card img {
@@ -40,7 +41,8 @@
 
 .exit-card-description {
   margin-bottom: 12px;
-	font-size: clamp(1rem, 1.4vw, 2.5rem) !important;
+	font-size: clamp(0.8rem, 1.2vw, 2.5rem) !important;
+  max-height: 50px;
 }
 
 .exit-card-height {
