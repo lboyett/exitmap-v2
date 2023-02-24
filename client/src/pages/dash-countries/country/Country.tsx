@@ -35,16 +35,10 @@ function Country() {
       </UnorderedList>
       <UnorderedList>
         <Flex className="exit-cards-container">
-          {exitsData.map((exit) => {
+          {exitsData.map((exit, i) => {
             return (
-              <ExitCard
-                name={exit.name}
-                description={exit.description}
-                height={exit.height}
-                legality={exit.legality}
-                hikingTime={exit.hikingTime}
-              />
-            );
+              <ExitCard name={exit.name} description={exit.description} height={exit.height} legality={exit.legality} hikingTime={exit.hikingTime} />
+            )
           })}
         </Flex>
       </UnorderedList>
