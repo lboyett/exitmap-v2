@@ -13,11 +13,13 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
+  Image,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import avatar from "../../assets/avatar.jpeg";
 
 type CurrentPage = "home" | "exits" | "submit";
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -135,9 +137,9 @@ export default function NavBar(props: NavBarProps) {
       >
         {lightMode ? <SunIcon boxSize={5} /> : <MoonIcon boxSize={5} />}
       </Box>
-      <Box className="avatar-placeholder" bg={txt_500}></Box>
+      <Image className="avatar" src={avatar}></Image>
       <Heading as="h3" className="name-placeholder" color={txt_500}>
-        Jackson Boyett
+        splitseam
       </Heading>
     </Flex>
   );

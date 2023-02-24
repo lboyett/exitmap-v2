@@ -16,6 +16,15 @@ interface Coordinates {
   lng: number;
 }
 
+type Libraries = (
+  | "drawing"
+  | "geometry"
+  | "localContext"
+  | "places"
+  | "visualization"
+)[];
+const libraries = ["places"] as Libraries;
+
 export default function Map() {
   const [center, setCenter] = useState<Coordinates>({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState<number>(7);
@@ -29,6 +38,7 @@ export default function Map() {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: libraries,
   });
 
   useEffect(() => {
