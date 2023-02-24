@@ -8,7 +8,7 @@ import {
 import { useColorModeValue, Text } from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
-import exitSampleData from "./map-sample-data";
+import exitSampleData from "../../data/map-sample-data";
 import Exit from "../../type-definitions/exit";
 
 interface Coordinates {

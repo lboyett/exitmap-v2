@@ -1,4 +1,4 @@
-import Exit from "../../type-definitions/exit";
+import Exit from "../type-definitions/exit";
 
 let exitSampleData: Exit[];
 
