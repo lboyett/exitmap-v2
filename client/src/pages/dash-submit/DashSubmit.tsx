@@ -8,9 +8,10 @@ function DashSubmit() {
   return (
     <div className="dash-submit">
       <NavBar currentPage="submit" />
-
-      <SubmitExitForm />
-      <Map />
+      <Box className="content">
+        <SubmitExitForm />
+        <Map />
+      </Box>
     </div>
   );
 }
