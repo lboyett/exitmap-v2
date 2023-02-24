@@ -9,7 +9,7 @@ import {
 import "./country.css";
 import { statesArr } from "../../../data/states-data";
 import ExitCard from "../../../components/exit-card/ExitCard";
-import { exitsData } from "../../../data/sample-exit-data";
+import { exitsData } from "../../../data/sample-exit-card-data";
 
 function Country() {
   let { country } = useParams();
@@ -42,7 +42,8 @@ function Country() {
                 description={exit.description}
                 height={exit.height}
                 legality={exit.legality}
-                hikingTime={exit.hikingTime}
+                hikingtime={exit.hiking_time}
+                key={i}
               />
             );
           })}
