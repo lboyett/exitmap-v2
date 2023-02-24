@@ -28,17 +28,36 @@ export default function SubmitExitForm() {
     },
   };
 
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+  }
+
+  function changeSliderColor(target: EventTarget & HTMLInputElement) {
+    const list = target.classList;
+    list.remove("green");
+    list.remove("yellow");
+    list.remove("red");
+    const val = target.value;
+    if (val == "0") {
+      list.add("green");
+    } else if (val == "0.5") {
+      list.add("yellow");
+    } else {
+      list.add("red");
+    }
+  }
+
   return (
-    <form className="submit-exit-form">
+    <form className="submit-exit-form" onSubmit={(e) => handleSubmit(e)}>
       <FormControl>
         <FormLabel>Exit Name</FormLabel>
-        <Input type="text" isRequired className={inputColorMode} />
+        <Input type="text" className={inputColorMode} />
       </FormControl>
       <FileInput />
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Type of Object</FormLabel>
-          <Select placeholder="Select" isRequired className={inputColorMode}>
+          <Select placeholder="Select" className={inputColorMode}>
             <option>Building</option>
             <option>Antenna</option>
             <option>Span</option>
@@ -48,7 +67,7 @@ export default function SubmitExitForm() {
         </FormControl>
         <FormControl>
           <FormLabel>Experience Required</FormLabel>
-          <Select placeholder="Select" isRequired className={inputColorMode}>
+          <Select placeholder="Select" className={inputColorMode}>
             <option>Beginner</option>
             <option>Intermediate</option>
             <option>Advanced</option>
@@ -78,7 +97,7 @@ export default function SubmitExitForm() {
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Legality</FormLabel>
-          <Select placeholder="Select" isRequired className={inputColorMode}>
+          <Select placeholder="Select" className={inputColorMode}>
             <option>Legal</option>
             <option>Semi-legal</option>
             <option>Illegal</option>
@@ -91,37 +110,37 @@ export default function SubmitExitForm() {
             min={0}
             max={1}
             defaultValue={0.5}
+            onChange={(e) => changeSliderColor(e.target)}
             step={0.5}
-            className="input-slider input"
-            required
+            className="input-slider input yellow"
           />
         </FormControl>
       </Flex>
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Height Until Impact</FormLabel>
-          <Input type="number" isRequired className={inputColorMode} />
+          <Input type="number" className={inputColorMode} />
         </FormControl>
         <FormControl>
           <FormLabel>Height Until Landing</FormLabel>
-          <Input type="number" isRequired className={inputColorMode} />
+          <Input type="number" className={inputColorMode} />
         </FormControl>
       </Flex>
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Latitude</FormLabel>
-          <Input type="number" isRequired className={inputColorMode} />
+          <Input type="number" className={inputColorMode} />
           <FormHelperText>click map to add location</FormHelperText>
         </FormControl>
         <FormControl>
           <FormLabel>Longitude</FormLabel>
-          <Input type="number" isRequired className={inputColorMode} />
+          <Input type="number" className={inputColorMode} />
         </FormControl>
       </Flex>
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Hiking Time</FormLabel>
-          <Input type="number" isRequired className={inputColorMode} />
+          <Input type="number" className={inputColorMode} />
         </FormControl>
         <FormControl>
           <FormLabel>Approach Difficulty</FormLabel>
@@ -131,24 +150,24 @@ export default function SubmitExitForm() {
             max={1}
             defaultValue={0.5}
             step={0.5}
-            className="input-slider input"
-            required
+            onChange={(e) => changeSliderColor(e.target)}
+            className="input-slider input yellow"
           />
         </FormControl>
       </Flex>
       <FormControl>
         <FormLabel>Description</FormLabel>
-        <Textarea resize="none" isRequired className={inputColorMode} />
+        <Textarea resize="none" className={inputColorMode} />
       </FormControl>
       <FormControl>
         <FormLabel>Access and Approach</FormLabel>
-        <Textarea resize="none" isRequired className={inputColorMode} />
+        <Textarea resize="none" className={inputColorMode} />
       </FormControl>
       <FormControl>
         <FormLabel>Landing Area</FormLabel>
-        <Textarea resize="none" isRequired className={inputColorMode} />
+        <Textarea resize="none" className={inputColorMode} />
       </FormControl>
-      <Button>Submit Exit</Button>
+      <Button type="submit">Submit Exit</Button>
     </form>
   );
 }
