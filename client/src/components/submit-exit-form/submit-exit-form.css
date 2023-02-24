@@ -81,6 +81,9 @@ label {
   background-color: red;
 }
 
+textarea {
+  height: 100px !important;
+}
 button {
   font-weight: 300 !important;
 }

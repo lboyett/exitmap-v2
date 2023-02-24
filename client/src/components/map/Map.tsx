@@ -11,7 +11,7 @@ import { darkMapStyle } from "./map-styles";
 import exitSampleData from "../../data/map-sample-data";
 import Exit from "../../type-definitions/exit";
 
-interface Coordinates {
+interface Coordinate {
   lat: number;
   lng: number;
 }
@@ -25,11 +25,16 @@ type Libraries = (
 )[];
 const libraries = ["places"] as Libraries;
 
-export default function Map() {
-  const [center, setCenter] = useState<Coordinates>({ lat: 0, lng: 0 });
+interface MapProps {
+  updateForm?: Function;
+}
+
+export default function Map(props: MapProps) {
+  const [center, setCenter] = useState<Coordinate>({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState<number>(7);
   const [exits, setExits] = useState<Exit[]>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
+  const [addedMarker, setAddedMarker] = useState<Coordinate>();
 
   const lightMode = useColorModeValue(true, false);
 
@@ -62,6 +67,15 @@ export default function Map() {
       });
   }
 
+  function addMarker(lat: number, lng: number) {
+    setAddedMarker({ lat: lat, lng: lng });
+    if (props.updateForm) props.updateForm({ lat, lng });
+    // const geocoder = new google.maps.Geocoder();
+    // geocoder.geocode({ location: { lat: lat, lng: lng } }, (results) => {
+    //   if (results && results[0]) console.log(results[0]);
+    // });
+  }
+
   if (isLoaded) {
     return (
       <GoogleMap
@@ -70,6 +84,11 @@ export default function Map() {
         center={center}
         zoom={zoom}
         options={{ styles: mapStyle, backgroundColor: "gray" }}
+        onClick={(e) => {
+          if (e.latLng) {
+            addMarker(e.latLng.lat(), e.latLng.lng());
+          }
+        }}
       >
         {exits
           ? exits.map((exit) => {
@@ -91,6 +110,12 @@ export default function Map() {
               );
             })
           : null}
+        {addedMarker ? (
+          <MarkerF
+            icon={`https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`}
+            position={addedMarker}
+          />
+        ) : null}
       </GoogleMap>
     );
   } else {

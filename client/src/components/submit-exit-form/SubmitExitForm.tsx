@@ -17,7 +17,18 @@ import {
 import { useRef, useState } from "react";
 import FileInput from "./file-input/FileInput";
 
-export default function SubmitExitForm() {
+interface Coordinate {
+  lat: number;
+  lng: number;
+}
+
+interface SubmitFormProps {
+  addedMarker: Coordinate | undefined;
+}
+
+export default function SubmitExitForm(props: SubmitFormProps) {
+  const lat = props.addedMarker ? props.addedMarker.lat : undefined;
+  const lng = props.addedMarker ? props.addedMarker.lng : undefined;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
@@ -129,12 +140,22 @@ export default function SubmitExitForm() {
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Latitude</FormLabel>
-          <Input type="number" className={inputColorMode} />
+          <Input
+            type="number"
+            className={inputColorMode}
+            value={lat || ""}
+            readOnly
+          />
           <FormHelperText>click map to add location</FormHelperText>
         </FormControl>
         <FormControl>
           <FormLabel>Longitude</FormLabel>
-          <Input type="number" className={inputColorMode} />
+          <Input
+            type="number"
+            className={inputColorMode}
+            value={lng || ""}
+            readOnly
+          />
         </FormControl>
       </Flex>
       <Flex className="input-group">
