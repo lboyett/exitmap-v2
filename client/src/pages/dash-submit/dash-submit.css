@@ -1,3 +1,9 @@
+.dash-submit {
+  min-height: max-content;
+}
+
 .content {
-  max-width: 95vw;
+  display: flex;
+  min-width: calc(95vw + 1rem);
+  min-height: max-content;
 }

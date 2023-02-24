@@ -10,18 +10,27 @@ import {
   Checkbox,
   CheckboxGroup,
   Stack,
+  Button,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import { useRef, useState } from "react";
+import FileInput from "./file-input/FileInput";
 
 export default function SubmitExitForm() {
+  const lightMode = useColorModeValue(true, false);
+  const inputColorMode = lightMode ? "input-light" : "input-dark";
+
   return (
     <form className="submit-exit-form">
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Exit Name</FormLabel>
-        <Input type="text" />
+        <Input type="text" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FileInput />
+      <FormControl>
         <FormLabel>Type of Object</FormLabel>
-        <Select placeholder="Select type">
+        <Select placeholder="Select type" isRequired className={inputColorMode}>
           <option>Building</option>
           <option>Antenna</option>
           <option>Span</option>
@@ -38,18 +47,26 @@ export default function SubmitExitForm() {
           <Checkbox value="wingsuit">Wingsuit</Checkbox>
         </Stack>
       </CheckboxGroup>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Experience Required</FormLabel>
-        <Select placeholder="Select experience level">
+        <Select
+          placeholder="Select experience level"
+          isRequired
+          className={inputColorMode}
+        >
           <option>Beginner</option>
           <option>Intermediate</option>
           <option>Advanced</option>
           <option>Expert</option>
         </Select>
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Legality</FormLabel>
-        <Select placeholder="Select legality">
+        <Select
+          placeholder="Select legality"
+          isRequired
+          className={inputColorMode}
+        >
           <option>Legal</option>
           <option>Semi-legal</option>
           <option>Illegal</option>
@@ -57,42 +74,60 @@ export default function SubmitExitForm() {
       </FormControl>
       <FormControl>
         <FormLabel>Bust Factor</FormLabel>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          defaultValue={0.5}
+          step={0.5}
+          className="input-slider input"
+          required
+        />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Height Until Impact</FormLabel>
-        <Input type="number" />
+        <Input type="number" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Height Until Landing</FormLabel>
-        <Input type="number" />
+        <Input type="number" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Latitude</FormLabel>
-        <Input type="number" />
+        <Input type="number" isRequired className={inputColorMode} />
         <FormHelperText>click map to add location</FormHelperText>
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Longitude</FormLabel>
-        <Input type="number" />
+        <Input type="number" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Hiking Time</FormLabel>
-        <Input type="number" />
+        <Input type="number" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Approach Difficulty</FormLabel>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          defaultValue={0.5}
+          step={0.5}
+          className="input-slider input"
+          required
+        />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Description</FormLabel>
-        <Textarea resize="none" />
+        <Textarea resize="none" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Access and Approach</FormLabel>
-        <Textarea resize="none" />
+        <Textarea resize="none" isRequired className={inputColorMode} />
       </FormControl>
-      <FormControl isRequired>
+      <FormControl>
         <FormLabel>Landing Area</FormLabel>
-        <Textarea resize="none" />
+        <Textarea resize="none" isRequired className={inputColorMode} />
       </FormControl>
     </form>
   );

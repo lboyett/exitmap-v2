@@ -26,23 +26,18 @@ interface ExitCardProps {
 
 function ExitCard(props: ExitCardProps) {
   const navigate = useNavigate();
-  const [legalityColor, setLegalityColor] = useState('green')
-
 
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
-  const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
-  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
-  const lightMode = useColorModeValue(true, false);
 
   function legalityColorPicker() {
     switch (props.legality) {
-      case 'legal': 
-        return 'lime';
-      case 'legalish': 
-        return 'yellow';
-      case 'illegal': 
-        return 'red'
+      case "legal":
+        return "lime";
+      case "legalish":
+        return "yellow";
+      case "illegal":
+        return "red";
     }
   }
 
@@ -66,7 +61,13 @@ function ExitCard(props: ExitCardProps) {
           templateRows={"1fr 1fr 0.5fr"}
         >
           <Heading as="h4">{props.name}</Heading>
-          <Text className="exit-card-legality" style={{color: legalityColorPicker()}} bg='black '>{props.legality}</Text>
+          <Text
+            className="exit-card-legality"
+            style={{ color: legalityColorPicker() }}
+            bg="black "
+          >
+            {props.legality}
+          </Text>
           <Text className="exit-card-description">{props.description}</Text>
           <Spacer />
           <Text className="exit-card-height">{props.height} ft</Text>

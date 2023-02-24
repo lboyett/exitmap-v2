@@ -1,0 +1,26 @@
+.input-div {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.input-div > button {
+  padding: 0.5rem;
+  height: min-content;
+  margin-left: auto;
+}
+
+.input-dark {
+  border: 1px solid white !important;
+}
+.input-dark:focus {
+  border: 1px solid #ccae76 !important;
+  box-shadow: 0px 0px 5px #ccae76 !important;
+}
+.input-light {
+  border: 1px solid black !important;
+}
+.input-light:focus {
+  border: 1px solid #ccae76 !important;
+  box-shadow: 0px 0px 10px #ccae76 !important;
+}

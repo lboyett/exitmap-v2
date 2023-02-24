@@ -11,16 +11,25 @@ import "./app.css";
 
 function App() {
   return (
-    <div className="app">
+    <div
+      className="app"
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+      }}
+    >
       <Routes>
         <Route path="" element={<Domain />} />
         <Route path="signup" element={<Signup />} />
-        <Route path='login' element={<Login />} />
-        <Route path='home' element={<DashHome />} />
-        <Route path='submit' element={<DashSubmit />} />
-        <Route path='countries' element={<DashCountries />} />
-        <Route path='countries/:country' element={<Country />} />
-        <Route path='countries/:country/:exit' element={<Exit />} />
+        <Route path="login" element={<Login />} />
+        <Route path="home" element={<DashHome />} />
+        <Route path="submit" element={<DashSubmit />} />
+        <Route path="countries" element={<DashCountries />} />
+        <Route path="countries/:country" element={<Country />} />
+        <Route path="countries/:country/:exit" element={<Exit />} />
       </Routes>
     </div>
   );
