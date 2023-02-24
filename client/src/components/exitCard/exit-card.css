@@ -1,0 +1,51 @@
+.exit-card {
+  border-radius: 10px;
+  min-height: clamp(5rem, 10vw, 10rem);
+  width: clamp(20rem, 45vw, 50rem);
+  overflow: hidden;
+  display: flex;
+}
+.exit-card:hover {
+  box-shadow: 0px 0px 10px;
+  cursor: pointer;
+}
+
+.exit-card > div {
+  flex-grow: 1;
+  padding: 0.5rem;
+}
+
+.exit-card h4 {
+  font-size: clamp(2rem, 3vw, 3rem) !important;
+  font-weight: 400 !important;
+}
+
+.exit-card img {
+  width: 30%;
+  margin-right: 0.5rem;
+}
+
+.exit-card-grid {
+	align-items: center;
+}
+
+.exit-card-legality {
+	text-align: end;
+	color: red;
+	font-size: clamp(1.2rem, 1.8vw, 2.5rem) !important;
+}
+
+.exit-card-height {
+	align-self: flex-end;
+	font-size: clamp(1.2rem, 1.8vw, 2.5rem) !important;
+}
+
+.exit-card-hiking-time {
+	align-self: flex-end;
+	text-align: end;
+	font-size: clamp(1.2rem, 1.8vw, 2.5rem) !important;
+}
+
+.exit-card-hiking-icon {
+	
+}
