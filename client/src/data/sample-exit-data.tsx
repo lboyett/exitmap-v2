@@ -3,7 +3,7 @@ export const exitData = [
     name: "Pedra de Gavea",
 		image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nebulosa_Pedra_da_G%C3%A1vea.jpg/1200px-Nebulosa_Pedra_da_G%C3%A1vea.jpg",
 		exit_type: "Earth",
-		experience: "Advanced",
+		experience: "Expert",
 		jump_type: "Slider down",
 		legality: "legal",
 		bust_factor: "low",

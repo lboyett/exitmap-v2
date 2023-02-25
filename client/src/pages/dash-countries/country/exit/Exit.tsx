@@ -154,7 +154,7 @@ function Exit() {
                   <FaCircle color={circle} key={i}/>
                 )
               })}
-              <Text color={experienceArr[experienceArr.length - 1]}>Advanced</Text>
+              <Text color={experienceArr[experienceArr.length - 1]}>{exit.experience}</Text>
             </Flex>
           </Box>
 
