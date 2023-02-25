@@ -7,7 +7,7 @@ export default function DashHome() {
   return (
     <div className="dash-home">
       <NavBar currentPage="home" />
-      <Map />
+      <Map editable={false} />
     </div>
   );
 }

@@ -23,6 +23,7 @@ function DashSubmit() {
           updateForm={(latLng: Coordinate) => {
             setAddedMarker(latLng);
           }}
+          editable={true}
         />
       </Box>
     </div>

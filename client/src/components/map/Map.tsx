@@ -27,6 +27,7 @@ const libraries = ["places"] as Libraries;
 
 interface MapProps {
   updateForm?: Function;
+  editable: boolean;
 }
 
 export default function Map(props: MapProps) {
@@ -85,6 +86,7 @@ export default function Map(props: MapProps) {
         zoom={zoom}
         options={{ styles: mapStyle, backgroundColor: "gray" }}
         onClick={(e) => {
+          if (!props.editable) return;
           if (e.latLng) {
             addMarker(e.latLng.lat(), e.latLng.lng());
           }

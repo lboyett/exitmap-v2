@@ -12,6 +12,7 @@ import {
   Stack,
   Button,
   Flex,
+  Box,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
@@ -26,7 +27,13 @@ interface SubmitFormProps {
   addedMarker: Coordinate | undefined;
 }
 
+interface FormInputs extends HTMLFormControlsCollection {
+  exit_name: HTMLInputElement;
+  object_type: HTMLInputElement;
+}
+
 export default function SubmitExitForm(props: SubmitFormProps) {
+  const [units, setUnits] = useState(["ft", "ft"]);
   const lat = props.addedMarker ? props.addedMarker.lat : undefined;
   const lng = props.addedMarker ? props.addedMarker.lng : undefined;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
@@ -41,6 +48,13 @@ export default function SubmitExitForm(props: SubmitFormProps) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const target = e.target as HTMLFormElement;
+    const inputs = target.elements as FormInputs;
+    const submission_data = {
+      exit_name: inputs.exit_name.value,
+      object_type: inputs.object_type.value,
+    };
+    console.log(submission_data);
   }
 
   function changeSliderColor(target: EventTarget & HTMLInputElement) {
@@ -62,13 +76,17 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     <form className="submit-exit-form" onSubmit={(e) => handleSubmit(e)}>
       <FormControl>
         <FormLabel>Exit Name</FormLabel>
-        <Input type="text" className={inputColorMode} />
+        <Input type="text" className={inputColorMode} name="exit_name" />
       </FormControl>
       <FileInput />
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Type of Object</FormLabel>
-          <Select placeholder="Select" className={inputColorMode}>
+          <Select
+            placeholder="Select"
+            className={inputColorMode}
+            name="object_type"
+          >
             <option>Building</option>
             <option>Antenna</option>
             <option>Span</option>
@@ -78,7 +96,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
         </FormControl>
         <FormControl>
           <FormLabel>Experience Required</FormLabel>
-          <Select placeholder="Select" className={inputColorMode}>
+          <Select
+            placeholder="Select"
+            className={inputColorMode}
+            name="experience_required"
+          >
             <option>Beginner</option>
             <option>Intermediate</option>
             <option>Advanced</option>
@@ -90,9 +112,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
         <Stack direction="row" className="checkbox-group">
           <Checkbox value="slider_down" sx={checkboxStyles}>
             Slider down
-          </Checkbox>
-          <Checkbox value="slider_up_slick" sx={checkboxStyles}>
-            Slider up slick
           </Checkbox>
           <Checkbox value="two_piece" sx={checkboxStyles}>
             Two piece
@@ -108,7 +127,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Legality</FormLabel>
-          <Select placeholder="Select" className={inputColorMode}>
+          <Select
+            placeholder="Select"
+            className={inputColorMode}
+            name="legality"
+          >
             <option>Legal</option>
             <option>Semi-legal</option>
             <option>Illegal</option>
@@ -124,17 +147,46 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             onChange={(e) => changeSliderColor(e.target)}
             step={0.5}
             className="input-slider input yellow"
+            name="bust_factor"
           />
         </FormControl>
       </Flex>
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Height Until Impact</FormLabel>
-          <Input type="number" className={inputColorMode} />
+          <Flex className="height-div">
+            <Input
+              type="number"
+              className={inputColorMode}
+              name="height_impact"
+            />
+            <Button
+              onClick={() => {
+                if (units[0] === "ft") setUnits(["m", units[1]]);
+                else setUnits(["ft", units[1]]);
+              }}
+            >
+              {units[0]}
+            </Button>
+          </Flex>
         </FormControl>
         <FormControl>
           <FormLabel>Height Until Landing</FormLabel>
-          <Input type="number" className={inputColorMode} />
+          <Flex className="height-div">
+            <Input
+              type="number"
+              className={inputColorMode}
+              name="height_landing"
+            />
+            <Button
+              onClick={() => {
+                if (units[1] === "ft") setUnits([units[0], "m"]);
+                else setUnits([units[0], "ft"]);
+              }}
+            >
+              {units[1]}
+            </Button>
+          </Flex>
         </FormControl>
       </Flex>
       <Flex className="input-group">
@@ -145,6 +197,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             className={inputColorMode}
             value={lat || ""}
             readOnly
+            name="lat"
           />
           <FormHelperText>click map to add location</FormHelperText>
         </FormControl>
@@ -155,13 +208,31 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             className={inputColorMode}
             value={lng || ""}
             readOnly
+            name="lng"
           />
         </FormControl>
       </Flex>
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Hiking Time</FormLabel>
-          <Input type="number" className={inputColorMode} />
+          <Flex className="hiking-time-div">
+            <Flex>
+              <Input
+                type="number"
+                className={inputColorMode}
+                name="hiking_time_hrs"
+              />
+              <Box>hrs</Box>
+            </Flex>
+            <Flex>
+              <Input
+                type="number"
+                className={inputColorMode}
+                name="hiking_time_mins"
+              />
+              <Box>mins</Box>
+            </Flex>
+          </Flex>
         </FormControl>
         <FormControl>
           <FormLabel>Approach Difficulty</FormLabel>
@@ -173,20 +244,29 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             step={0.5}
             onChange={(e) => changeSliderColor(e.target)}
             className="input-slider input yellow"
+            name="approach_difficulty"
           />
         </FormControl>
       </Flex>
       <FormControl>
         <FormLabel>Description</FormLabel>
-        <Textarea resize="none" className={inputColorMode} />
+        <Textarea resize="none" className={inputColorMode} name="description" />
       </FormControl>
       <FormControl>
         <FormLabel>Access and Approach</FormLabel>
-        <Textarea resize="none" className={inputColorMode} />
+        <Textarea
+          resize="none"
+          className={inputColorMode}
+          name="access_approach"
+        />
       </FormControl>
       <FormControl>
         <FormLabel>Landing Area</FormLabel>
-        <Textarea resize="none" className={inputColorMode} />
+        <Textarea
+          resize="none"
+          className={inputColorMode}
+          name="landing_area"
+        />
       </FormControl>
       <Button type="submit">Submit Exit</Button>
     </form>

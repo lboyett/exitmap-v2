@@ -6,6 +6,10 @@
   margin-top: 2vh;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 label {
   font-weight: 400 !important;
   font-size: 1rem !important;
@@ -70,6 +74,7 @@ label {
   border-radius: 50%;
   appearance: none;
   border: 1px solid black;
+  transition: all 0.3s;
 }
 .green::-webkit-slider-thumb {
   background-color: lime;
@@ -79,6 +84,26 @@ label {
 }
 .red::-webkit-slider-thumb {
   background-color: red;
+}
+
+.height-div {
+  gap: 0.5rem;
+}
+.height-div button {
+  border: 1px solid gray;
+  width: 2rem;
+}
+
+.hiking-time-div {
+  gap: 1rem;
+}
+.hiking-time-div > div {
+  position: relative;
+  align-items: center;
+}
+.hiking-time-div > div > div {
+  position: absolute;
+  right: 0.5rem;
 }
 
 textarea {
