@@ -25,9 +25,15 @@ type Libraries = (
 )[];
 const libraries = ["places"] as Libraries;
 
+interface exit_location_type {
+  lat: number;
+  lng: number;
+}
+
 interface MapProps {
   updateForm?: Function;
   editable: boolean;
+  exit_location?: exit_location_type;
 }
 
 export default function Map(props: MapProps) {
@@ -49,6 +55,11 @@ export default function Map(props: MapProps) {
 
   useEffect(() => {
     setExits(exitSampleData);
+    if (props.exit_location) {
+      setCenter({lat: props.exit_location.lat, lng: props.exit_location.lng});
+      setAddedMarker({lat: props.exit_location.lat, lng: props.exit_location.lng});
+      return
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (res) => {

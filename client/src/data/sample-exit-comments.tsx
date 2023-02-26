@@ -15,8 +15,8 @@ export const exitComments = [
 	created_at: 'January 12, 2023',
 },
 {
-	username: 'jacksonboyett',
-	text: 'This jump is amazing!',
+	username: 'dickhansen',
+	text: 'I did this jump back in 2020 with the twins, a lot of people in the BASE community know exactly who I am talking about lmfao. I hate hiking, but I have to say that this hike was actually pretty rad. The jump was amazing too, it was beautiful and  a very long flight!',
 	created_at: 'January 12, 2023',
 },
 {

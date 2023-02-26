@@ -1,5 +1,5 @@
 import avatar from "../../../../../assets/avatar.jpeg";
-import { Image, Flex, Text, Heading } from "@chakra-ui/react";
+import { Image, Flex, Text, Heading, Box } from "@chakra-ui/react";
 import "./exit-comments.css";
 
 function ExitComments(props: any) {
@@ -14,7 +14,15 @@ function ExitComments(props: any) {
         return (
           <Flex className="comment" key={i}>
             <Image src={avatar} className="avatar-comments" />
-            <Text><b style={{marginRight:'4px'}}>{'@' + comment.username}</b>{comment.text}</Text>
+            <Box>
+              <Flex alignItems={'center'}>
+                <Text className="comment-username">
+                  {"@" + comment.username}
+                </Text>
+                <Text fontWeight={'200'} fontSize='0.8rem'>{comment.created_at}</Text>
+              </Flex>
+              <Text>{comment.text}</Text>
+            </Box>
           </Flex>
         );
       })}

@@ -1,0 +1,20 @@
+.exit-images-container {
+	margin-bottom: 2rem
+}
+
+.swiper-slide > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+}
+
+.swiper-slide {
+  max-width: 100%;
+  height: 45vw !important;
+}
+
+@media only screen and (max-width: 700px) {
+  .swiper-slide {
+    height: 60vw !important;
+  }
+}

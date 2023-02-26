@@ -20,7 +20,7 @@
 }
 
 .country-list {
-  margin: 0 0 0 4rem !important;
+  margin: 1rem 0 0 4rem !important;
   list-style-type: none !important;
   display: flex;
   flex-direction: column;
