@@ -30,10 +30,27 @@ interface SubmitFormProps {
 interface FormInputs extends HTMLFormControlsCollection {
   exit_name: HTMLInputElement;
   object_type: HTMLInputElement;
+  sd: HTMLInputElement;
+  ts: HTMLInputElement;
+  ws: HTMLInputElement;
+  experience_required: HTMLInputElement;
+  legality: HTMLInputElement;
+  bust_factor: HTMLInputElement;
+  height_impact: HTMLInputElement;
+  height_landing: HTMLInputElement;
+  lat: HTMLInputElement;
+  lng: HTMLInputElement;
+  hiking_time_hrs: HTMLInputElement;
+  hiking_time_mins: HTMLInputElement;
+  approach_difficulty: HTMLInputElement;
+  description: HTMLInputElement;
+  access_approach: HTMLInputElement;
+  landing_area: HTMLInputElement;
 }
 
 export default function SubmitExitForm(props: SubmitFormProps) {
   const [units, setUnits] = useState(["ft", "ft"]);
+  const [formData, setFormData] = useState<FormData>();
   const lat = props.addedMarker ? props.addedMarker.lat : undefined;
   const lng = props.addedMarker ? props.addedMarker.lng : undefined;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
@@ -53,6 +70,21 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     const submission_data = {
       exit_name: inputs.exit_name.value,
       object_type: inputs.object_type.value,
+      exit_jump_type: [inputs.sd.checked, inputs.ts.checked, inputs.ws.checked],
+      experience_required: inputs.experience_required.value,
+      legality: inputs.legality.value,
+      bust_factor: inputs.bust_factor.value,
+      height_impact: inputs.height_impact.value,
+      height_landing: inputs.height_landing.value,
+      lat: inputs.lat.value,
+      lng: inputs.lng.value,
+      hiking_time_hrs: inputs.hiking_time_hrs.value,
+      hiking_time_mins: inputs.hiking_time_mins.value,
+      approach_difficulty: inputs.approach_difficulty.value,
+      description: inputs.description.value,
+      access_approach: inputs.access_approach.value,
+      landing_area: inputs.landing_area.value,
+      formData: formData,
     };
     console.log(submission_data);
   }
@@ -78,7 +110,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
         <FormLabel>Exit Name</FormLabel>
         <Input type="text" className={inputColorMode} name="exit_name" />
       </FormControl>
-      <FileInput />
+      <FileInput updateForm={(formData: FormData) => setFormData(formData)} />
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Type of Object</FormLabel>
@@ -110,16 +142,13 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       </Flex>
       <CheckboxGroup>
         <Stack direction="row" className="checkbox-group">
-          <Checkbox value="slider_down" sx={checkboxStyles}>
+          <Checkbox value="slider_down" sx={checkboxStyles} name="sd">
             Slider down
           </Checkbox>
-          <Checkbox value="two_piece" sx={checkboxStyles}>
-            Two piece
+          <Checkbox value="two_piece" sx={checkboxStyles} name="ts">
+            Tracking suit
           </Checkbox>
-          <Checkbox value="one_piece" sx={checkboxStyles}>
-            One piece
-          </Checkbox>
-          <Checkbox value="wingsuit" sx={checkboxStyles}>
+          <Checkbox value="wingsuit" sx={checkboxStyles} name="ws">
             Wingsuit
           </Checkbox>
         </Stack>

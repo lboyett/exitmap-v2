@@ -7,10 +7,14 @@ import {
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./file-input.css";
 
-export default function FileInput() {
+interface FileInputProps {
+  updateForm: Function;
+}
+
+export default function FileInput({ updateForm }: FileInputProps) {
   const [fileName, setFileName] = useState("");
   const [formData, setFormData] = useState<FormData>();
   const [borderColor, setBorderColor] = useState<string>();
@@ -29,6 +33,10 @@ export default function FileInput() {
     formData.append("file", e.dataTransfer.files[0]);
     setFormData(formData);
   }
+
+  useEffect(() => {
+    updateForm(formData);
+  }, [formData]);
 
   return (
     <FormControl>
