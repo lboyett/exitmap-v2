@@ -1,0 +1,20 @@
+.avatar-comments {
+  height: clamp(1rem, 3vw, 4vw) !important;
+	/* height: clamp(3rem, 6vw, 65%); */
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.comments {
+	margin-top: 12px;
+}
+
+.comments-title {
+	text-align: center;
+}
+
+.comment {
+	align-items: center;
+	margin-bottom: 24px;
+}

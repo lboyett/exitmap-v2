@@ -9,8 +9,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { exitData } from "../../../../data/sample-exit-data";
+import { exitComments } from "../../../../data/sample-exit-comments";
 import ExitTitle from "./exit-components/ExitTitle";
 import ExitDetails from "./exit-components/ExitDetails";
+import ExitComments from "./exit-components/ExitComments";
 
 function Exit() {
   const { exit_name } = useParams();
@@ -28,8 +30,8 @@ function Exit() {
           
           <ExitTitle exit={exit}/>
           <ExitDetails exit={exit} />
+          <ExitComments comments={exitComments}/>
 
-          <Box className="exit-comments">Comments</Box>
         </Box>
 
         <Box className="exit-right">
