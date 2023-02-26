@@ -2,14 +2,14 @@
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   width: 95vw;
   margin: 0 auto !important;
-	column-gap: 24px;
+  column-gap: 24px;
 }
 
 /* Location */
 
 .exit-location {
   height: min-content;
-	margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .exit-name {
@@ -33,29 +33,30 @@
 
 .exit-description {
   font-size: clamp(1rem, 1vw, 4rem) !important;
-	border-bottom: 1px solid white;
-	padding-bottom: 12px;
-	margin-bottom: 12px;
+  border-bottom: 1px solid white;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 /* Details */
 
 .exit-details {
-	align-items: center;
-	justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
 .exit-details-left {
   width: max-content;
-	border-bottom: 1px solid white;
+  border-bottom: 1px solid white;
 }
 
 .exit-details-title {
-  font-size: clamp(1.5rem, 2vw, 4rem) !important;
+  font-size: clamp(1.5rem, 3vw, 4rem) !important;
   width: max-content;
   align-items: center;
   gap: 20px;
-	border-bottom: 1px solid white;
+  border-bottom: 1px solid white;
 }
 
 .exit-height {
@@ -66,41 +67,101 @@
 }
 
 .exit-details-middle {
-	width: max-content;
-	padding-right: 24px;
+  width: max-content;
+  padding-right: 24px;
 }
 
 .exit-jump-type {
-	align-items: center;
-	gap: 8px;
+  align-items: center;
+  gap: 8px;
 }
 
 .exit-details-right {
-	margin-right: 12px;
+  margin-right: 12px;
 }
 
 .exit-legality {
-  font-size: clamp(1rem, 1.5vw, 4rem);
-	font-weight: 200;
-	align-items: center;
-	gap: 12px;
+  font-size: clamp(1rem, 1.8vw, 4rem);
+  font-weight: 200;
+  align-items: center;
+  gap: 12px;
 }
 
 /* Experience Level */
 
 .exit-experience {
-	font-size: clamp(1.5rem, 2vw, 4rem) !important;
-	font-weight: 200;
+  font-size: clamp(1.5rem, 2vw, 4rem) !important;
+  font-weight: 500;
+  letter-spacing: 0.15rem;
+  max-width: max-content;
+  border-bottom: 1px solid white;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .exit-experience-bar {
   font-size: clamp(1rem, 1.2vw, 4rem) !important;
-	align-items: center;
+  align-items: center;
+}
+
+.exit-experience-text {
+  font-size: clamp(1.2rem, 1.8vw, 4rem) !important;
+  margin-left: 8px;
 }
 
 /* Access and Approach */
+.exit-access-container {
+  border-bottom: 1px solid white;
+  padding-bottom: 8px;
+}
+
+.exit-access {
+  font-size: clamp(1.5rem, 2vw, 4rem) !important;
+  font-weight: 500;
+  letter-spacing: 0.15rem;
+  padding-right: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exit-access-description {
+  max-height: 0px;
+  transition: max-height 0.5s;
+  overflow: hidden;
+}
+
+.activeAccess{
+  max-height: 1000px;
+}
 
 /* Landing Area */
+
+.exit-landing {
+  font-size: clamp(1.5rem, 2vw, 4rem) !important;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  padding-bottom: 8px;
+  padding-right: 8px;
+  border-bottom: 1px solid white;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exit-landing-description {
+  max-height: 0px;
+  transition: max-height 0.5s;
+  overflow: hidden;
+}
+
+
+.exit-x {
+  transform: rotate(45deg);
+  transition: transform 0.3s;
+}
+
+.active-x {
+  transform: rotate(0deg);
+}
 
 /* Comments */
 

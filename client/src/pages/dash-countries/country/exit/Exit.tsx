@@ -24,10 +24,15 @@ import {
 } from "react-icons/fa";
 import { GiHandcuffs } from "react-icons/gi";
 import { render } from "@testing-library/react";
+import { ac } from "vitest/dist/types-0373403c";
 
 function Exit() {
   const { exit_name } = useParams();
   const [experienceArr, setExperienceArr] = useState<string[]>([]);
+  const [activeAccess, setActiveAccess] = useState("");
+  const [activeXAccess, setActiveXAccess] = useState("");
+  const [activeLanding, setActiveLanding] = useState("");
+  const [activeXLanding, setActiveXLanding] = useState("");
   const exit = exitData[0];
 
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
@@ -57,7 +62,6 @@ function Exit() {
   }
 
   function createExperienceArr(experience: number) {
-    console.log(`Experience array function input: ${experience}`)
     for (let i = 0; i < experience; i++) {
       if (i < 3) {
         setExperienceArr((prevArr) => [...prevArr, "lime"]);
@@ -66,6 +70,26 @@ function Exit() {
       } else {
         setExperienceArr((prevArr) => [...prevArr, "red"]);
       }
+    }
+  }
+
+  function showTextAccess() {
+    if (activeAccess === "") {
+      setActiveAccess("active");
+      setActiveXAccess("active-x");
+    } else {
+      setActiveAccess("");
+      setActiveXAccess("");
+    }
+  }
+
+  function showTextLanding() {
+    if (activeAccess === "") {
+      setActiveLanding("active");
+      setActiveXLanding("active-x");
+    } else {
+      setActiveLanding("");
+      setActiveXLanding("");
     }
   }
 
@@ -146,23 +170,63 @@ function Exit() {
             </Box>
           </Flex>
 
-          <Box className="exit-experience" color={txt_300}>
+          <Box
+            className="exit-experience"
+            color={txt_300}
+            borderColor={txt_300}
+          >
             Experience Level
             <Flex className="exit-experience-bar">
               {experienceArr.map((circle, i) => {
-                return (
-                  <FaCircle color={circle} key={i}/>
-                )
+                return <FaCircle color={circle} key={i} />;
               })}
-              <Text color={experienceArr[experienceArr.length - 1]}>{exit.experience}</Text>
+              <Text
+                color={experienceArr[experienceArr.length - 1]}
+                className="exit-experience-text"
+              >
+                {exit.experience}
+              </Text>
             </Flex>
           </Box>
 
-          <Box className="exit-access">Access and Approach</Box>
+          <Box
+            className="exit-access-container"
+            color={txt_300}
+            borderColor={txt_300}
+          >
+            <Flex className="exit-access">
+              Access and Approach
+              <FaTimes
+                className={`exit-x ${activeXAccess}`}
+                onClick={() => showTextAccess()}
+              />
+            </Flex>
+            <Text className={`exit-access-description ${activeAccess}`}>
+              {exit.access}
+            </Text>
+          </Box>
 
-          <Box className="exit-landing">Landing Area</Box>
-
-          <Box className="exit-comments">Comments</Box>
+          <Box
+            className="exit-access-container"
+            color={txt_300}
+            borderColor={txt_300}
+          >
+            <Flex
+              className="exit-landing"
+              color={txt_300}
+              borderColor={txt_300}
+            >
+              Landing Area
+              <FaTimes
+                className={`exit-x ${activeXLanding}`}
+                onClick={() => showTextLanding()}
+              />
+            </Flex>
+            <Text className={`exit-landing-description ${activeLanding}`}>
+              {exit.landing}
+            </Text>
+            <Box className="exit-comments">Comments</Box>
+          </Box>
         </Box>
 
         <Box className="exit-right">
