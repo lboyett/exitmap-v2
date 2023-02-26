@@ -1,227 +1,33 @@
 import "./exit.css";
 import NavBar from "../../../../components/navbar/NavBar";
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Heading,
   Flex,
   Box,
-  Text,
   Grid,
   Image,
-  Checkbox,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { exitData } from "../../../../data/sample-exit-data";
-import {
-  FaMapMarkerAlt,
-  FaMountain,
-  FaArrowsAltV,
-  FaCheck,
-  FaTimes,
-  FaThumbsUp,
-  FaCircle,
-} from "react-icons/fa";
-import { GiHandcuffs } from "react-icons/gi";
-import { render } from "@testing-library/react";
-import { ac } from "vitest/dist/types-0373403c";
+import ExitTitle from "./exit-components/ExitTitle";
+import ExitDetails from "./exit-components/ExitDetails";
 
 function Exit() {
   const { exit_name } = useParams();
-  const [experienceArr, setExperienceArr] = useState<string[]>([]);
-  const [activeAccess, setActiveAccess] = useState("");
-  const [activeXAccess, setActiveXAccess] = useState("");
-  const [activeLanding, setActiveLanding] = useState("");
-  const [activeXLanding, setActiveXLanding] = useState("");
   const exit = exitData[0];
 
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
-  useEffect(() => {
-    experienceCounter(exit.experience);
-  }, []);
-
-  function experienceCounter(experience: string) {
-    setExperienceArr([]);
-    switch (experience) {
-      case "Beginner":
-        createExperienceArr(3);
-        break;
-      case "Intermediate":
-        createExperienceArr(5);
-        break;
-      case "Advanced":
-        createExperienceArr(7);
-        break;
-      case "Expert":
-        createExperienceArr(10);
-        break;
-    }
-  }
-
-  function createExperienceArr(experience: number) {
-    for (let i = 0; i < experience; i++) {
-      if (i < 3) {
-        setExperienceArr((prevArr) => [...prevArr, "lime"]);
-      } else if (i < 7) {
-        setExperienceArr((prevArr) => [...prevArr, "yellow"]);
-      } else {
-        setExperienceArr((prevArr) => [...prevArr, "red"]);
-      }
-    }
-  }
-
-  function showTextAccess() {
-    if (activeAccess === "") {
-      setActiveAccess("active-access");
-      setActiveXAccess("active-x-access");
-    } else {
-      setActiveAccess("");
-      setActiveXAccess("");
-    }
-  }
-
-  function showTextLanding() {
-    if (activeLanding === "") {
-      setActiveLanding("active-landing");
-      setActiveXLanding("active-x-landing");
-    } else {
-      setActiveLanding("");
-      setActiveXLanding("");
-    }
-  }
-
   return (
     <div>
       <NavBar />
       <Grid className="exit-page">
         <Box className="exit-left">
-          <Flex className="exit-location">
-            <Flex
-              className="exit-location-left"
-              direction="column"
-              borderColor={out_500}
-            >
-              <Heading as="h1" className="exit-name">
-                {exit.name}
-              </Heading>
-              <Text>
-                {exit.city}, {exit.country}
-              </Text>
-            </Flex>
-            <Flex className="exit-location-right">
-              <FaMapMarkerAlt className="fa-marker"></FaMapMarkerAlt>
-              <Text>
-                {exit.lat}, {exit.lng}
-              </Text>
-            </Flex>
-          </Flex>
-
-          <Text className="exit-description" borderColor={out_500}>
-            {exit.description}
-          </Text>
-
-          <Flex color={txt_300} className="exit-details">
-            <Box className="exit-details-left" borderColor={txt_300}>
-              <Flex className="exit-details-title" borderColor={txt_300}>
-                Exit Details
-                <FaMountain />
-              </Flex>
-              <Flex>
-                <Flex className="exit-height">
-                  <FaArrowsAltV fontSize={"24px"} />
-                  Impact: {exit.height_impact} ft.
-                </Flex>
-                <Flex className="exit-height">
-                  <FaArrowsAltV fontSize={"24px"} />
-                  Landing: {exit.height_landing} ft.
-                </Flex>
-              </Flex>
-            </Box>
-            <Box className="exit-details-middle">
-              <Flex className="exit-jump-type">
-                <FaCheck color="lime" />
-                Slider down
-              </Flex>
-              <Flex className="exit-jump-type">
-                <FaTimes color="red" />
-                Tracking suit
-              </Flex>
-              <Flex className="exit-jump-type">
-                <FaCheck color="lime" />
-                Wingsuit
-              </Flex>
-            </Box>
-            <Box className="exit-details-right">
-              <Flex className="exit-legality" color="lime">
-                <Box color={out_500}>
-                  <FaThumbsUp />
-                </Box>
-                legal
-              </Flex>
-              <Flex className="exit-legality" color="lime">
-                <Box color={out_500}>
-                  <GiHandcuffs />
-                </Box>
-                low
-              </Flex>
-            </Box>
-          </Flex>
-
-          <Box
-            className="exit-experience"
-            color={txt_300}
-            borderColor={txt_300}
-          >
-            Experience Level
-            <Flex className="exit-experience-bar">
-              {experienceArr.map((circle, i) => {
-                return <FaCircle color={circle} key={i} />;
-              })}
-              <Text
-                color={experienceArr[experienceArr.length - 1]}
-                className="exit-experience-text"
-              >
-                {exit.experience}
-              </Text>
-            </Flex>
-          </Box>
-
-          <Box
-            className="exit-access-container"
-            color={txt_300}
-            borderColor={txt_300}
-          >
-            <Flex className="exit-access">
-              Access and Approach
-              <FaTimes
-                className={`exit-x ${activeXAccess}`}
-                onClick={() => showTextAccess()}
-              />
-            </Flex>
-            <Text className={`exit-access-description ${activeAccess}`}>
-              {exit.access}
-            </Text>
-          </Box>
-
-          <Box
-            className="exit-landing-container"
-            color={txt_300}
-            borderColor={txt_300}
-          >
-            <Flex className="exit-landing">
-              Landing Area
-              <FaTimes
-                className={`exit-x ${activeXLanding}`}
-                onClick={() => showTextLanding()}
-              />
-            </Flex>
-            <Text className={`exit-landing-description ${activeLanding}`}>
-              {exit.landing}
-            </Text>
-          </Box>
+          
+          <ExitTitle exit={exit}/>
+          <ExitDetails exit={exit} />
 
           <Box className="exit-comments">Comments</Box>
         </Box>
