@@ -130,19 +130,22 @@
   overflow: hidden;
 }
 
-.activeAccess{
+.active-access{
   max-height: 1000px;
 }
 
 /* Landing Area */
 
+.exit-landing-container {
+  border-bottom: 1px solid white;
+  padding-bottom: 8px;
+}
+
 .exit-landing {
   font-size: clamp(1.5rem, 2vw, 4rem) !important;
   font-weight: 500;
-  letter-spacing: 0.1rem;
-  padding-bottom: 8px;
+  letter-spacing: 0.15rem;
   padding-right: 8px;
-  border-bottom: 1px solid white;
   align-items: center;
   justify-content: space-between;
 }
@@ -153,13 +156,21 @@
   overflow: hidden;
 }
 
+.active-landing{
+  max-height: 1000px;
+}
+
 
 .exit-x {
   transform: rotate(45deg);
   transition: transform 0.3s;
 }
 
-.active-x {
+.active-x-access {
+  transform: rotate(0deg);
+}
+
+.active-x-landing {
   transform: rotate(0deg);
 }
 

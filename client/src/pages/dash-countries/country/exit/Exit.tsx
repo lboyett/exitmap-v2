@@ -75,8 +75,8 @@ function Exit() {
 
   function showTextAccess() {
     if (activeAccess === "") {
-      setActiveAccess("active");
-      setActiveXAccess("active-x");
+      setActiveAccess("active-access");
+      setActiveXAccess("active-x-access");
     } else {
       setActiveAccess("");
       setActiveXAccess("");
@@ -84,9 +84,9 @@ function Exit() {
   }
 
   function showTextLanding() {
-    if (activeAccess === "") {
-      setActiveLanding("active");
-      setActiveXLanding("active-x");
+    if (activeLanding === "") {
+      setActiveLanding("active-landing");
+      setActiveXLanding("active-x-landing");
     } else {
       setActiveLanding("");
       setActiveXLanding("");
@@ -207,15 +207,11 @@ function Exit() {
           </Box>
 
           <Box
-            className="exit-access-container"
+            className="exit-landing-container"
             color={txt_300}
             borderColor={txt_300}
           >
-            <Flex
-              className="exit-landing"
-              color={txt_300}
-              borderColor={txt_300}
-            >
+            <Flex className="exit-landing">
               Landing Area
               <FaTimes
                 className={`exit-x ${activeXLanding}`}
@@ -225,8 +221,9 @@ function Exit() {
             <Text className={`exit-landing-description ${activeLanding}`}>
               {exit.landing}
             </Text>
-            <Box className="exit-comments">Comments</Box>
           </Box>
+
+          <Box className="exit-comments">Comments</Box>
         </Box>
 
         <Box className="exit-right">
