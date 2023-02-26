@@ -96,3 +96,12 @@ h3 {
     margin: 0 1rem;
   }
 }
+
+.modal img {
+  max-width: 30%;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+}

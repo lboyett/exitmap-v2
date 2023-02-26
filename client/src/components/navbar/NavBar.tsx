@@ -11,9 +11,18 @@ import {
   MenuItem,
   IconButton,
   Text,
+  Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
   useColorMode,
   useColorModeValue,
-  Image,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +37,7 @@ interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function NavBar(props: NavBarProps) {
   const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const page = props.currentPage;
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
@@ -137,10 +147,26 @@ export default function NavBar(props: NavBarProps) {
       >
         {lightMode ? <SunIcon boxSize={5} /> : <MoonIcon boxSize={5} />}
       </Box>
-      <Image className="avatar" src={avatar}></Image>
-      <Heading as="h3" className="name-placeholder" color={txt_500}>
+      <Image className="avatar" src={avatar} onClick={onOpen} />
+      <Heading
+        as="h3"
+        className="name-placeholder"
+        color={txt_500}
+        onClick={onOpen}
+      >
         splitseam
       </Heading>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent className="modal">
+          <ModalHeader className="modal-header">
+            <Image className="avatar" src={avatar} />
+            <Text>splitseam</Text>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>This is a user profile</ModalBody>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 }
