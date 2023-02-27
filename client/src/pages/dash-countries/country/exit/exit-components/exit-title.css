@@ -1,0 +1,32 @@
+/* Location */
+
+.exit-location {
+  height: min-content;
+  margin-bottom: 12px;
+}
+
+.exit-name {
+  font-size: clamp(2rem, 4vw, 4rem) !important;
+  white-space: nowrap;
+  margin: 0 !important;
+}
+
+.exit-location-left {
+  border-bottom: 1px solid white;
+}
+
+.exit-location-right {
+  margin-left: auto;
+  align-self: flex-end;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Description */
+
+.exit-description {
+  font-size: clamp(1rem, 1vw, 4rem) !important;
+  border-bottom: 1px solid white;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
