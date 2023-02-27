@@ -18,15 +18,24 @@ function ExitTitle(props: any) {
           <Heading as="h1" className="exit-name">
             {props.exit.name}
           </Heading>
-          <Text>
+          <Flex className='exit-city-latlng'>
+          <Text className='exit-city'>
             {props.exit.city}, {props.exit.country}
           </Text>
-        </Flex>
-        <Flex className="exit-location-right">
+          <Flex className="exit-latlng-wide">
           <FaMapMarkerAlt className="fa-marker"></FaMapMarkerAlt>
           <Text>
             {props.exit.lat}, {props.exit.lng}
           </Text>
+        </Flex>
+
+          </Flex>
+          <Flex className="exit-latlng-mobile">
+          <FaMapMarkerAlt className="fa-marker"></FaMapMarkerAlt>
+          <Text>
+            {props.exit.lat}, {props.exit.lng}
+          </Text>
+        </Flex>
         </Flex>
       </Flex>
 

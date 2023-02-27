@@ -137,11 +137,11 @@ function ExitDetails(props: any) {
           </Flex>
           <Flex>
             <Flex className="exit-height">
-              <FaArrowsAltV fontSize={"24px"} />
+              <FaArrowsAltV fontSize={"24px"} style={{marginRight: '4px'}}/>
               Impact: {props.exit.height_impact} ft.
             </Flex>
             <Flex className="exit-height">
-              <FaArrowsAltV fontSize={"24px"} />
+              <FaArrowsAltV fontSize={"24px"} style={{marginRight: '4px'}}/>
               Landing: {props.exit.height_landing} ft.
             </Flex>
           </Flex>
