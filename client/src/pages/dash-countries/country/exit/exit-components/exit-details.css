@@ -83,6 +83,7 @@
   padding-right: 8px;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .exit-access-description {
@@ -109,6 +110,7 @@
   padding-right: 8px;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .exit-landing-description {
