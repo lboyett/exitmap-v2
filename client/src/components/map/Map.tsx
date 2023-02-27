@@ -25,15 +25,22 @@ type Libraries = (
 )[];
 const libraries = ["places"] as Libraries;
 
-interface MapProps {
+interface exit_location_type {
+  lat: number;
+  lng: number;
+}
+
+interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
   updateForm?: Function;
   editable: boolean;
+  exit_location?: exit_location_type;
 }
 
 export default function Map(props: MapProps) {
   const [center, setCenter] = useState<Coordinate>({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState<number>(7);
   const [exits, setExits] = useState<Exit[]>();
+  const [exitPageLocation, setExitPageLocation] = useState<exit_location_type>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
 
@@ -49,6 +56,11 @@ export default function Map(props: MapProps) {
 
   useEffect(() => {
     setExits(exitSampleData);
+    if (props.exit_location) {
+      setCenter({lat: props.exit_location.lat, lng: props.exit_location.lng});
+      setExitPageLocation({lat: props.exit_location.lat, lng: props.exit_location.lng});
+      return
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (res) => {
@@ -116,6 +128,11 @@ export default function Map(props: MapProps) {
           <MarkerF
             icon={`https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`}
             position={addedMarker}
+          />
+        ) : null}
+        {exitPageLocation ? (
+          <MarkerF
+            position={exitPageLocation}
           />
         ) : null}
       </GoogleMap>

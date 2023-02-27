@@ -1,0 +1,54 @@
+.avatar-comments {
+	align-self: flex-start;
+  height: clamp(2.5rem, 3vw, 4vw) !important;
+	height: clamp(3rem, 6vw, 65%);
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.comments {
+	margin-top: 12px;
+}
+
+.comments-title-container {
+	justify-content: flex-end;
+	margin-bottom: 0.5rem;
+	align-items: center;
+}
+
+
+.comment {
+	align-items: center;
+	margin-bottom: 24px;
+}
+
+.comment-username {
+	font-weight: 600;
+	margin-right: 0.5rem;
+}
+
+.comment-form {
+	margin-bottom: 1rem;
+	display: none !important;
+}
+
+.comment-button-container {
+	align-items: center;
+	gap: 1rem;
+	display: none !important;
+}
+
+.add-comment-icon {
+  font-size: clamp(1.5rem, 2vw, 4rem) !important;
+	margin-right: 8px;
+	cursor: pointer;
+}
+
+.active {
+	display: flex !important;
+}
+
+.inactive {
+	display: none !important;
+}

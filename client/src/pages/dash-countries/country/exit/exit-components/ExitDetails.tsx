@@ -137,11 +137,11 @@ function ExitDetails(props: any) {
           </Flex>
           <Flex>
             <Flex className="exit-height">
-              <FaArrowsAltV fontSize={"24px"} />
+              <FaArrowsAltV fontSize={"24px"} style={{marginRight: '4px'}}/>
               Impact: {props.exit.height_impact} ft.
             </Flex>
             <Flex className="exit-height">
-              <FaArrowsAltV fontSize={"24px"} />
+              <FaArrowsAltV fontSize={"24px"} style={{marginRight: '4px'}}/>
               Landing: {props.exit.height_landing} ft.
             </Flex>
           </Flex>
@@ -210,7 +210,7 @@ function ExitDetails(props: any) {
         color={txt_300}
         borderColor={txt_300}
       >
-        <Flex className="exit-access">
+        <Flex className="exit-access" onClick={() => showTextAccess()}>
           Access and Approach
           <FaTimes
             className={`exit-x ${activeXAccess}`}
@@ -227,7 +227,7 @@ function ExitDetails(props: any) {
         color={txt_300}
         borderColor={txt_300}
       >
-        <Flex className="exit-landing">
+        <Flex className="exit-landing" onClick={() => showTextLanding()}>
           Landing Area
           <FaTimes
             className={`exit-x ${activeXLanding}`}

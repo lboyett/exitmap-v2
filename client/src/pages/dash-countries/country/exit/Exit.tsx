@@ -1,16 +1,14 @@
 import "./exit.css";
 import NavBar from "../../../../components/navbar/NavBar";
 import { useParams } from "react-router-dom";
-import {
-  Flex,
-  Box,
-  Grid,
-  Image,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Flex, Box, Grid, Image, useColorModeValue } from "@chakra-ui/react";
 import { exitData } from "../../../../data/sample-exit-data";
+import { exitComments } from "../../../../data/sample-exit-comments";
 import ExitTitle from "./exit-components/ExitTitle";
 import ExitDetails from "./exit-components/ExitDetails";
+import ExitComments from "./exit-components/ExitComments";
+import ExitImages from "./exit-components/ExitImages";
+import Map from "../../../../components/map/Map";
 
 function Exit() {
   const { exit_name } = useParams();
@@ -25,23 +23,16 @@ function Exit() {
       <NavBar />
       <Grid className="exit-page">
         <Box className="exit-left">
-          
-          <ExitTitle exit={exit}/>
+          <ExitTitle exit={exit} />
+          <ExitImages class='mobile' exit={exit} />
           <ExitDetails exit={exit} />
-
-          <Box className="exit-comments">Comments</Box>
+          <div className='exit-page-map-mobile'><Map editable={false} exit_location={{lat: exit.lat, lng: exit.lng}}/></div>
+          <ExitComments comments={exitComments} />
         </Box>
 
         <Box className="exit-right">
-          <Image
-            src={`${exit.image}`}
-            alt="pic of exit"
-            className="exit-image"
-          />
-
-          <Flex className="exit-image-carousel">Carousel</Flex>
-
-          <Box className="exit-map">Map</Box>
+          <ExitImages class='wide' exit={exit} />
+          <div className='exit-page-map-wide'><Map editable={false} exit_location={{lat: exit.lat, lng: exit.lng}}/></div>
         </Box>
       </Grid>
     </div>

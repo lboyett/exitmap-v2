@@ -1,8 +1,15 @@
 export const exitData = [
   {
     name: "Pedra de Gavea",
-    image:
+    images: [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nebulosa_Pedra_da_G%C3%A1vea.jpg/1200px-Nebulosa_Pedra_da_G%C3%A1vea.jpg",
+      "https://i.ytimg.com/vi/55RR7r7ZJkY/maxresdefault.jpg",
+      "https://d.ibtimes.co.uk/en/full/1647657/alexander-polli-base-jumping-pedra-da-gavea-brazil.jpg",
+      "http://f.i.uol.com.br/fotografia/2016/06/06/613956-940x600-1.jpeg",
+      "https://trilhandomontanhas.com/arquivos/2016-12/ab-negreiros-na-pedra-da-gavea-parque-nacional-da-tijuca-rj-maior.jpg",
+      "https://i.ytimg.com/vi/CabN2v5NlVY/maxresdefault.jpg",
+      "https://willexperience.com/fotos/pedra-da-gavea/pedra-da-gavea-lateral.jpg",
+    ],
     exit_type: "Earth",
     experience: "Expert",
     jump_type: [true, false, true],
