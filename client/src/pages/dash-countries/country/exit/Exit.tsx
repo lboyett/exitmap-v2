@@ -24,12 +24,13 @@ function Exit() {
       <Grid className="exit-page">
         <Box className="exit-left">
           <ExitTitle exit={exit} />
+          <ExitImages class='mobile' exit={exit} />
           <ExitDetails exit={exit} />
           <ExitComments comments={exitComments} />
         </Box>
 
         <Box className="exit-right">
-          <ExitImages exit={exit} />
+          <ExitImages class='wide' exit={exit} />
           <Map editable={false} exit_location={{lat: exit.lat, lng: exit.lng}}/>
         </Box>
       </Grid>

@@ -15,7 +15,7 @@ function ExitImages(props: any) {
 	const images = props.exit.images;
 
   return (
-    <div className='exit-images-container'>
+    <div className={`exit-images-container-${props.class}`}>
       <Swiper
         effect={"slide"}
         grabCursor={true}
