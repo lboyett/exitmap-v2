@@ -20,7 +20,7 @@
     display: none;
   }
   .exit-page-map-mobile {
-    display: inline;
+    display: block;
   }
   .exit-page-map-wide {
     display: none;
