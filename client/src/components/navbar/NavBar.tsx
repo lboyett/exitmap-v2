@@ -23,6 +23,8 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -158,13 +160,20 @@ export default function NavBar(props: NavBarProps) {
       </Heading>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent className="modal">
+        <ModalContent className="modal" bg={bg_500}>
           <ModalHeader className="modal-header">
             <Image className="avatar" src={avatar} />
             <Text>splitseam</Text>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>This is a user profile</ModalBody>
+          <ModalBody>
+            <List>
+              <ListItem>Submitted exits:</ListItem>
+              <ListItem>Comments:</ListItem>
+              <ListItem>Settings</ListItem>
+              <ListItem>Change Password</ListItem>
+            </List>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </Flex>
