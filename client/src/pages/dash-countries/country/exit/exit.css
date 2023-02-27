@@ -8,12 +8,21 @@
 .exit-images-container-mobile {
   display: none;
 }
+.exit-page-map-mobile {
+  display: none;
+}
 
 @media only screen and (max-width: 700px) {
   .exit-images-container-mobile {
     display: inline;
   }
   .exit-images-container-wide {
+    display: none;
+  }
+  .exit-page-map-mobile {
+    display: inline;
+  }
+  .exit-page-map-wide {
     display: none;
   }
 }
