@@ -68,10 +68,10 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     const submission_data = {
-      exit_name: inputs.exit_name.value,
+      name: inputs.exit_name.value,
       object_type: inputs.object_type.value,
-      exit_jump_type: [inputs.sd.checked, inputs.ts.checked, inputs.ws.checked],
-      experience_required: inputs.experience_required.value,
+      exit_type: [inputs.sd.checked, inputs.ts.checked, inputs.ws.checked],
+      exp_req: inputs.experience_required.value,
       legality: inputs.legality.value,
       bust_factor: inputs.bust_factor.value,
       height_impact: inputs.height_impact.value,
@@ -80,7 +80,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       lng: inputs.lng.value,
       hiking_time_hrs: inputs.hiking_time_hrs.value,
       hiking_time_mins: inputs.hiking_time_mins.value,
-      approach_difficulty: inputs.approach_difficulty.value,
+      approach_diff: inputs.approach_difficulty.value,
       description: inputs.description.value,
       access_approach: inputs.access_approach.value,
       landing_area: inputs.landing_area.value,
@@ -250,6 +250,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
                 type="number"
                 className={inputColorMode}
                 name="hiking_time_hrs"
+                min={0}
+                pattern="\d*"
               />
               <Box>hrs</Box>
             </Flex>
@@ -258,6 +260,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
                 type="number"
                 className={inputColorMode}
                 name="hiking_time_mins"
+                min={0}
+                pattern="\d*"
               />
               <Box>mins</Box>
             </Flex>
