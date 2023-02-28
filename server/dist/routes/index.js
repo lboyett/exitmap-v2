@@ -4,8 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-var router = express_1.default.Router();
-router.get('/', (req, res, next) => {
+const router = express_1.default.Router();
+router.get("/", (req, res, next) => {
     res.send("This is the / route from the routes/index.js file");
 });
-module.exports = router;
+router.get("/exits/:id", (req, res, next) => {
+    res.send("This is the / route from the routes/index.js file");
+});
+exports.default = router;

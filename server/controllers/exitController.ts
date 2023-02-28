@@ -1,2 +1,1 @@
-const { pool } = require("../pool-config.js");
-
+import pool from "../pool-config";

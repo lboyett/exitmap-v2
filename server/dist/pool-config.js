@@ -37,6 +37,4 @@ const pool = new Pool({
     password: process.env.POSTGRES_PW,
     port: 5432,
 });
-module.exports = {
-    pool,
-};
+exports.default = pool;
