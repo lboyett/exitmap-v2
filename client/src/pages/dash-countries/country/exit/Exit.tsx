@@ -24,7 +24,7 @@ function Exit() {
   async function getExit(exitsUrl: string) {
     try {
       const res = await axios.get(`${exitsUrl}/1`);
-      console.log(res)
+      console.log(res.data[0])
     } catch (err: any) {
       if (err) {
         console.log(err) // NEED TO UPDATE THE ERROR HANDLING

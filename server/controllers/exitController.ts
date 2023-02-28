@@ -6,7 +6,6 @@ export async function getExit(id: string) {
 			"SELECT * FROM exits WHERE _id = $1",
 			[id],
 			(err, results) => {
-				console.log(id);
 				if (err) {
 					console.log(err);
 				}
