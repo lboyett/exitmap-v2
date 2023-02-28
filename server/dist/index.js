@@ -4,11 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const port = 8000;
+const body_parser_1 = __importDefault(require("body-parser"));
 const app = (0, express_1.default)();
-app.get("/", (req, res) => {
-    res.send("hello world + this is a test");
-});
+const port = 8000;
+app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.get("/", (req, res) => { });
 app.listen(port, () => {
     console.log(`Now listening on port: ${port}`);
 });

@@ -1,11 +1,13 @@
-import express, { Express, Request, Response } from "express";
-const port = 8000;
+import express from "express";
+import bodyParser from "body-parser";
 
 const app = express();
+const port = 8000;
 
-app.get("/", (req, res) => {
-  res.send("hello world + this is a test");
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {});
 
 app.listen(port, () => {
   console.log(`Now listening on port: ${port}`);
