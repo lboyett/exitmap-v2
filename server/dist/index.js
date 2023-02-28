@@ -7,10 +7,10 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const app = (0, express_1.default)();
 const port = 8000;
+var indexRouter = require("./routes/index");
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
-app.get("/", (req, res) => { });
+app.use("/", indexRouter);
 app.listen(port, () => {
     console.log(`Now listening on port: ${port}`);
 });
-app.use('/', indexRouter);
