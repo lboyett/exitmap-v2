@@ -42,7 +42,9 @@ const router = express_1.default.Router();
 router.get("/exits/:id", (req, res, next) => {
     getInfoFromSpecific(req, res, exitController_1.getExit);
 });
-router.post("/");
+router.post("/exits", (req, res, next) => {
+    (0, exitController_1.addExit)();
+});
 router.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const exits = yield testController.getExits();

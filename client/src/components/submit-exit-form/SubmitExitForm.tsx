@@ -85,7 +85,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       landing_area: inputs.landing_area.value,
       formData: formData,
     };
-    console.log(submission_data);
   }
 
   function changeSliderColor(target: EventTarget & HTMLInputElement) {

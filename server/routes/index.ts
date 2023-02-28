@@ -6,7 +6,9 @@ const router = express.Router();
 router.get("/exits/:id", (req, res, next) => {
   getInfoFromSpecific(req, res, getExit);
 });
-router.post("/");
+router.post("/exits", (req, res, next) => {
+  addExit();
+});
 
 router.get("/test", async (req, res) => {
   try {
