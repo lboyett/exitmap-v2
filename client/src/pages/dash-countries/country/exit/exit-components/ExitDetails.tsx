@@ -28,7 +28,7 @@ function ExitDetails(props: any) {
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   useEffect(() => {
-    experienceCounter(props.exit.experience);
+    experienceCounter(props.exit.experience_required);
   }, []);
 
   function experienceCounter(experience: string) {
@@ -82,7 +82,7 @@ function ExitDetails(props: any) {
   }
 
   function returnExitTypeIcon() {
-    switch (props.exit.exit_type) {
+    switch (props.exit.object_type) {
       case "Building":
         return <FaRegBuilding />;
       case "Antenna":
@@ -109,7 +109,7 @@ function ExitDetails(props: any) {
     switch (props.exit.legality) {
       case "legal":
         return ('lime')
-      case "legalish":
+      case "semi":
         return ('yellow')
       case "illegal":
         return ('red')
@@ -118,6 +118,8 @@ function ExitDetails(props: any) {
 
   function returnBustColor() {
     switch (props.exit.bust_factor) {
+      case 'na':
+        return('white')
       case "low":
         return ('lime')
       case "moderate":
@@ -149,7 +151,7 @@ function ExitDetails(props: any) {
 
         <Box className="exit-details-middle">
           <Flex className="exit-jump-type">
-            {props.exit.jump_type[0] === true ? (
+            {props.exit.exit_type[0] === true ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -157,7 +159,7 @@ function ExitDetails(props: any) {
             Slider down
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.jump_type[1] === true ? (
+            {props.exit.exit_type[1] === true ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -165,7 +167,7 @@ function ExitDetails(props: any) {
             Tracking suit
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.jump_type[2] === true ? (
+            {props.exit.exit_type[2] === true ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -200,7 +202,7 @@ function ExitDetails(props: any) {
             color={experienceArr[experienceArr.length - 1]}
             className="exit-experience-text"
           >
-            {props.exit.experience}
+            {props.exit.experience_required}
           </Text>
         </Flex>
       </Box>
@@ -218,7 +220,7 @@ function ExitDetails(props: any) {
           />
         </Flex>
         <Text className={`exit-access-description ${activeAccess}`}>
-          {props.exit.access}
+          {props.exit.access_approach}
         </Text>
       </Box>
 
@@ -235,7 +237,7 @@ function ExitDetails(props: any) {
           />
         </Flex>
         <Text className={`exit-landing-description ${activeLanding}`}>
-          {props.exit.landing}
+          {props.exit.landing_area}
         </Text>
       </Box>
     </div>

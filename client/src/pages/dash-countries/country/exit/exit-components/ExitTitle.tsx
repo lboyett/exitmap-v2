@@ -3,8 +3,6 @@ import { Heading, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
 function ExitTitle(props: any) {
-  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
-  const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   return (
@@ -20,7 +18,7 @@ function ExitTitle(props: any) {
           </Heading>
           <Flex className='exit-city-latlng'>
           <Text className='exit-city'>
-            {props.exit.city}, {props.exit.country}
+            {props.exit.city}, {props.exit.country_name}
           </Text>
           <Flex className="exit-latlng-wide">
           <FaMapMarkerAlt className="fa-marker"></FaMapMarkerAlt>

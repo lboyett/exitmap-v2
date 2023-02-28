@@ -23,6 +23,7 @@ function Country() {
   return (
     <div className="country">
       <NavBar currentPage="exits" />
+
       <h1 className="country-header">{country}</h1>
       <UnorderedList className="states-bar" color={out_500}>
         {statesArr.map((state) => {
@@ -33,6 +34,7 @@ function Country() {
           );
         })}
       </UnorderedList>
+      
       <UnorderedList>
         <Flex className="exit-cards-container">
           {exitsData.map((exit, i) => {
