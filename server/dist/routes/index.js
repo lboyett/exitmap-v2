@@ -4,10 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const port = 8000;
-const app = (0, express_1.default)();
-var indexRouter = require('./routes/index');
-app.listen(port, () => {
-    console.log(`Now listening on port: ${port}`);
+var router = express_1.default.Router();
+router.get('/', (req, res, next) => {
+    res.send("This is the / route from the routes/index.js file");
 });
-app.use('/', indexRouter);
+module.exports = router;
