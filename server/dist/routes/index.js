@@ -14,12 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const testController_1 = __importDefault(require("../controllers/testController"));
+const exitController_1 = require("../controllers/exitController");
 const router = express_1.default.Router();
 router.get("/", (req, res, next) => {
     res.send("This is the / route from the routes/index.js file");
 });
 router.get("/exits/:id", (req, res, next) => {
-    res.send("This is the / route from the routes/index.js file");
+    getInfoFromSpecific(req, res, exitController_1.getExit);
 });
 router.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -31,3 +32,14 @@ router.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 exports.default = router;
+function getInfoFromSpecific(req, res, _function) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const info = yield _function(req.params.id);
+            res.json(info);
+        }
+        catch (err) {
+            res.status(500).send("Internal Server Error");
+        }
+    });
+}
