@@ -1,4 +1,5 @@
 import "./exit.css";
+import { useEffect } from "react";
 import NavBar from "../../../../components/navbar/NavBar";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
 import { exitData } from "../../../../data/sample-exit-data";
@@ -9,8 +10,28 @@ import ExitComments from "./exit-components/ExitComments";
 import ExitImages from "./exit-components/ExitImages";
 import Map from "../../../../components/map/Map";
 
+import axios from "axios";
+
 function Exit() {
   const exit = exitData[0];
+
+  const exitsUrl = 'http://localhost:8000/exits';
+
+  useEffect(() => {
+    getExit(exitsUrl)
+  }, []);
+
+  async function getExit(exitsUrl: string) {
+    try {
+      const res = await axios.get(`${exitsUrl}/1`);
+      console.log(res)
+    } catch (err: any) {
+      if (err) {
+        console.log(err) // NEED TO UPDATE THE ERROR HANDLING
+      }
+    }
+  }
+
 
   return (
     <div>
