@@ -1,4 +1,4 @@
-type ExitType = "building" | "antenna" | "span" | "earth" | "other";
+type ObjectType = "building" | "antenna" | "span" | "earth" | "other";
 type ExperienceRequired = "beginner" | "intermediate" | "advanced" | "expert";
 type Legality = "legal" | "semi" | "illegal";
 type BustFactor = "na" | "low" | "moderate" | "high";
@@ -7,8 +7,10 @@ type ApproachDiff = "easy" | "medium" | "hard";
 export default interface Exit {
   _id: number;
   name: string;
+  images: string[];
   description: string;
-  exit_type: ExitType;
+  object_type: ObjectType;
+  exit_type: boolean[];
   experience_required: ExperienceRequired;
   legality: Legality;
   bust_factor: BustFactor;
