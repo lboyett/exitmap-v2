@@ -54,7 +54,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
   const lat = props.addedMarker ? props.addedMarker.lat : undefined;
   const lng = props.addedMarker ? props.addedMarker.lng : undefined;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
-  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
   const checkboxStyles = {
