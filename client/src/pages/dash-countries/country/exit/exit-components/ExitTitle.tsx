@@ -14,7 +14,7 @@ function ExitTitle(props: any) {
           borderColor={out_500}
         >
           <Heading as="h1" className="exit-name">
-            {props.exit.name}
+            {props.exit.exit_name}
           </Heading>
           <Flex className='exit-city-latlng'>
           <Text className='exit-city'>
@@ -23,7 +23,7 @@ function ExitTitle(props: any) {
           <Flex className="exit-latlng-wide">
           <FaMapMarkerAlt className="fa-marker"></FaMapMarkerAlt>
           <Text>
-            {props.exit.lat}, {props.exit.lng}
+          {(+props.exit.lat).toFixed(6)}, {(+props.exit.lng).toFixed(6)}
           </Text>
         </Flex>
 
@@ -31,7 +31,7 @@ function ExitTitle(props: any) {
           <Flex className="exit-latlng-mobile">
           <FaMapMarkerAlt className="fa-marker"></FaMapMarkerAlt>
           <Text>
-            {props.exit.lat}, {props.exit.lng}
+            {(+props.exit.lat).toFixed(6)}, {(+props.exit.lng).toFixed(6)}
           </Text>
         </Flex>
         </Flex>

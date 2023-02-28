@@ -22,11 +22,10 @@ interface ExitData {
 }
 
 export async function getExit(id: string) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     pool.query("SELECT * FROM exits WHERE _id = $1", [id], (err, results) => {
-      console.log(id);
       if (err) {
-        console.log(err);
+        reject(err);
       }
       resolve(results.rows);
     });

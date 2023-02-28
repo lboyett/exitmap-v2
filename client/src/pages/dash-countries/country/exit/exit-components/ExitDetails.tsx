@@ -28,22 +28,22 @@ function ExitDetails(props: any) {
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   useEffect(() => {
-    experienceCounter(props.exit.experience_required);
+    experienceCounter(props.exit.exp_req);
   }, []);
 
   function experienceCounter(experience: string) {
     setExperienceArr([]);
     switch (experience) {
-      case "Beginner":
+      case "beginner":
         createExperienceArr(3);
         break;
-      case "Intermediate":
+      case "intermediate":
         createExperienceArr(5);
         break;
-      case "Advanced":
+      case "advanced":
         createExperienceArr(7);
         break;
-      case "Expert":
+      case "expert":
         createExperienceArr(10);
         break;
     }
@@ -151,7 +151,7 @@ function ExitDetails(props: any) {
 
         <Box className="exit-details-middle">
           <Flex className="exit-jump-type">
-            {props.exit.exit_type[0] === true ? (
+            {props.exit.sd === true ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -159,7 +159,7 @@ function ExitDetails(props: any) {
             Slider down
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.exit_type[1] === true ? (
+            {props.exit.ts === true ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -167,7 +167,7 @@ function ExitDetails(props: any) {
             Tracking suit
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.exit_type[2] === true ? (
+            {props.exit.ws === true ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -202,7 +202,7 @@ function ExitDetails(props: any) {
             color={experienceArr[experienceArr.length - 1]}
             className="exit-experience-text"
           >
-            {props.exit.experience_required}
+            {props.exit.exp_req}
           </Text>
         </Flex>
       </Box>

@@ -1,11 +1,19 @@
 import express, { Express, Request, Response } from "express";
 import * as testController from "../controllers/testController";
 import { getExit, addExit } from "../controllers/exitController";
+import { getExitImages } from "../controllers/imageController";
 const router = express.Router();
 
-router.get("/exits/:id", (req, res, next) => {
-  getInfoFromSpecific(req, res, getExit);
+router.get("/exits/:id", async (req, res, next) => {
+  try {
+  const exitData = await getExit(req.params.id);
+  const exitImages = await getExitImages(req.params.id);
+  res.json([exitImages, exitData])
+  } catch (err) {
+    res.status(500).send("Internal server error in the getExit request")
+  }
 });
+
 router.post("/exits", (req, res, next) => {
   const exit_data = req.body.headers.exit_data;
   addExit(exit_data);
@@ -19,18 +27,5 @@ router.get("/test", async (req, res) => {
     res.status(500).send(err);
   }
 });
-
-async function getInfoFromSpecific(
-  req: Request,
-  res: Response,
-  _function: (_id: string) => any
-) {
-  try {
-    const info = await _function(req.params.id);
-    res.json(info);
-  } catch (err) {
-    res.status(500).send("Internal Server Error");
-  }
-}
 
 export default router;
