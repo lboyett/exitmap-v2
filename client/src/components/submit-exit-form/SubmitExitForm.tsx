@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import FileInput from "./file-input/FileInput";
+import axios from "axios";
 
 interface Coordinate {
   lat: number;
@@ -62,11 +63,13 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     },
   };
 
+  const url = "http://localhost:8000/exits";
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
-    const submission_data = {
+    const exit_data = {
       name: inputs.exit_name.value,
       object_type: inputs.object_type.value,
       exit_type: [inputs.sd.checked, inputs.ts.checked, inputs.ws.checked],
@@ -85,6 +88,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       landing_area: inputs.landing_area.value,
       formData: formData,
     };
+    axios.post(url, {
+      headers: {
+        exit_data,
+      },
+    });
   }
 
   function changeSliderColor(target: EventTarget & HTMLInputElement) {

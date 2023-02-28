@@ -7,7 +7,8 @@ router.get("/exits/:id", (req, res, next) => {
   getInfoFromSpecific(req, res, getExit);
 });
 router.post("/exits", (req, res, next) => {
-  addExit();
+  const exit_data = req.body.headers.exit_data;
+  addExit(exit_data);
 });
 
 router.get("/test", async (req, res) => {
