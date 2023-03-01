@@ -10,7 +10,7 @@ import "swiper/css/navigation";
 
 import { EffectFlip, Pagination, Navigation } from "swiper";
 
-interface imgArrType {
+export interface imgArrType {
   exit: number;
   is_deleted: boolean;
   is_main: boolean;

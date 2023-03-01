@@ -2,13 +2,35 @@ import express, { Express, Request, Response } from "express";
 import * as testController from "../controllers/testController";
 import { getExit, addExit } from "../controllers/exitController";
 import { getExitImages } from "../controllers/imageController";
+import { getExitComments } from "../controllers/commentController";
 const router = express.Router();
+
+// router.get("/exits/:id", async (req, res, next) => {
+//   try {
+//     const exitData = await getExit(req.params.id);
+//     const exitImages = await getExitImages(req.params.id);
+//     const exitComments = await getExitComments(req.params.id);
+//     res.json([exitData, exitImages, exitComments]);
+//   } catch (err) {
+//     res.status(500).send("Internal server error in the getExit request");
+//   }
+// });
 
 router.get("/exits/:id", async (req, res, next) => {
   try {
+    let results: any = {};
     const exitData = await getExit(req.params.id);
+    aggregate('data', exitData);
     const exitImages = await getExitImages(req.params.id);
-    res.json([exitImages, exitData]);
+    aggregate('images', exitImages);
+    const exitComments = await getExitComments(req.params.id);
+    aggregate('comments', exitComments);
+    function aggregate(name: string, data: any) {
+      results[name] = data;
+      if (results.data && results.images && results.comments) {
+        res.json(results)
+      }
+    }
   } catch (err) {
     res.status(500).send("Internal server error in the getExit request");
   }

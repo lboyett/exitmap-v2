@@ -13,7 +13,21 @@ import "./exit-comments.css";
 import { useState } from "react";
 import { BiCommentAdd } from "react-icons/bi";
 
-function ExitComments(props: any) {
+export interface commentsTypes {
+  author: number;
+  comment: string;
+  created_at: string;
+  exit: number;
+  is_deleted: boolean;
+  updated_at: string;
+  _id: number;
+}
+
+ interface ExitCommentsPropTypes {
+  comments: commentsTypes[] | undefined;
+}
+
+function ExitComments(props: ExitCommentsPropTypes) {
   const [addCommentButton, setAddCommentButton] = useState("");
   const [hideIcon, setHideIcon] = useState("");
   const comments = props.comments;
@@ -32,6 +46,9 @@ function ExitComments(props: any) {
     }
   }
 
+  if (!comments) {
+    return <></>
+  } else {
   return (
     <div className="comments">
       <Flex className="comments-title-container">
@@ -70,13 +87,14 @@ function ExitComments(props: any) {
                   {comment.created_at}
                 </Text>
               </Flex>
-              <Text>{comment.text}</Text>
+              <Text>{comment.comment}</Text>
             </Box>
           </Flex>
         );
       })}
     </div>
   );
+}
 }
 
 export default ExitComments;
