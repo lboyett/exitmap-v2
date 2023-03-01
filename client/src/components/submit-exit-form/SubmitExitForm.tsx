@@ -25,7 +25,7 @@ interface Coordinate {
 }
 
 interface SubmitFormProps {
-  addedMarker: Coordinate | undefined;
+  locationData: Coordinate | undefined;
 }
 
 interface FormInputs extends HTMLFormControlsCollection {
@@ -52,8 +52,8 @@ interface FormInputs extends HTMLFormControlsCollection {
 export default function SubmitExitForm(props: SubmitFormProps) {
   const [units, setUnits] = useState(["ft", "ft"]);
   const [formData, setFormData] = useState<FormData>();
-  const lat = props.addedMarker ? props.addedMarker.lat : undefined;
-  const lng = props.addedMarker ? props.addedMarker.lng : undefined;
+  const lat = props.locationData ? props.locationData.lat : undefined;
+  const lng = props.locationData ? props.locationData.lng : undefined;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -71,11 +71,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     const inputs = target.elements as FormInputs;
     const exit_data = {
       name: inputs.exit_name.value,
-      object_type: inputs.object_type.value,
+      object_type: inputs.object_type.value.toLowerCase(),
       exit_type: +`${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
         .checked}`,
-      exp_req: inputs.experience_required.value,
-      legality: inputs.legality.value,
+      exp_req: inputs.experience_required.value.toLowerCase(),
+      legality: inputs.legality.value.toLowerCase(),
       bust_factor: inputs.bust_factor.value,
       height_impact: inputs.height_impact.value,
       height_landing: inputs.height_landing.value,
@@ -83,7 +83,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       lng: inputs.lng.value,
       hiking_time_hrs: inputs.hiking_time_hrs.value,
       hiking_time_mins: inputs.hiking_time_mins.value,
-      approach_diff: inputs.approach_difficulty.value,
+      approach_diff: +inputs.approach_difficulty.value,
       description: inputs.description.value,
       access_approach: inputs.access_approach.value,
       landing_area: inputs.landing_area.value,

@@ -18,7 +18,7 @@ function DashSubmit() {
     <div className="dash-submit">
       <NavBar currentPage="submit" />
       <Box className="content">
-        <SubmitExitForm addedMarker={addedMarker} />
+        <SubmitExitForm locationData={addedMarker} />
         <Map
           updateForm={(latLng: Coordinate) => {
             setAddedMarker(latLng);
