@@ -39,12 +39,33 @@ const express_1 = __importDefault(require("express"));
 const testController = __importStar(require("../controllers/testController"));
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
+const commentController_1 = require("../controllers/commentController");
 const router = express_1.default.Router();
+// router.get("/exits/:id", async (req, res, next) => {
+//   try {
+//     const exitData = await getExit(req.params.id);
+//     const exitImages = await getExitImages(req.params.id);
+//     const exitComments = await getExitComments(req.params.id);
+//     res.json([exitData, exitImages, exitComments]);
+//   } catch (err) {
+//     res.status(500).send("Internal server error in the getExit request");
+//   }
+// });
 router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let results = {};
         const exitData = yield (0, exitController_1.getExit)(req.params.id);
+        aggregate('data', exitData);
         const exitImages = yield (0, imageController_1.getExitImages)(req.params.id);
-        res.json([exitImages, exitData]);
+        aggregate('images', exitImages);
+        const exitComments = yield (0, commentController_1.getExitComments)(req.params.id);
+        aggregate('comments', exitComments);
+        function aggregate(name, data) {
+            results[name] = data;
+            if (results.data && results.images && results.comments) {
+                res.json(results);
+            }
+        }
     }
     catch (err) {
         res.status(500).send("Internal server error in the getExit request");

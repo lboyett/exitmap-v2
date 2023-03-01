@@ -10,13 +10,16 @@ import ExitComments from "./exit-components/ExitComments";
 import ExitImages from "./exit-components/ExitImages";
 import Map from "../../../../components/map/Map";
 import exit from "../../../../type-definitions/exit";
+import { imgArrType } from "./exit-components/ExitImages";
+import { commentsTypes } from "./exit-components/ExitComments";
 
 import axios from "axios";
 
 function Exit() {
   const exit = exitData[0];
   const [exitRes, setExitRes] = useState<exit>();
-  const [exitImages, setExitImages] = useState();
+  const [exitImages, setExitImages] = useState<imgArrType[]>();
+  const [exitComments, setExitComments] = useState<commentsTypes[]>();
 
   const exitsUrl = "http://localhost:8000/exits";
 
@@ -27,9 +30,10 @@ function Exit() {
   async function getExit(exitsUrl: string) {
     try {
       const res = await axios.get(`${exitsUrl}/1`);
-      setExitImages(res.data[0]);
-      // console.log(res.data[0]);
-      setExitRes(res.data[1][0]);
+      console.log(res.data);
+      setExitRes(res.data.data[0]);
+      setExitImages(res.data.images);
+      setExitComments(res.data.comments); // Look into promise.all
     } catch (err: any) {
       if (err) {
         console.log(err); // NEED TO UPDATE THE ERROR HANDLING
@@ -58,7 +62,7 @@ function Exit() {
           </Box>
 
           <Box className="exit-right">
-            <ExitImages class="wide" exit={exit} imgArr={exitImages} />
+            <ExitImages class="wide" exit={exit} />
             <div className="exit-page-map-wide">
               <Map
                 editable={false}
