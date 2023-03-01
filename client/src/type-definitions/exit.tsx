@@ -1,17 +1,15 @@
 type ObjectType = "building" | "antenna" | "span" | "earth" | "other";
-type ExperienceRequired = "beginner" | "intermediate" | "advanced" | "expert";
+type ExperienceRequired = "beginner" | "inetermediate" | "advanced" | "expert";
 type Legality = "legal" | "semi" | "illegal";
-type BustFactor = "na" | "low" | "moderate" | "high";
-type ApproachDiff = "easy" | "medium" | "hard";
+type BustFactor = "0" | "0.5" | "1";
+type ApproachDiff = "0" | "0.5" | "1";
 
 export default interface Exit {
   _id: number;
   name: string;
-  images: string[];
-  description: string;
   object_type: ObjectType;
   exit_type: boolean[];
-  experience_required: ExperienceRequired;
+  exp_req: ExperienceRequired;
   legality: Legality;
   bust_factor: BustFactor;
   height_impact: number;
@@ -19,12 +17,15 @@ export default interface Exit {
   lat: number;
   lng: number;
   city: string;
-  state: string;
-  country_name: string;
   country_code: string;
-  hiking_time: number;
+  country_name: string;
+  hiking_time_hrs: number;
+  hiking_time_mins: number;
   approach_diff: ApproachDiff;
+  description: string;
   access_approach: string;
   landing_area: string;
+  submitted_by: number;
+  is_reviewed: boolean;
   is_deleted: boolean;
 }

@@ -14,6 +14,7 @@ interface Coordinate {
 
 function DashSubmit() {
   const [addedMarker, setAddedMarker] = useState<Coordinate | undefined>();
+
   return (
     <div className="dash-submit">
       <NavBar currentPage="submit" />

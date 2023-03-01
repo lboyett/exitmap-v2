@@ -40,12 +40,14 @@ export default function Map(props: MapProps) {
   const [center, setCenter] = useState<Coordinate>({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState<number>(7);
   const [exits, setExits] = useState<Exit[]>();
-  const [exitPageLocation, setExitPageLocation] = useState<exit_location_type>();
+  const [exitPageLocation, setExitPageLocation] =
+    useState<exit_location_type>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
+  const [addedCity, setAddedCity] = useState<string>();
+  const [addedCountry, setAddedCountry] = useState<string>();
 
   const lightMode = useColorModeValue(true, false);
-
   const mapStyle = lightMode ? null : darkMapStyle;
 
   const { isLoaded } = useJsApiLoader({
@@ -57,9 +59,12 @@ export default function Map(props: MapProps) {
   useEffect(() => {
     setExits(exitSampleData);
     if (props.exit_location) {
-      setCenter({lat: props.exit_location.lat, lng: props.exit_location.lng});
-      setExitPageLocation({lat: props.exit_location.lat, lng: props.exit_location.lng});
-      return
+      setCenter({ lat: props.exit_location.lat, lng: props.exit_location.lng });
+      setExitPageLocation({
+        lat: props.exit_location.lat,
+        lng: props.exit_location.lng,
+      });
+      return;
     }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -83,10 +88,10 @@ export default function Map(props: MapProps) {
   function addMarker(lat: number, lng: number) {
     setAddedMarker({ lat: lat, lng: lng });
     if (props.updateForm) props.updateForm({ lat, lng });
-    // const geocoder = new google.maps.Geocoder();
-    // geocoder.geocode({ location: { lat: lat, lng: lng } }, (results) => {
-    //   if (results && results[0]) console.log(results[0]);
-    // });
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: { lat: lat, lng: lng } }, (results) => {
+      if (results && results[0]) console.log(results[0]);
+    });
   }
 
   if (isLoaded) {
@@ -130,11 +135,7 @@ export default function Map(props: MapProps) {
             position={addedMarker}
           />
         ) : null}
-        {exitPageLocation ? (
-          <MarkerF
-            position={exitPageLocation}
-          />
-        ) : null}
+        {exitPageLocation ? <MarkerF position={exitPageLocation} /> : null}
       </GoogleMap>
     );
   } else {
