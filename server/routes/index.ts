@@ -20,15 +20,15 @@ router.get("/exits/:id", async (req, res, next) => {
   try {
     let results: any = {};
     const exitData = await getExit(req.params.id);
-    aggregate('data', exitData);
+    aggregate("data", exitData);
     const exitImages = await getExitImages(req.params.id);
-    aggregate('images', exitImages);
+    aggregate("images", exitImages);
     const exitComments = await getExitComments(req.params.id);
-    aggregate('comments', exitComments);
+    aggregate("comments", exitComments);
     function aggregate(name: string, data: any) {
       results[name] = data;
       if (results.data && results.images && results.comments) {
-        res.json(results)
+        res.json(results);
       }
     }
   } catch (err) {
@@ -37,12 +37,14 @@ router.get("/exits/:id", async (req, res, next) => {
 });
 
 router.post("/exits", async (req, res, next) => {
-  const exit_data = req.body.headers.exit_data;
+  const exit_data = req.body.headers;
   try {
     const response = await addExit(exit_data);
     console.log(response);
+    res.send("OK");
   } catch (err) {
     console.log(err);
+    res.send(err);
   }
 });
 

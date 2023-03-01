@@ -1,5 +1,6 @@
 import pool from "../pool-config";
 
+// i don't think these should be input elements
 interface ExitData {
   name: HTMLInputElement;
   object_type: HTMLInputElement;
@@ -11,12 +12,15 @@ interface ExitData {
   height_landing: HTMLInputElement;
   lat: HTMLInputElement;
   lng: HTMLInputElement;
+  city: HTMLInputElement;
+  country_code: HTMLInputElement;
   hiking_time_hrs: HTMLInputElement;
   hiking_time_mins: HTMLInputElement;
   approach_diff: HTMLInputElement;
   description: HTMLInputElement;
   access_approach: HTMLInputElement;
   landing_area: HTMLInputElement;
+  submitted_by: HTMLInputElement;
 }
 
 export async function getExit(id: string) {
@@ -41,12 +45,15 @@ export async function addExit({
   height_landing,
   lat,
   lng,
+  city,
+  country_code,
   hiking_time_hrs,
   hiking_time_mins,
   approach_diff,
   description,
   access_approach,
   landing_area,
+  submitted_by,
 }: ExitData) {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -60,12 +67,16 @@ export async function addExit({
         height_landing,
         lat,
         lng,
+        city,
+        country_code,
         hiking_time_hrs,
         hiking_time_mins,
         approach_diff,
         description,
         access_approach,
-        landing_area) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
+        landing_area,
+        submitted_by) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18, $19)
+        RETURNING *`,
       [
         name,
         object_type,
@@ -77,16 +88,19 @@ export async function addExit({
         height_landing,
         lat,
         lng,
+        city,
+        country_code,
         hiking_time_hrs,
         hiking_time_mins,
         approach_diff,
         description,
         access_approach,
         landing_area,
+        submitted_by,
       ],
       (err, results) => {
         if (err) reject(err);
-        console.log(results);
+        resolve(results.rows[0]);
       }
     );
   });

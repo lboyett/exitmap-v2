@@ -10,4 +10,3 @@ drop type if exists bust_factor;
 drop type if exists approach_diff;
 
 
-

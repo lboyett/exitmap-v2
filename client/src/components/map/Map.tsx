@@ -44,8 +44,6 @@ export default function Map(props: MapProps) {
     useState<exit_location_type>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
-  const [addedCity, setAddedCity] = useState<string>();
-  const [addedCountry, setAddedCountry] = useState<string>();
 
   const lightMode = useColorModeValue(true, false);
   const mapStyle = lightMode ? null : darkMapStyle;
@@ -85,13 +83,25 @@ export default function Map(props: MapProps) {
       });
   }
 
-  function addMarker(lat: number, lng: number) {
+  async function handleMapClick(lat: number, lng: number) {
     setAddedMarker({ lat: lat, lng: lng });
-    if (props.updateForm) props.updateForm({ lat, lng });
+    try {
+      const code = await getCountryCode(lat, lng);
+      if (props.updateForm) props.updateForm({ lat, lng }, code);
+    } catch (err) {}
+  }
+
+  async function getCountryCode(lat: number, lng: number) {
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: { lat: lat, lng: lng } }, (results) => {
-      if (results && results[0]) console.log(results[0]);
-    });
+    try {
+      const response = await geocoder.geocode({
+        location: { lat: lat, lng: lng },
+      });
+      const l = response.results.length;
+      return response.results[l - 1].address_components[0].short_name;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   if (isLoaded) {
@@ -105,7 +115,7 @@ export default function Map(props: MapProps) {
         onClick={(e) => {
           if (!props.editable) return;
           if (e.latLng) {
-            addMarker(e.latLng.lat(), e.latLng.lng());
+            handleMapClick(e.latLng.lat(), e.latLng.lng());
           }
         }}
       >

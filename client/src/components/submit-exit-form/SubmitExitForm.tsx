@@ -15,7 +15,7 @@ import {
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import FileInput from "./file-input/FileInput";
 import axios from "axios";
 
@@ -25,7 +25,8 @@ interface Coordinate {
 }
 
 interface SubmitFormProps {
-  locationData: Coordinate | undefined;
+  latLng: Coordinate | undefined;
+  country_code: string | undefined;
 }
 
 interface FormInputs extends HTMLFormControlsCollection {
@@ -41,6 +42,7 @@ interface FormInputs extends HTMLFormControlsCollection {
   height_landing: HTMLInputElement;
   lat: HTMLInputElement;
   lng: HTMLInputElement;
+  city: HTMLInputElement;
   hiking_time_hrs: HTMLInputElement;
   hiking_time_mins: HTMLInputElement;
   approach_difficulty: HTMLInputElement;
@@ -50,10 +52,11 @@ interface FormInputs extends HTMLFormControlsCollection {
 }
 
 export default function SubmitExitForm(props: SubmitFormProps) {
-  const [units, setUnits] = useState(["ft", "ft"]);
+  const [units, setUnits] = useState<string>("ft");
   const [formData, setFormData] = useState<FormData>();
-  const lat = props.locationData ? props.locationData.lat : undefined;
-  const lng = props.locationData ? props.locationData.lng : undefined;
+  const lat = props.latLng ? props.latLng.lat : undefined;
+  const lng = props.latLng ? props.latLng.lng : undefined;
+  const country_code = props.country_code ? props.country_code : null;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -64,12 +67,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
   };
 
   const url = "http://localhost:8000/exits";
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
-    const exit_data = {
+    const headers = {
       name: inputs.exit_name.value,
       object_type: inputs.object_type.value.toLowerCase(),
       exit_type: +`${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
@@ -77,23 +79,28 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       exp_req: inputs.experience_required.value.toLowerCase(),
       legality: inputs.legality.value.toLowerCase(),
       bust_factor: inputs.bust_factor.value,
-      height_impact: inputs.height_impact.value,
-      height_landing: inputs.height_landing.value,
+      height_impact:
+        units == "m"
+          ? Math.floor(+inputs.height_impact.value * 3.28)
+          : Math.floor(+inputs.height_impact.value),
+      height_landing:
+        units == "m"
+          ? Math.floor(+inputs.height_landing.value * 3.28)
+          : Math.floor(+inputs.height_landing.value),
       lat: inputs.lat.value,
       lng: inputs.lng.value,
+      city: inputs.city.value,
+      country_code: country_code,
       hiking_time_hrs: inputs.hiking_time_hrs.value,
       hiking_time_mins: inputs.hiking_time_mins.value,
       approach_diff: +inputs.approach_difficulty.value,
       description: inputs.description.value,
       access_approach: inputs.access_approach.value,
       landing_area: inputs.landing_area.value,
+      submitted_by: 1, //USERID
       formData: formData,
     };
-    axios.post(url, {
-      headers: {
-        exit_data,
-      },
-    });
+    axios.post(url, { headers });
   }
 
   function changeSliderColor(target: EventTarget & HTMLInputElement) {
@@ -168,9 +175,9 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             className={inputColorMode}
             name="legality"
           >
-            <option>Legal</option>
-            <option>Semi-legal</option>
-            <option>Illegal</option>
+            <option value-="legal">Legal</option>
+            <option value="semi">Semi-legal</option>
+            <option value="illegal">Illegal</option>
           </Select>
         </FormControl>
         <FormControl>
@@ -196,14 +203,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
               className={inputColorMode}
               name="height_impact"
             />
-            <Button
-              onClick={() => {
-                if (units[0] === "ft") setUnits(["m", units[1]]);
-                else setUnits(["ft", units[1]]);
-              }}
-            >
-              {units[0]}
-            </Button>
           </Flex>
         </FormControl>
         <FormControl>
@@ -214,19 +213,28 @@ export default function SubmitExitForm(props: SubmitFormProps) {
               className={inputColorMode}
               name="height_landing"
             />
-            <Button
-              onClick={() => {
-                if (units[1] === "ft") setUnits([units[0], "m"]);
-                else setUnits([units[0], "ft"]);
-              }}
-            >
-              {units[1]}
-            </Button>
           </Flex>
         </FormControl>
+        <Button
+          alignSelf="end"
+          onClick={() => {
+            if (units == "ft") setUnits("m");
+            else setUnits("ft");
+          }}
+        >
+          {units}
+        </Button>
       </Flex>
       <Flex className="input-group">
-        <FormControl>
+        <FormControl
+          isInvalid={
+            country_code
+              ? country_code.length > 2 || country_code == undefined
+                ? true
+                : false
+              : false
+          }
+        >
           <FormLabel>Latitude</FormLabel>
           <Input
             type="number"
@@ -235,6 +243,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             readOnly
             name="lat"
           />
+          <FormErrorMessage>Must choose a valid location</FormErrorMessage>
           <FormHelperText>click map to add location</FormHelperText>
         </FormControl>
         <FormControl>
@@ -246,6 +255,12 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             readOnly
             name="lng"
           />
+        </FormControl>
+      </Flex>
+      <Flex className="input-group">
+        <FormControl>
+          <FormLabel>City</FormLabel>
+          <Input type="text" className={inputColorMode} name="city" />
         </FormControl>
       </Flex>
       <Flex className="input-group">

@@ -10,40 +10,37 @@ create table users (
 	is_deleted boolean not null default false
 );
 
-create type object_type as enum ('bridge', 'antenna', 'span', 'earth', 'other');
-create type exit_type as enum ('sd','ts','ws');
+create type object_type as enum ('building', 'antenna', 'span', 'earth', 'other');
 create type exp_req as enum ('beginner','intermediate','advanced', 'expert');
 create type legality as enum ('legal','semi','illegal');
-create type bust_factor as enum ('low','med','high');
-create type approach_diff as enum ('easy','med','hard');
+create type bust_factor as enum ('0','0.5','1');
+create type approach_diff as enum ('0','0.5','1');
 
 
 create table exits (
 	_id int generated always as identity primary key not null,
-	exit_name varchar(255) not null,
-	object_type object_type not null,
-	sd boolean not null,
-	ts boolean not null, 
-	ws boolean not null,
-	exp_req exp_req not null,
-	legality legality not null,
-	bust_factor bust_factor not null,
-	height_impact int not null,
-	height_landing int not null,
-	lat numeric(16,14) not null,
-	lng numeric(17,14) not null,
-	city varchar(255) not null,
-	country_code varchar(2) not null,
-	country_name varchar(255) not null,
+	name varchar(255),
+	object_type object_type,
+	exit_type bit(3),
+	exp_req exp_req ,
+	legality legality ,
+	bust_factor bust_factor ,
+	height_impact int ,
+	height_landing int ,
+	lat numeric(16,14) ,
+	lng numeric(17,14) ,
+	city varchar(255) ,
+	country_code varchar(2) ,
+	country_name varchar(255),
 	hiking_time_hrs int default 0,
-	hiking_time_mins int not null,
-	approach_diff approach_diff not null,
-	description varchar(10000) not null,
-	access_approach varchar(10000) not null,
-	landing_area varchar(10000) not null,
-	submitted_by int not null references users (_id) on delete restrict on update restrict,
-	is_reviewed boolean not null default false,
-	is_deleted boolean not null default false
+	hiking_time_mins int ,
+	approach_diff approach_diff ,
+	description varchar(10000) ,
+	access_approach varchar(10000) ,
+	landing_area varchar(10000) ,
+	submitted_by int  references users (_id) on delete restrict on update restrict,
+	is_reviewed boolean default false,
+	is_deleted boolean default false
 );
 
 create table comments (
