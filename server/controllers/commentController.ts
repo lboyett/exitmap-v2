@@ -11,6 +11,3 @@ export async function getExitComments(exit_id: string) {
     });
   });
 }
-
-// get all comments from comments with exit_id
-// 

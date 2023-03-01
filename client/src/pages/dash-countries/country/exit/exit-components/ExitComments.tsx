@@ -12,6 +12,7 @@ import {
 import "./exit-comments.css";
 import { useState } from "react";
 import { BiCommentAdd } from "react-icons/bi";
+import { format, formatDistance, endOfDay } from 'date-fns'
 
 export interface commentsTypes {
   author: number;
@@ -44,6 +45,9 @@ function ExitComments(props: ExitCommentsPropTypes) {
       setAddCommentButton("");
       setHideIcon('');
     }
+  }
+
+  if (props.comments) {
   }
 
   if (!comments) {
@@ -84,7 +88,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
                   {"@" + comment.username}
                 </Text>
                 <Text fontWeight={"200"} fontSize="0.8rem">
-                  {comment.created_at}
+                  {formatDistance(new Date(comment.created_at), endOfDay(new Date()), {addSuffix:true})}
                 </Text>
               </Flex>
               <Text>{comment.comment}</Text>
