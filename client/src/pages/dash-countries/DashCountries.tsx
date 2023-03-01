@@ -36,8 +36,8 @@ function DashCountries() {
           })}
         </UnorderedList>
         <UnorderedList className="country-list">
-          {countriesList.map((country) => {
-            return <CountryCard country={country} />;
+          {countriesList.map((country, i) => {
+            return <CountryCard key={i} country={country} />;
           })}
         </UnorderedList>
       </Box>
