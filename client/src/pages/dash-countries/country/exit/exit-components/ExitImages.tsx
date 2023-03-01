@@ -29,7 +29,7 @@ function ExitImages(props: any) {
 
   return (
     <div className={`exit-images-container-${props.class}`}>
-      {imgState ? <div>THIS SHIT WORKS</div> : <div>BITCHHHHHHHHH</div>}
+      {imgState ? <div>THIS SHIT WORKS</div> : <div>returns null</div>}
     </div>
   );
 }

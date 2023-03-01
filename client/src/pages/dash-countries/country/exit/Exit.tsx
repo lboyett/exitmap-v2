@@ -9,7 +9,7 @@ import ExitDetails from "./exit-components/ExitDetails";
 import ExitComments from "./exit-components/ExitComments";
 import ExitImages from "./exit-components/ExitImages";
 import Map from "../../../../components/map/Map";
-import exit from '../../../../type-definitions/exit'
+import exit from "../../../../type-definitions/exit";
 
 import axios from "axios";
 
@@ -37,41 +37,39 @@ function Exit() {
     }
   }
 
+  if (exitRes == undefined) {
+    return <></>;
+  } else {
+    return (
+      <div>
+        <NavBar />
+        <Grid className="exit-page">
+          <Box className="exit-left">
+            <ExitTitle exit={exitRes} />
+            <ExitImages class="mobile" exit={exit} imgArr={exitImages} />
+            <ExitDetails exit={exitRes} />
+            <div className="exit-page-map-mobile">
+              <Map
+                editable={false}
+                exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
+              />
+            </div>
+            <ExitComments comments={exitComments} />
+          </Box>
 
-
-if (exitRes == undefined) {
-  return <></>
-} else {
-  return (
-    <div>
-      <NavBar />
-      <Grid className="exit-page">
-        <Box className="exit-left">
-          <ExitTitle exit={exitRes} />
-          <ExitImages class="mobile" exit={exit} imgArr={exitImages}/>
-          <ExitDetails exit={exitRes} />
-          <div className="exit-page-map-mobile">
-            <Map
-              editable={false}
-              exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
-            />
-          </div>
-          <ExitComments comments={exitComments} />
-        </Box>
-
-        <Box className="exit-right">
-          <ExitImages class="wide" exit={exit} />
-          <div className="exit-page-map-wide">
-            <Map
-              editable={false}
-              exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
-            />
-          </div>
-        </Box>
-      </Grid>
-    </div>
-  );
-}
+          <Box className="exit-right">
+            <ExitImages class="wide" exit={exit} imgArr={exitImages} />
+            <div className="exit-page-map-wide">
+              <Map
+                editable={false}
+                exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
+              />
+            </div>
+          </Box>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 export default Exit;
