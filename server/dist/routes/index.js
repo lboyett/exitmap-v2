@@ -41,16 +41,6 @@ const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
 const router = express_1.default.Router();
-// router.get("/exits/:id", async (req, res, next) => {
-//   try {
-//     const exitData = await getExit(req.params.id);
-//     const exitImages = await getExitImages(req.params.id);
-//     const exitComments = await getExitComments(req.params.id);
-//     res.json([exitData, exitImages, exitComments]);
-//   } catch (err) {
-//     res.status(500).send("Internal server error in the getExit request");
-//   }
-// });
 router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let results = {};
