@@ -48,7 +48,7 @@ if (exitRes == undefined) {
       <Grid className="exit-page">
         <Box className="exit-left">
           <ExitTitle exit={exitRes} />
-          <ExitImages class="mobile" exit={exit} imgArr={exitImages}/>
+          <ExitImages class="mobile" imgArr={exitImages}/>
           <ExitDetails exit={exitRes} />
           <div className="exit-page-map-mobile">
             <Map
@@ -60,7 +60,7 @@ if (exitRes == undefined) {
         </Box>
 
         <Box className="exit-right">
-          <ExitImages class="wide" exit={exit} />
+          <ExitImages class="wide" imgArr={exitImages}/>
           <div className="exit-page-map-wide">
             <Map
               editable={false}
