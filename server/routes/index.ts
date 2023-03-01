@@ -13,6 +13,7 @@ router.get("/exits/:id", async (req, res, next) => {
     res.status(500).send("Internal server error in the getExit request");
   }
 });
+
 router.post("/exits", async (req, res, next) => {
   const exit_data = req.body.headers.exit_data;
   try {
