@@ -5,17 +5,6 @@ import { getExitImages } from "../controllers/imageController";
 import { getExitComments } from "../controllers/commentController";
 const router = express.Router();
 
-// router.get("/exits/:id", async (req, res, next) => {
-//   try {
-//     const exitData = await getExit(req.params.id);
-//     const exitImages = await getExitImages(req.params.id);
-//     const exitComments = await getExitComments(req.params.id);
-//     res.json([exitData, exitImages, exitComments]);
-//   } catch (err) {
-//     res.status(500).send("Internal server error in the getExit request");
-//   }
-// });
-
 router.get("/exits/:id", async (req, res, next) => {
   try {
     let results: any = {};
