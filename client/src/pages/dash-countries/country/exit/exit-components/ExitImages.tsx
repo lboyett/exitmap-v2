@@ -11,39 +11,27 @@ import "swiper/css/navigation";
 import { EffectFlip, Pagination, Navigation } from "swiper";
 
 function ExitImages(props: any) {
-  const [imgArr, setImgArr] = useState<string[]>();
+  const [imgState, setImgState] = useState<string[]>();
 
-  function makeImgArr(images: any){
-    let arr = images.map((image: any) => {
-      return image.url;
-    })
-    console.log(arr);
-    setImgArr(arr);
-  }
+  useEffect(() => {
+    let imagesArray: string[] = [];
+    if (props.imgArr) {
+      props.imgArr.forEach((image: any) => {
+        imagesArray.push(image.url);
+      });
+      setImgState([...imagesArray]);
+    }
+  }, []);
 
-  if (props.images === undefined) {
-    return <></>;
-  } else {
-    return (
-      <div className={`exit-images-container-${props.class}`}>
-        {/* <Swiper
-          effect={"slide"}
-          grabCursor={true}
-          pagination={true}
-          navigation={true}
-          modules={[Pagination, Navigation]} // Add EffectFlip to this for a different effect
-          className="mySwiper"
-        >
-          {imgArr.map((image: string, i: number) => {
-            return (
-              <SwiperSlide key={i} className="swiper-slide">
-                <img src={image} />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper> */}
-      </div>
-    );
-  }
+  useEffect(() => {
+    console.log(imgState);
+  }, [imgState]);
+
+  return (
+    <div className={`exit-images-container-${props.class}`}>
+      {imgState ? <div>THIS SHIT WORKS</div> : <div>BITCHHHHHHHHH</div>}
+    </div>
+  );
 }
+
 export default ExitImages;
