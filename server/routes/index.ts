@@ -16,8 +16,9 @@ router.get("/exits/:id", async (req, res, next) => {
 router.post("/exits", async (req, res, next) => {
   const exit_data = req.body.headers.exit_data;
   try {
-    const response = await addExit(exit_data);
-    console.log(response);
+    // const response = await addExit(exit_data);
+    // console.log(response);
+    console.log(exit_data);
   } catch (err) {
     console.log(err);
   }

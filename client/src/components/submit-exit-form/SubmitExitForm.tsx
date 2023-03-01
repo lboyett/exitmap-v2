@@ -72,7 +72,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     const exit_data = {
       name: inputs.exit_name.value,
       object_type: inputs.object_type.value,
-      exit_type: [inputs.sd.checked, inputs.ts.checked, inputs.ws.checked],
+      exit_type: +`${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
+        .checked}`,
       exp_req: inputs.experience_required.value,
       legality: inputs.legality.value,
       bust_factor: inputs.bust_factor.value,
