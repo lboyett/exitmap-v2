@@ -109,6 +109,11 @@ label {
 textarea {
   height: 100px !important;
 }
+
+.submit-div {
+  gap: 1rem;
+  align-items: center;
+}
 button {
   font-weight: 300 !important;
 }

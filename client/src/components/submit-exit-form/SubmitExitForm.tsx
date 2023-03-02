@@ -14,6 +14,7 @@ import {
   Flex,
   Box,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import FileInput from "./file-input/FileInput";
@@ -54,6 +55,9 @@ interface FormInputs extends HTMLFormControlsCollection {
 export default function SubmitExitForm(props: SubmitFormProps) {
   const [units, setUnits] = useState<string>("ft");
   const [formData, setFormData] = useState<FormData>();
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string>();
   const lat = props.latLng ? props.latLng.lat : undefined;
   const lng = props.latLng ? props.latLng.lng : undefined;
   const country_code = props.country_code ? props.country_code : null;
@@ -70,6 +74,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
   const imageUrl = "http://localhost:8000/images";
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMessage(undefined);
+    setSuccessMessage(undefined);
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     const exit_data = {
@@ -104,13 +110,22 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       landing_area: inputs.landing_area.value,
       submitted_by: 1, //USERID
     };
-
-    const [exitRes, imgRes] = await Promise.all([
-      axios.post(exitUrl, exit_data),
-      axios.post(imageUrl, formData),
-    ]);
-    console.log(exitRes);
-    console.log(imgRes);
+    setSubmitting(true);
+    try {
+      const exitRes = await axios.post(exitUrl, exit_data);
+      const exit = exitRes.data._id;
+      formData?.delete("exit");
+      formData?.delete("submitted_by");
+      formData?.append("exit", exit);
+      formData?.append("submitted_by", "1"); //USERID
+      const imgRes = await axios.post(imageUrl, formData);
+      setSubmitting(false);
+      setSuccessMessage("New exit submitted successfully");
+    } catch (err) {
+      console.log(err);
+      setSubmitting(false);
+      setErrorMessage("Submission error");
+    }
   }
 
   function changeSliderColor(target: EventTarget & HTMLInputElement) {
@@ -333,7 +348,12 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           name="landing_area"
         />
       </FormControl>
-      <Button type="submit">Submit Exit</Button>
+      <Flex className="submit-div">
+        <Button type="submit">Submit Exit</Button>
+        {submitting ? <Spinner /> : null}
+        {successMessage ? <Box>{successMessage}</Box> : null}
+        {errorMessage ? <Box color="red">{errorMessage}</Box> : null}
+      </Flex>
     </form>
   );
 }

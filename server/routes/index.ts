@@ -1,11 +1,12 @@
 import express, { Express, Request, Response } from "express";
-import * as testController from "../controllers/testController";
-import { getExit, addExit } from "../controllers/exitController";
-import { getExitImages } from "../controllers/imageController";
-import { getExitComments } from "../controllers/commentController";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import * as AWS from "@aws-sdk/client-s3";
+import { QueryResult } from "pg";
+
+import { getExit, addExit } from "../controllers/exitController";
+import { getExitImages, addImage } from "../controllers/imageController";
+import { getExitComments } from "../controllers/commentController";
 const router = express.Router();
 
 router.get("/exits/:id", async (req, res, next) => {
@@ -25,6 +26,17 @@ router.get("/exits/:id", async (req, res, next) => {
     }
   } catch (err) {
     res.status(500).send("Internal server error in the getExit request");
+  }
+});
+
+router.post("/exits", async (req, res, next) => {
+  const exit_data = req.body;
+  try {
+    const response = (await addExit(exit_data)) as QueryResult;
+    res.status(200).send(response.rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
   }
 });
 
@@ -60,25 +72,16 @@ function uploadFile(req: Request, res: Response, next: Function) {
   });
 }
 
-router.post("/exits", async (req, res, next) => {
-  const exit_data = req.body;
-  try {
-    const response = await addExit(exit_data);
-    res.status(200).send(response);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
 router.post("/images", uploadFile, async (req, res, next) => {
-  res.status(200).send("OK");
-});
-
-router.get("/test", async (req, res) => {
+  const exit = req.body.exit;
+  const submitted_by = req.body.submitted_by;
+  console.log(exit, submitted_by);
+  const url = req.file.location;
   try {
-    const exits = await testController.getExits();
-    res.send(await exits);
+    const response = (await addImage(submitted_by, exit, url)) as QueryResult;
+    res.status(200).send(response.rows[0]);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
