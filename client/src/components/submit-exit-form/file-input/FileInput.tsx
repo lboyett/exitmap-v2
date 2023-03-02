@@ -30,7 +30,7 @@ export default function FileInput({ updateForm }: FileInputProps) {
     setBorderColor(undefined);
     setFileName(e.dataTransfer.files[0].name);
     const formData = new FormData();
-    formData.append("file", e.dataTransfer.files[0]);
+    formData.append("image", e.dataTransfer.files[0]);
     setFormData(formData);
   }
 
@@ -49,7 +49,7 @@ export default function FileInput({ updateForm }: FileInputProps) {
           if (!e.target.files) return; // add error message here
           setFileName(e.target.files[0].name);
           const formData = new FormData();
-          formData.append("file", e.target.files[0]);
+          formData.append("image", e.target.files[0]);
           setFormData(formData);
         }}
       />
@@ -57,7 +57,7 @@ export default function FileInput({ updateForm }: FileInputProps) {
         as="div"
         className={`input-div ${inputMode}`}
         color={borderColor}
-        boxShadow="0px 0px 5px"
+        borderColor={`${borderColor} !important`}
         onDrop={(e) => handleDrop(e)}
         onDragOver={(e) => {
           setBorderColor(txt_500);

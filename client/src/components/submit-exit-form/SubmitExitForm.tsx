@@ -66,12 +66,13 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     },
   };
 
-  const url = "http://localhost:8000/exits";
+  const exitUrl = "http://localhost:8000/exits";
+  const imageUrl = "http://localhost:8000/images";
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
-    const headers = {
+    const exit_data = {
       name: inputs.exit_name.value,
       object_type: inputs.object_type.value.toLowerCase(),
       exit_type: +`${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
@@ -91,16 +92,25 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       lng: inputs.lng.value,
       city: inputs.city.value,
       country_code: country_code,
-      hiking_time_hrs: inputs.hiking_time_hrs.value,
-      hiking_time_mins: inputs.hiking_time_mins.value,
+      hiking_time_hrs: inputs.hiking_time_hrs.value
+        ? inputs.hiking_time_hrs.value
+        : null,
+      hiking_time_mins: inputs.hiking_time_mins.value
+        ? inputs.hiking_time_mins.value
+        : null,
       approach_diff: +inputs.approach_difficulty.value,
       description: inputs.description.value,
       access_approach: inputs.access_approach.value,
       landing_area: inputs.landing_area.value,
       submitted_by: 1, //USERID
-      formData: formData,
     };
-    axios.post(url, { headers });
+
+    const [exitRes, imgRes] = await Promise.all([
+      axios.post(exitUrl, exit_data),
+      axios.post(imageUrl, formData),
+    ]);
+    console.log(exitRes);
+    console.log(imgRes);
   }
 
   function changeSliderColor(target: EventTarget & HTMLInputElement) {

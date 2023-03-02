@@ -40,16 +40,19 @@ const testController = __importStar(require("../controllers/testController"));
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
+const multer_1 = __importDefault(require("multer"));
+const multer_s3_1 = __importDefault(require("multer-s3"));
+const AWS = __importStar(require("@aws-sdk/client-s3"));
 const router = express_1.default.Router();
 router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let results = {};
         const exitData = yield (0, exitController_1.getExit)(req.params.id);
-        aggregate('data', exitData);
+        aggregate("data", exitData);
         const exitImages = yield (0, imageController_1.getExitImages)(req.params.id);
-        aggregate('images', exitImages);
+        aggregate("images", exitImages);
         const exitComments = yield (0, commentController_1.getExitComments)(req.params.id);
-        aggregate('comments', exitComments);
+        aggregate("comments", exitComments);
         function aggregate(name, data) {
             results[name] = data;
             if (results.data && results.images && results.comments) {
@@ -61,15 +64,50 @@ router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, f
         res.status(500).send("Internal server error in the getExit request");
     }
 }));
+const s3 = new AWS.S3Client({
+    apiVersion: "2006-03-01",
+    region: "eu-central-1",
+});
+const bucketName = "lboyett-exitmap-v2";
+const upload = (0, multer_1.default)({
+    storage: (0, multer_s3_1.default)({
+        s3: s3,
+        bucket: bucketName,
+        metadata: (req, file, cb) => {
+            cb(null, { fieldName: file.filename });
+        },
+        key: (req, file, cb) => {
+            cb(null, file.originalname);
+        },
+    }),
+}).single("image");
+function uploadFile(req, res, next) {
+    upload(req, res, (err) => {
+        if (err instanceof multer_1.default.MulterError) {
+            console.log(err);
+            res.status(500).send("A multer error occured during upload");
+        }
+        else if (err) {
+            console.log(err);
+            res.status(500).send("An unknown error occured during upload");
+        }
+        else {
+            next();
+        }
+    });
+}
 router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const exit_data = req.body.headers.exit_data;
+    const exit_data = req.body;
     try {
         const response = yield (0, exitController_1.addExit)(exit_data);
-        console.log(response);
+        res.status(200).send(response);
     }
     catch (err) {
-        console.log(err);
+        res.status(500).send(err);
     }
+}));
+router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).send("OK");
 }));
 router.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -9,13 +9,3 @@
   height: min-content;
   margin-left: auto;
 }
-
-.input-dark {
-  border: 1px solid white !important;
-  box-shadow: none !important;
-}
-
-.input-light {
-  border: 1px solid black !important;
-  box-shadow: none !important;
-}

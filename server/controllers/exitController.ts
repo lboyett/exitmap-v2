@@ -99,8 +99,11 @@ export async function addExit({
         submitted_by,
       ],
       (err, results) => {
-        if (err) reject(err);
-        resolve(results.rows[0]);
+        if (err) {
+          console.log(err);
+          reject(err);
+        }
+        resolve(results);
       }
     );
   });
