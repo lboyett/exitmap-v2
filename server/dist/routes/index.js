@@ -97,13 +97,15 @@ function uploadFile(req, res, next) {
     });
 }
 router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const exit_data = req.body;
+    const exit_data = req.body.headers;
     try {
         const response = yield (0, exitController_1.addExit)(exit_data);
-        res.status(200).send(response);
+        console.log(response);
+        res.send("OK");
     }
     catch (err) {
-        res.status(500).send(err);
+        console.log(err);
+        res.send(err);
     }
 }));
 router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
