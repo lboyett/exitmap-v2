@@ -16,7 +16,7 @@ import {
   useColorModeValue,
   Spinner,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import FileInput from "./file-input/FileInput";
 import axios from "axios";
 
@@ -52,12 +52,19 @@ interface FormInputs extends HTMLFormControlsCollection {
   landing_area: HTMLInputElement;
 }
 
+interface Checkbox extends HTMLInputElement {
+  checked: boolean;
+}
+
 export default function SubmitExitForm(props: SubmitFormProps) {
   const [units, setUnits] = useState<string>("ft");
   const [formData, setFormData] = useState<FormData>();
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
+  const sd = useRef();
+  const ts = useRef();
+  const ws = useRef();
   const lat = props.latLng ? props.latLng.lat : undefined;
   const lng = props.latLng ? props.latLng.lng : undefined;
   const country_code = props.country_code ? props.country_code : null;
@@ -81,7 +88,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     const exit_data = {
       name: inputs.exit_name.value,
       object_type: inputs.object_type.value.toLowerCase(),
-      exit_type: +`${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
+      exit_type: `${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
         .checked}`,
       exp_req: inputs.experience_required.value.toLowerCase(),
       legality: inputs.legality.value.toLowerCase(),
@@ -113,6 +120,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     setSubmitting(true);
     try {
       const exitRes = await axios.post(exitUrl, exit_data);
+      if (!formData) {
+        setSubmitting(false);
+        setSuccessMessage("New exit submitted successfully");
+        return;
+      }
       const exit = exitRes.data._id;
       formData?.delete("exit");
       formData?.delete("submitted_by");
@@ -147,7 +159,12 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     <form className="submit-exit-form" onSubmit={(e) => handleSubmit(e)}>
       <FormControl>
         <FormLabel>Exit Name</FormLabel>
-        <Input type="text" className={inputColorMode} name="exit_name" />
+        <Input
+          type="text"
+          className={inputColorMode}
+          name="exit_name"
+          required
+        />
       </FormControl>
       <FileInput updateForm={(formData: FormData) => setFormData(formData)} />
       <Flex className="input-group">
@@ -157,6 +174,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             placeholder="Select"
             className={inputColorMode}
             name="object_type"
+            defaultValue=""
+            required
           >
             <option>Building</option>
             <option>Antenna</option>
@@ -171,6 +190,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             placeholder="Select"
             className={inputColorMode}
             name="experience_required"
+            defaultValue=""
+            required
           >
             <option>Beginner</option>
             <option>Intermediate</option>
@@ -179,19 +200,26 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           </Select>
         </FormControl>
       </Flex>
-      <CheckboxGroup>
-        <Stack direction="row" className="checkbox-group">
-          <Checkbox value="slider_down" sx={checkboxStyles} name="sd">
-            Slider down
-          </Checkbox>
-          <Checkbox value="two_piece" sx={checkboxStyles} name="ts">
-            Tracking suit
-          </Checkbox>
-          <Checkbox value="wingsuit" sx={checkboxStyles} name="ws">
-            Wingsuit
-          </Checkbox>
-        </Stack>
-      </CheckboxGroup>
+      <FormControl>
+        <CheckboxGroup onChange={() => console.log(sd)}>
+          <Stack direction="row" className="checkbox-group">
+            <Checkbox
+              value="slider_down"
+              sx={checkboxStyles}
+              name="sd"
+              ref={sd}
+            >
+              Slider down
+            </Checkbox>
+            <Checkbox value="two_piece" sx={checkboxStyles} name="ts" ref={sd}>
+              Tracking suit
+            </Checkbox>
+            <Checkbox value="wingsuit" sx={checkboxStyles} name="ws" ref={sd}>
+              Wingsuit
+            </Checkbox>
+          </Stack>
+        </CheckboxGroup>
+      </FormControl>
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Legality</FormLabel>
@@ -199,8 +227,10 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             placeholder="Select"
             className={inputColorMode}
             name="legality"
+            defaultValue=""
+            required
           >
-            <option value-="legal">Legal</option>
+            <option value="legal">Legal</option>
             <option value="semi">Semi-legal</option>
             <option value="illegal">Illegal</option>
           </Select>

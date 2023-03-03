@@ -36,13 +36,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const testController = __importStar(require("../controllers/testController"));
-const exitController_1 = require("../controllers/exitController");
-const imageController_1 = require("../controllers/imageController");
-const commentController_1 = require("../controllers/commentController");
 const multer_1 = __importDefault(require("multer"));
 const multer_s3_1 = __importDefault(require("multer-s3"));
 const AWS = __importStar(require("@aws-sdk/client-s3"));
+const uniqid_1 = __importDefault(require("uniqid"));
+const path_1 = __importDefault(require("path"));
+const exitController_1 = require("../controllers/exitController");
+const imageController_1 = require("../controllers/imageController");
+const commentController_1 = require("../controllers/commentController");
 const router = express_1.default.Router();
 router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -64,6 +65,17 @@ router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, f
         res.status(500).send("Internal server error in the getExit request");
     }
 }));
+router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const exit_data = req.body;
+    try {
+        const response = (yield (0, exitController_1.addExit)(exit_data));
+        res.status(200).send(response.rows[0]);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
 const s3 = new AWS.S3Client({
     apiVersion: "2006-03-01",
     region: "eu-central-1",
@@ -77,7 +89,8 @@ const upload = (0, multer_1.default)({
             cb(null, { fieldName: file.filename });
         },
         key: (req, file, cb) => {
-            cb(null, file.originalname);
+            const ext = path_1.default.extname(file.originalname);
+            cb(null, `${Date.now()}-${(0, uniqid_1.default)()}${ext}`);
         },
     }),
 }).single("image");
@@ -96,25 +109,16 @@ function uploadFile(req, res, next) {
         }
     });
 }
-router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const exit_data = req.body;
-    try {
-        const response = yield (0, exitController_1.addExit)(exit_data);
-        res.status(200).send(response);
-    }
-    catch (err) {
-        res.status(500).send(err);
-    }
-}));
 router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).send("OK");
-}));
-router.get("/test", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const exit = req.body.exit;
+    const submitted_by = req.body.submitted_by;
+    const url = req.file.location;
     try {
-        const exits = yield testController.getExits();
-        res.send(yield exits);
+        const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url));
+        res.status(200).send(response.rows[0]);
     }
     catch (err) {
+        console.log(err);
         res.status(500).send(err);
     }
 }));

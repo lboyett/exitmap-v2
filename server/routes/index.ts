@@ -3,6 +3,8 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import * as AWS from "@aws-sdk/client-s3";
 import { QueryResult } from "pg";
+import uniqid from "uniqid";
+import path from "path";
 
 import { getExit, addExit } from "../controllers/exitController";
 import { getExitImages, addImage } from "../controllers/imageController";
@@ -52,8 +54,9 @@ const upload = multer({
     metadata: (req, file, cb) => {
       cb(null, { fieldName: file.filename });
     },
-    key: (req: Request, file, cb) => {
-      cb(null, file.originalname);
+    key: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      cb(null, `${Date.now()}-${uniqid()}${ext}`);
     },
   }),
 }).single("image");
@@ -75,7 +78,6 @@ function uploadFile(req: Request, res: Response, next: Function) {
 router.post("/images", uploadFile, async (req, res, next) => {
   const exit = req.body.exit;
   const submitted_by = req.body.submitted_by;
-  console.log(exit, submitted_by);
   const url = req.file.location;
   try {
     const response = (await addImage(submitted_by, exit, url)) as QueryResult;
