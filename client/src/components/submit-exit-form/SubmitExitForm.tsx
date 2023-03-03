@@ -16,7 +16,7 @@ import {
   useColorModeValue,
   Spinner,
 } from "@chakra-ui/react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import FileInput from "./file-input/FileInput";
 import axios from "axios";
 
@@ -28,6 +28,7 @@ interface Coordinate {
 interface SubmitFormProps {
   latLng: Coordinate | undefined;
   country_code: string | undefined;
+  onSuccess: Function;
 }
 
 interface FormInputs extends HTMLFormControlsCollection {
@@ -62,9 +63,9 @@ export default function SubmitExitForm(props: SubmitFormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
-  const sd = useRef();
-  const ts = useRef();
-  const ws = useRef();
+  const [sdChecked, setSdChecked] = useState<boolean>(false);
+  const [tsChecked, setTsChecked] = useState<boolean>(false);
+  const [wsChecked, setWsChecked] = useState<boolean>(false);
   const lat = props.latLng ? props.latLng.lat : undefined;
   const lng = props.latLng ? props.latLng.lng : undefined;
   const country_code = props.country_code ? props.country_code : null;
@@ -83,6 +84,10 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     e.preventDefault();
     setErrorMessage(undefined);
     setSuccessMessage(undefined);
+    if (!sdChecked && !tsChecked && !wsChecked) {
+      setErrorMessage("Please select an exit type");
+      return;
+    }
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     const exit_data = {
@@ -122,7 +127,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       const exitRes = await axios.post(exitUrl, exit_data);
       if (!formData) {
         setSubmitting(false);
-        setSuccessMessage("New exit submitted successfully");
+        props.onSuccess();
         return;
       }
       const exit = exitRes.data._id;
@@ -132,7 +137,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       formData?.append("submitted_by", "1"); //USERID
       const imgRes = await axios.post(imageUrl, formData);
       setSubmitting(false);
-      setSuccessMessage("New exit submitted successfully");
+      props.onSuccess();
     } catch (err) {
       console.log(err);
       setSubmitting(false);
@@ -200,21 +205,30 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           </Select>
         </FormControl>
       </Flex>
-      <FormControl>
-        <CheckboxGroup onChange={() => console.log(sd)}>
+      <FormControl isInvalid={!sdChecked && !tsChecked && !wsChecked}>
+        <CheckboxGroup>
+          <FormLabel>Exit Type</FormLabel>
           <Stack direction="row" className="checkbox-group">
             <Checkbox
-              value="slider_down"
+              value="sd"
               sx={checkboxStyles}
               name="sd"
-              ref={sd}
+              onChange={() => setSdChecked(!sdChecked)}
             >
               Slider down
             </Checkbox>
-            <Checkbox value="two_piece" sx={checkboxStyles} name="ts" ref={sd}>
+            <Checkbox
+              sx={checkboxStyles}
+              name="ts"
+              onChange={() => setTsChecked(!tsChecked)}
+            >
               Tracking suit
             </Checkbox>
-            <Checkbox value="wingsuit" sx={checkboxStyles} name="ws" ref={sd}>
+            <Checkbox
+              sx={checkboxStyles}
+              name="ws"
+              onChange={() => setWsChecked(!wsChecked)}
+            >
               Wingsuit
             </Checkbox>
           </Stack>
@@ -257,6 +271,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
               type="number"
               className={inputColorMode}
               name="height_impact"
+              required
             />
           </Flex>
         </FormControl>
@@ -267,6 +282,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
               type="number"
               className={inputColorMode}
               name="height_landing"
+              required
             />
           </Flex>
         </FormControl>
@@ -295,8 +311,9 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             type="number"
             className={inputColorMode}
             value={lat || ""}
-            readOnly
             name="lat"
+            readOnly
+            required
           />
           <FormErrorMessage>Must choose a valid location</FormErrorMessage>
           <FormHelperText>click map to add location</FormHelperText>
@@ -307,8 +324,9 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             type="number"
             className={inputColorMode}
             value={lng || ""}
-            readOnly
             name="lng"
+            readOnly
+            required
           />
         </FormControl>
       </Flex>
@@ -355,12 +373,18 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             onChange={(e) => changeSliderColor(e.target)}
             className="input-slider input yellow"
             name="approach_difficulty"
+            required
           />
         </FormControl>
       </Flex>
       <FormControl>
         <FormLabel>Description</FormLabel>
-        <Textarea resize="none" className={inputColorMode} name="description" />
+        <Textarea
+          resize="none"
+          className={inputColorMode}
+          name="description"
+          required
+        />
       </FormControl>
       <FormControl>
         <FormLabel>Access and Approach</FormLabel>
@@ -368,6 +392,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           resize="none"
           className={inputColorMode}
           name="access_approach"
+          required
         />
       </FormControl>
       <FormControl>
