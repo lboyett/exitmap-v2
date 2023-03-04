@@ -34,6 +34,20 @@ export async function getExit(id: string) {
   });
 }
 
+export async function getReviewedExits() {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM exits WHERE is_reviewed = true;",
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(results.rows);
+      }
+    );
+  });
+}
+
 export async function addExit({
   name,
   object_type,

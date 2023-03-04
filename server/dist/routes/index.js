@@ -45,6 +45,15 @@ const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
 const router = express_1.default.Router();
+router.get("/exits/reviewed", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield (0, exitController_1.getReviewedExits)();
+        res.send(response);
+    }
+    catch (err) {
+        res.status(500).send("error");
+    }
+}));
 router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let results = {};
@@ -69,7 +78,7 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const exit_data = req.body;
     try {
         const response = (yield (0, exitController_1.addExit)(exit_data));
-        res.status(200).send(response.rows[0]);
+        res.status(200).send(response.rows[0]); //FixThis
     }
     catch (err) {
         console.log(err);

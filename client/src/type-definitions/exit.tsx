@@ -28,4 +28,5 @@ export default interface Exit {
   submitted_by: number;
   is_reviewed: boolean;
   is_deleted: boolean;
+  created_at: string;
 }

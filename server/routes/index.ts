@@ -6,10 +6,23 @@ import { QueryResult } from "pg";
 import uniqid from "uniqid";
 import path from "path";
 
-import { getExit, addExit } from "../controllers/exitController";
+import {
+  getExit,
+  getReviewedExits,
+  addExit,
+} from "../controllers/exitController";
 import { getExitImages, addImage } from "../controllers/imageController";
 import { getExitComments } from "../controllers/commentController";
 const router = express.Router();
+
+router.get("/exits/reviewed", async (req, res, next) => {
+  try {
+    const response = await getReviewedExits();
+    res.send(response);
+  } catch (err) {
+    res.status(500).send("error");
+  }
+});
 
 router.get("/exits/:id", async (req, res, next) => {
   try {
@@ -35,7 +48,7 @@ router.post("/exits", async (req, res, next) => {
   const exit_data = req.body;
   try {
     const response = (await addExit(exit_data)) as QueryResult;
-    res.status(200).send(response.rows[0]);
+    res.status(200).send(response.rows[0]); //FixThis
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

@@ -1,6 +1,6 @@
 import Exit from "../type-definitions/exit";
 
-let exitSampleData: Exit[];
+//let exitSampleData: Exit[];
 
 export default exitSampleData = [
   {

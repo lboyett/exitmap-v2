@@ -10,6 +10,7 @@ import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import exitSampleData from "../../data/map-sample-data";
 import Exit from "../../type-definitions/exit";
+import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
 
 interface Coordinate {
   lat: number;
@@ -44,6 +45,7 @@ export default function Map(props: MapProps) {
     useState<exit_location_type>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
+  const { data, error, loading } = useReviewedExitsFetch();
 
   const lightMode = useColorModeValue(true, false);
   const mapStyle = lightMode ? null : darkMapStyle;
@@ -55,7 +57,10 @@ export default function Map(props: MapProps) {
   });
 
   useEffect(() => {
-    setExits(exitSampleData);
+    if (data !== undefined) console.log(data);
+  }, [data]);
+
+  useEffect(() => {
     if (props.exit_location) {
       setCenter({ lat: props.exit_location.lat, lng: props.exit_location.lng });
       setExitPageLocation({
@@ -141,7 +146,7 @@ export default function Map(props: MapProps) {
           : null}
         {addedMarker ? (
           <MarkerF
-            icon={`https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`}
+            icon={`https://www.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png`}
             position={addedMarker}
           />
         ) : null}
