@@ -14,7 +14,7 @@ function ExitTitle(props: any) {
           borderColor={out_500}
         >
           <Heading as="h1" className="exit-name">
-            {props.exit.exit_name}
+            {props.exit.name}
           </Heading>
           <Flex className='exit-city-latlng'>
           <Text className='exit-city'>
