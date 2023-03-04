@@ -9,9 +9,39 @@ import "./dash-countries.css";
 import { countriesList } from "../../data/countries-data";
 import { useNavigate } from "react-router-dom";
 import CountryCard from "../../components/country-card/CountryCard";
+import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
+import { useEffect, useState } from "react";
+
+interface Country {
+  code: string;
+  country: string;
+  num_jumps: number;
+}
+
+interface MyObj {
+  [key: string]: Country;
+}
 
 function DashCountries() {
   const navigate = useNavigate();
+  const { data, error, loading } = useReviewedExitsFetch();
+  const [countries, setCountries] = useState<Country[]>();
+
+  useEffect(() => {
+    const arr = [] as string[];
+    if (data !== undefined) {
+      let obj = {} as MyObj;
+      const arr = [] as Country[];
+      data.forEach(({ country_code, country_name }) => {
+        obj[country_code] = {
+          num_jumps: (obj[country_code] ? obj[country_code].num_jumps : 0) + 1,
+          country: country_name,
+          code: country_code,
+        };
+      });
+      setCountries(Object.entries(obj).map((i) => i[1]));
+    }
+  }, [data]);
 
   const lettersArr = [] as string[];
   for (let i = 65; i < 91; i++) {
@@ -36,9 +66,11 @@ function DashCountries() {
           })}
         </UnorderedList>
         <UnorderedList className="country-list">
-          {countriesList.map((country, i) => {
-            return <CountryCard key={i} country={country} />;
-          })}
+          {countries
+            ? countries.map((country, i) => {
+                return <CountryCard key={i} country={country} />;
+              })
+            : null}
         </UnorderedList>
       </Box>
     </div>

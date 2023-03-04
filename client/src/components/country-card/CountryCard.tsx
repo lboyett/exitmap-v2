@@ -12,7 +12,8 @@ import countryImage from "../../assets/country-image.jpeg";
 
 interface Country {
   country: string;
-  continent: string;
+  num_jumps: number;
+  code: string;
 }
 
 interface CountryCardProps {
@@ -33,16 +34,16 @@ export default function CountryCard({ country }: CountryCardProps) {
         borderColor: txt_300,
         color: txt_300,
       }}
-      onClick={() => navigate(country.country)}
+      onClick={() => navigate("test")}
     >
       <Image src={countryImage} loading="lazy" />
       <Flex direction="column">
         <Heading as="h4">{country.country}</Heading>
         <Spacer />
         <Flex>
-          <Text>{country.continent}</Text>
+          <Text>{country.code}</Text>
           <Spacer />
-          <Text>3 jumps</Text>
+          <Text>{country.num_jumps} jumps</Text>
         </Flex>
       </Flex>
     </ListItem>
