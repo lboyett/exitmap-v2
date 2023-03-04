@@ -1,12 +1,7 @@
 .navbar {
-  height: 100px;
-  max-width: 95vw;
-  margin: 0 auto;
-  margin-top: 1em;
-  border-radius: 10px;
+  height: 75px;
+  max-width: 100vw;
   align-items: center;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
 .navbar-links {

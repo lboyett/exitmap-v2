@@ -48,11 +48,7 @@ export default function NavBar(props: NavBarProps) {
   const lightMode = useColorModeValue(true, false);
 
   return (
-    <Flex
-      className="navbar"
-      bg={bg_500}
-      border={lightMode ? `1px solid` : "none"}
-    >
+    <Flex className="navbar" bg={bg_500}>
       <Heading
         className="logo"
         as="h1"
