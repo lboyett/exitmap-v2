@@ -8,7 +8,6 @@ import {
 import { useColorModeValue, Text } from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
-import exitSampleData from "../../data/map-sample-data";
 import Exit from "../../type-definitions/exit";
 import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
 
@@ -57,7 +56,7 @@ export default function Map(props: MapProps) {
   });
 
   useEffect(() => {
-    if (data !== undefined) console.log(data);
+    if (data !== undefined) setExits(data);
   }, [data]);
 
   useEffect(() => {
@@ -130,7 +129,7 @@ export default function Map(props: MapProps) {
                 <MarkerF
                   onClick={() => handleMarkerClick(exit._id)}
                   key={exit._id}
-                  position={{ lat: exit.lat, lng: exit.lng }}
+                  position={{ lat: +exit.lat, lng: +exit.lng }}
                 >
                   {activeMarker === exit._id ? (
                     <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
