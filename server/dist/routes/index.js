@@ -44,6 +44,7 @@ const path_1 = __importDefault(require("path"));
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
+const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 router.get("/exits/reviewed", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -83,6 +84,30 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     catch (err) {
         console.log(err);
         res.status(500).send(err);
+    }
+}));
+router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_data = req.body.headers;
+    try {
+        const response = yield (0, userController_1.addUser)(user_data);
+        console.log(response);
+        res.send("OK");
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
+router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_data = req.body.headers;
+    try {
+        const response = yield (0, userController_1.addUser)(user_data);
+        console.log(response);
+        res.send("OK");
+    }
+    catch (err) {
+        console.log(err);
+        res.send(err);
     }
 }));
 const s3 = new AWS.S3Client({

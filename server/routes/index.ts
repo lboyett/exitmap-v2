@@ -13,6 +13,7 @@ import {
 } from "../controllers/exitController";
 import { getExitImages, addImage } from "../controllers/imageController";
 import { getExitComments } from "../controllers/commentController";
+import { addUser } from "../controllers/userController";
 const router = express.Router();
 
 router.get("/exits/reviewed", async (req, res, next) => {
@@ -52,6 +53,30 @@ router.post("/exits", async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
+  }
+});
+
+router.post("/users", async (req, res, next) => {
+  const user_data = req.body.headers;
+  try {
+    const response = await addUser(user_data);
+    console.log(response);
+    res.send("OK");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+router.post("/users", async (req, res, next) => {
+  const user_data = req.body.headers;
+  try {
+    const response = await addUser(user_data);
+    console.log(response);
+    res.send("OK");
+  } catch (err) {
+    console.log(err);
+    res.send(err);
   }
 });
 
