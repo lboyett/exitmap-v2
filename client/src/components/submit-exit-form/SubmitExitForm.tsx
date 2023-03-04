@@ -19,6 +19,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import FileInput from "./file-input/FileInput";
 import axios from "axios";
+import { countriesCodesJson } from "../../data/countries-with-codes";
 
 interface Coordinate {
   lat: number;
@@ -57,6 +58,10 @@ interface Checkbox extends HTMLInputElement {
   checked: boolean;
 }
 
+interface CountriesCodesJson {
+  [key: string]: string;
+}
+
 export default function SubmitExitForm(props: SubmitFormProps) {
   const [units, setUnits] = useState<string>("ft");
   const [formData, setFormData] = useState<FormData>();
@@ -88,6 +93,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       setErrorMessage("Please select an exit type");
       return;
     }
+
+    let country_name = null;
+    if (country_code && country_code in countriesCodesJson) {
+      country_name = countriesCodesJson[country_code];
+    }
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     const exit_data = {
@@ -110,6 +120,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       lng: inputs.lng.value,
       city: inputs.city.value,
       country_code: country_code,
+      country_name: country_name,
       hiking_time_hrs: inputs.hiking_time_hrs.value
         ? inputs.hiking_time_hrs.value
         : null,

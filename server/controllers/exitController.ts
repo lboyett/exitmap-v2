@@ -14,6 +14,7 @@ interface ExitData {
   lng: HTMLInputElement;
   city: HTMLInputElement;
   country_code: HTMLInputElement;
+  country_name: HTMLInputElement;
   hiking_time_hrs: HTMLInputElement;
   hiking_time_mins: HTMLInputElement;
   approach_diff: HTMLInputElement;
@@ -61,6 +62,7 @@ export async function addExit({
   lng,
   city,
   country_code,
+  country_name,
   hiking_time_hrs,
   hiking_time_mins,
   approach_diff,
@@ -83,14 +85,15 @@ export async function addExit({
         lng,
         city,
         country_code,
+        country_name,
         hiking_time_hrs,
         hiking_time_mins,
         approach_diff,
         description,
         access_approach,
         landing_area,
-        submitted_by) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18, $19)
-        RETURNING *`,
+        submitted_by) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
+        RETURNING *;`,
       [
         name,
         object_type,
@@ -104,6 +107,7 @@ export async function addExit({
         lng,
         city,
         country_code,
+        country_name,
         hiking_time_hrs,
         hiking_time_mins,
         approach_diff,
@@ -117,7 +121,7 @@ export async function addExit({
           console.log(err);
           reject(err);
         }
-        resolve(results);
+        resolve(results.rows[0]);
       }
     );
   });

@@ -1,4 +1,4 @@
-export const countriesCodesJson = {
+export const countriesCodesJson: { [key: string]: string } = {
   BD: "Bangladesh",
   BE: "Belgium",
   BF: "Burkina Faso",

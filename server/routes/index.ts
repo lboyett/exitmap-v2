@@ -49,7 +49,7 @@ router.post("/exits", async (req, res, next) => {
   const exit_data = req.body;
   try {
     const response = (await addExit(exit_data)) as QueryResult;
-    res.status(200).send(response.rows[0]); //FixThis
+    res.status(200).send(response); //FixThis
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

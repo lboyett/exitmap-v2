@@ -79,7 +79,7 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const exit_data = req.body;
     try {
         const response = (yield (0, exitController_1.addExit)(exit_data));
-        res.status(200).send(response.rows[0]); //FixThis
+        res.status(200).send(response); //FixThis
     }
     catch (err) {
         console.log(err);

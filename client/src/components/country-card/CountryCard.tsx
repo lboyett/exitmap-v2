@@ -34,7 +34,7 @@ export default function CountryCard({ country }: CountryCardProps) {
         borderColor: txt_300,
         color: txt_300,
       }}
-      onClick={() => navigate("test")}
+      onClick={() => navigate(country.country)}
     >
       <Image src={countryImage} loading="lazy" />
       <Flex direction="column">
