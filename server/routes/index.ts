@@ -72,10 +72,10 @@ router.post("/users", async (req, res, next) => {
   const user_data = req.body.headers;
   try {
     const response = await addUser(user_data);
-    console.log(response);
+    console.log(response)
     res.send("OK");
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.send(err);
   }
 });

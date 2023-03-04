@@ -50,3 +50,11 @@
   font-weight: 600 !important;
   letter-spacing: 1px;
 }
+
+.already-registered {
+	cursor: pointer;
+}
+
+.already-registered:hover {
+	text-decoration: underline;
+}

@@ -27,8 +27,12 @@ export async function addUser({
         RETURNING *`,
       [first_name, last_name, username, email, password],
       (err, results) => {
-        if (err) reject(err);
-        resolve(results.rows[0]);
+        if (err) {
+          console.log('YOU A BITCH BITCH')
+          reject(err);
+        }
+        // console.log(results)
+        resolve(results);
       }
     );
   });

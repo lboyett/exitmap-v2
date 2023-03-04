@@ -106,7 +106,7 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.send("OK");
     }
     catch (err) {
-        console.log(err);
+        // console.log(err);
         res.send(err);
     }
 }));

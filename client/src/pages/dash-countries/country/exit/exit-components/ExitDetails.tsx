@@ -28,6 +28,7 @@ function ExitDetails(props: any) {
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   useEffect(() => {
+    // console.log(props.exit.exit_type[0] === '1')
     experienceCounter(props.exit.exp_req);
   }, []);
 
@@ -151,7 +152,7 @@ function ExitDetails(props: any) {
 
         <Box className="exit-details-middle">
           <Flex className="exit-jump-type">
-            {props.exit.sd === true ? (
+            {props.exit.exit_type[0] === '1' ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -159,7 +160,7 @@ function ExitDetails(props: any) {
             Slider down
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.ts === true ? (
+            {props.exit.exit_type[1] === '1' ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -167,7 +168,7 @@ function ExitDetails(props: any) {
             Tracking suit
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.ws === true ? (
+            {props.exit.exit_type[2] === '1' ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
