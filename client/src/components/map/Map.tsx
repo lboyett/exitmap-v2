@@ -44,7 +44,7 @@ export default function Map(props: MapProps) {
     useState<exit_location_type>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
-  const { data, error, loading } = useReviewedExitsFetch();
+  const { data, error, loading } = useReviewedExitsFetch(); //FixThis
 
   const lightMode = useColorModeValue(true, false);
   const mapStyle = lightMode ? null : darkMapStyle;

@@ -15,7 +15,6 @@ export default function useReviewedExitsFetch() {
         const response = (await axios.get(url)) as AxiosResponse;
         setData(response.data);
       } catch (err: any) {
-        //FixThis
         setError(err);
       } finally {
         setLoading(false);
