@@ -103,6 +103,7 @@ export default function NavBar(props: NavBarProps) {
         </Menu>
         <Heading
           as="h2"
+          className="navbar-h2"
           color={txt_500}
           _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
           onClick={() => navigate("/home")}
@@ -112,6 +113,7 @@ export default function NavBar(props: NavBarProps) {
         </Heading>
         <Heading
           as="h2"
+          className="navbar-h2"
           color={txt_500}
           _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
           onClick={() => navigate("/countries")}
@@ -121,6 +123,7 @@ export default function NavBar(props: NavBarProps) {
         </Heading>
         <Heading
           as="h2"
+          className="navbar-h2"
           color={txt_500}
           _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
           onClick={() => navigate("/submit")}

@@ -22,6 +22,7 @@ import {
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 interface FormInputs extends HTMLFormControlsCollection {
   first_name: HTMLInputElement;
@@ -39,6 +40,7 @@ function Signup() {
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const out_500 = useColorModeValue("out_dark.500", "out_light.500");
 	const toast = useToast();
+  const navigate = useNavigate();
 
   const [capState, setCapState] = useState<boolean>(false);
 
@@ -64,7 +66,8 @@ function Signup() {
       email: inputs.email.value,
       password: inputs.password.value,
     }
-    axios.post(url, { headers })
+    axios.post(url, { headers });
+    navigate('/home')
   }
 
   function validateRecaptcha(value: any) {
@@ -120,7 +123,7 @@ function Signup() {
             <Button type="submit" bg={txt_500} color={out_500}>
               SUBMIT
             </Button>
-            <Text>Already registered?</Text>
+            <Text className='already-registered'>Already registered?</Text>
           </Flex>
         </form>
       </div>
