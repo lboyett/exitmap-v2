@@ -4,8 +4,9 @@ import {
   useJsApiLoader,
   MarkerF,
   InfoWindowF,
+  StandaloneSearchBox,
 } from "@react-google-maps/api";
-import { useColorModeValue, Text } from "@chakra-ui/react";
+import { useColorModeValue, Text, Box } from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import Exit from "../../type-definitions/exit";
@@ -30,6 +31,8 @@ interface exit_location_type {
   lng: number;
 }
 
+interface SearchBox extends google.maps.places.SearchBox {}
+
 interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
   updateForm?: Function;
   editable: boolean;
@@ -44,6 +47,7 @@ export default function Map(props: MapProps) {
     useState<exit_location_type>();
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
+  const [searchBox, setSearchBox] = useState<SearchBox>();
   const { data, error, loading } = useReviewedExitsFetch(); //FixThis
 
   const lightMode = useColorModeValue(true, false);
@@ -110,47 +114,69 @@ export default function Map(props: MapProps) {
 
   if (isLoaded) {
     return (
-      <GoogleMap
-        data-testid="google-map"
-        mapContainerClassName="map-container"
-        center={center}
-        zoom={zoom}
-        options={{ styles: mapStyle, backgroundColor: "gray" }}
-        onClick={(e) => {
-          if (!props.editable) return;
-          if (e.latLng) {
-            handleMapClick(e.latLng.lat(), e.latLng.lng());
-          }
-        }}
-      >
-        {exits
-          ? exits.map((exit) => {
-              return (
-                <MarkerF
-                  onClick={() => handleMarkerClick(exit._id)}
-                  key={exit._id}
-                  position={{ lat: +exit.lat, lng: +exit.lng }}
-                >
-                  {activeMarker === exit._id ? (
-                    <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
-                      <div className="info-box-content">
-                        <Text color="black">{exit.name}</Text>
-                        <Text color="black">{exit.height_impact} ft</Text>
-                      </div>
-                    </InfoWindowF>
-                  ) : null}
-                </MarkerF>
-              );
-            })
-          : null}
-        {addedMarker ? (
-          <MarkerF
-            icon={`https://www.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png`}
-            position={addedMarker}
-          />
-        ) : null}
-        {exitPageLocation ? <MarkerF position={exitPageLocation} /> : null}
-      </GoogleMap>
+      <Box className="map-component-container">
+        <Box className="search-box">
+          <StandaloneSearchBox
+            onPlacesChanged={() => {
+              if (searchBox) {
+                const searchResults = searchBox.getPlaces();
+                if (searchResults && searchResults.length > 0) {
+                  const lat = searchResults[0].geometry?.location?.lat();
+                  const lng = searchResults[0].geometry?.location?.lng();
+                  if (lat && lng) {
+                    setCenter({ lat: lat, lng: lng });
+                    setZoom(7);
+                  }
+                }
+              }
+            }}
+            onLoad={(ref) => setSearchBox(ref)}
+          >
+            <input type="text" placeholder="Search" />
+          </StandaloneSearchBox>
+        </Box>
+        <GoogleMap
+          data-testid="google-map"
+          mapContainerClassName="map-container"
+          center={center}
+          zoom={zoom}
+          options={{ styles: mapStyle, backgroundColor: "gray" }}
+          onClick={(e) => {
+            if (!props.editable) return;
+            if (e.latLng) {
+              handleMapClick(e.latLng.lat(), e.latLng.lng());
+            }
+          }}
+        >
+          {exits
+            ? exits.map((exit) => {
+                return (
+                  <MarkerF
+                    onClick={() => handleMarkerClick(exit._id)}
+                    key={exit._id}
+                    position={{ lat: +exit.lat, lng: +exit.lng }}
+                  >
+                    {activeMarker === exit._id ? (
+                      <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
+                        <div className="info-box-content">
+                          <Text color="black">{exit.name}</Text>
+                          <Text color="black">{exit.height_impact} ft</Text>
+                        </div>
+                      </InfoWindowF>
+                    ) : null}
+                  </MarkerF>
+                );
+              })
+            : null}
+          {addedMarker ? (
+            <MarkerF
+              icon={`https://www.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png`}
+              position={addedMarker}
+            />
+          ) : null}
+          {exitPageLocation ? <MarkerF position={exitPageLocation} /> : null}
+        </GoogleMap>
+      </Box>
     );
   } else {
     return <div style={{ color: "white" }}>Loading...</div>;
