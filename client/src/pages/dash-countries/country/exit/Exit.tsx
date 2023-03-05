@@ -24,7 +24,7 @@ function Exit() {
   const exitsUrl = "http://localhost:8000/exits";
 
   useEffect(() => {
-    getExit(exitsUrl);
+    getExit(exitsUrl); 
   }, []);
 
   async function getExit(exitsUrl: string) {
