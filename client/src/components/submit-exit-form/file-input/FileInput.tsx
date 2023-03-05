@@ -46,7 +46,7 @@ export default function FileInput({ updateForm }: FileInputProps) {
         ref={fileInput}
         display="none"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          if (!e.target.files) return; // add error message here
+          if (!e.target.files) return;
           setFileName(e.target.files[0].name);
           const formData = new FormData();
           formData.append("image", e.target.files[0]);
