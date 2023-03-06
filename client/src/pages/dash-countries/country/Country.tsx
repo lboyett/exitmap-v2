@@ -18,9 +18,8 @@ import { ExitDataContext } from "../../../ExitDataContext";
 
 function Country() {
   let { country } = useParams();
-  // const { data, error, loading } = useReviewedExitsFetch();
   const [ exits, setExits ] = useState<Array<Exit | undefined>>();
-  const { exitDataContext, setExitDataContext } = useContext(ExitDataContext);
+  const { exitDataContext, setExitDataContext } = useContext(ExitDataContext); // ACCESSES THE CONTEXT STATE FOR EXITS DATA
 
   useEffect(() => {
     let exitArray: Array<Exit | undefined> = [];
