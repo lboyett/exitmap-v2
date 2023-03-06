@@ -7,7 +7,8 @@ create table users (
 	password varchar(255) not null,
 	is_approved boolean not null default false,
 	is_admin boolean not null default false,
-	is_deleted boolean not null default false
+	is_deleted boolean not null default false,
+	created_at timestamptz(0) not null default now()
 );
 
 create type object_type as enum ('building', 'antenna', 'span', 'earth', 'other');
@@ -30,6 +31,7 @@ create table exits (
 	lat numeric(16,14),
 	lng numeric(17,14),
 	city varchar(255),
+	region varchar(255),
 	country_code varchar(2),
 	country_name varchar(255),
 	hiking_time_hrs int default 0,
@@ -40,7 +42,8 @@ create table exits (
 	landing_area varchar(10000),
 	submitted_by int  references users (_id) on delete restrict on update restrict,
 	is_reviewed boolean default false,
-	is_deleted boolean default false
+	is_deleted boolean default false,
+	created_at timestamptz(0) not null default now()
 );
 
 create table comments (
@@ -57,7 +60,8 @@ create table images (
 	_id int generated always as identity primary key not null,
 	submitted_by int not null references users (_id) on delete restrict on update restrict,
 	exit int not null references exits (_id) on delete restrict on update restrict,
-	url varchar(2083) not null unique,
+	url varchar(2083) not null,
 	is_main boolean default false,
-	is_deleted boolean default false
+	is_deleted boolean default false,
+	created_at timestamptz(0) not null default now()
 );

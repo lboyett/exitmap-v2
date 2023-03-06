@@ -29,6 +29,7 @@ insert into
 		lat, 
 		lng, 
 		city, 
+		region,
 		country_code, 
 		country_name, 
 		hiking_time_hrs, 
@@ -42,7 +43,7 @@ insert into
 		is_deleted)
 values
 	('Perrine Bridge', 'span', B'100' , 'beginner', 'legal', '0', 486, 486, 42.60083705751931, -114.45351304083016,
-	'Twin Falls', 'US', 'United States', 0, 25, '0',
+	'Twin Falls', 'Idaho', 'US', 'United States', 0, 25, '0',
 	'One of the most famous objects in the world. Many beginners learn how to BASE jump here. But dont be fooled, the Bridge is not as safe as it may seem, and jumpers
 	should still exercise caution when jumping.', 
 	'You can either walk out or climb out. The walk out takes about 20 minutes to a parking lot in the bottom of the canyon where jumpers can get picked up.
@@ -50,7 +51,7 @@ values
 	'Landing area next to river. Extremely open area, but it is common for beginner jumpers to land in the trees. It is advised to land in the water in case of emergency.', 
 	1, true, false),
 	('Tombstone', 'earth', B'100', 'intermediate', 'legal', '0', 515, 550, 38.52926, -109.593778,
-	'Moab', 'US', 'United States', 0, 45, '0',
+	'Moab', 'Utah', 'US', 'United States', 0, 45, '0',
 	'This is the classic jump in Moab. For many people, it the first cliff that they jump. A beautiful cliff face that looks just like a Tombstone, when you jump this exit, 
 	you hope its name is not any kind of foreshadowing.', 
 	'Approach is known for being somewhat confusing. There are many possible turns, and the rocks make navigation difficult. See photos for directions to the exit.', 

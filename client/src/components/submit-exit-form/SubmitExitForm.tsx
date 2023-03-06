@@ -46,6 +46,7 @@ interface FormInputs extends HTMLFormControlsCollection {
   lat: HTMLInputElement;
   lng: HTMLInputElement;
   city: HTMLInputElement;
+  region: HTMLInputElement;
   hiking_time_hrs: HTMLInputElement;
   hiking_time_mins: HTMLInputElement;
   approach_difficulty: HTMLInputElement;
@@ -119,6 +120,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       lat: inputs.lat.value,
       lng: inputs.lng.value,
       city: inputs.city.value,
+      region: inputs.region.value,
       country_code: country_code,
       country_name: country_name,
       hiking_time_hrs: inputs.hiking_time_hrs.value
@@ -345,6 +347,10 @@ export default function SubmitExitForm(props: SubmitFormProps) {
         <FormControl>
           <FormLabel>City</FormLabel>
           <Input type="text" className={inputColorMode} name="city" />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Region / State</FormLabel>
+          <Input type="text" className={inputColorMode} name="region" />
         </FormControl>
       </Flex>
       <Flex className="input-group">

@@ -17,6 +17,7 @@ export default interface Exit {
   lat: number;
   lng: number;
   city: string;
+  region: string;
   country_code: string;
   country_name: string;
   hiking_time_hrs: number;

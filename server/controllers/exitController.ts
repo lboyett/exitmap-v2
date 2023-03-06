@@ -13,6 +13,7 @@ interface ExitData {
   lat: HTMLInputElement;
   lng: HTMLInputElement;
   city: HTMLInputElement;
+  region: HTMLInputElement;
   country_code: HTMLInputElement;
   country_name: HTMLInputElement;
   hiking_time_hrs: HTMLInputElement;
@@ -22,7 +23,7 @@ interface ExitData {
   access_approach: HTMLInputElement;
   landing_area: HTMLInputElement;
   submitted_by: HTMLInputElement;
-}
+} // FixThis
 
 export async function getExit(id: string) {
   return new Promise((resolve, reject) => {
@@ -61,6 +62,7 @@ export async function addExit({
   lat,
   lng,
   city,
+  region,
   country_code,
   country_name,
   hiking_time_hrs,
@@ -73,7 +75,8 @@ export async function addExit({
 }: ExitData) {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO exits (name,
+      `INSERT INTO exits 
+        (name,
         object_type,
         exit_type,
         exp_req,
@@ -84,6 +87,7 @@ export async function addExit({
         lat,
         lng,
         city,
+        region,
         country_code,
         country_name,
         hiking_time_hrs,
@@ -92,7 +96,8 @@ export async function addExit({
         description,
         access_approach,
         landing_area,
-        submitted_by) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
+        submitted_by) 
+        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21)
         RETURNING *;`,
       [
         name,
@@ -106,6 +111,7 @@ export async function addExit({
         lat,
         lng,
         city,
+        region,
         country_code,
         country_name,
         hiking_time_hrs,
