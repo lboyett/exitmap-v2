@@ -102,11 +102,9 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const user_data = req.body.headers;
     try {
         const response = yield (0, userController_1.addUser)(user_data);
-        console.log(response);
         res.send("OK");
     }
     catch (err) {
-        // console.log(err);
         res.send(err);
     }
 }));
