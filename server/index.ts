@@ -3,6 +3,12 @@ import bodyParser from "body-parser";
 import indexRouter from "./routes/index";
 import logger from "morgan";
 import cors from "cors";
+import pool from "./pool-config";
+
+// Authentication dependencies
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import crypto from "crypto";
 
 const app = express();
 const port = 8000;
@@ -14,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use("/", indexRouter);
+
+// Authentication session
 
 app.use((req, res) => {
   res.status(404);

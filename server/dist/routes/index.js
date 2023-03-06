@@ -86,18 +86,20 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.status(500).send(err);
     }
 }));
-router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const user_data = req.body.headers;
-    try {
-        const response = yield (0, userController_1.addUser)(user_data);
-        console.log(response);
-        res.send("OK");
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
+// router.post("/users", async (req, res, next) => {
+//   const user_data = req.body.headers;
+//   try {
+//     const response = await addUser(user_data);
+//     console.log(response);
+//     res.send("OK");
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send(err);
+//   }
+// });
+router.post('/login', (req, res, next) => {
+    console.log('You just posted to the /login route');
+});
 router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user_data = req.body.headers;
     try {

@@ -25,7 +25,7 @@ interface MyObj {
 
 function DashCountries() {
   const navigate = useNavigate();
-  const { data, error, loading } = useReviewedExitsFetch();
+  const { data, error, loading} = useReviewedExitsFetch();
   const [countries, setCountries] = useState<Country[]>();
 
   useEffect(() => {

@@ -39,7 +39,7 @@ export default function CountryCard({ country }: CountryCardProps) {
         borderColor: txt_300,
         color: txt_300,
       }}
-      onClick={() => navigate(country.country)}
+      onClick={() => navigate(country.code)}
     >
       <Image src={url} loading="lazy" />
       <Flex direction="column">

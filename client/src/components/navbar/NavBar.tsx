@@ -58,7 +58,7 @@ export default function NavBar(props: NavBarProps) {
       >
         ExitMap
       </Heading>
-      <HStack className="navbar-links">
+      <HStack className="navbar-links" zIndex={'1000'}>
         <Menu>
           <Box color={txt_500} className="navbar-icon">
             <MenuButton

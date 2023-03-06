@@ -16,6 +16,7 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static("public"));
 app.use("/", index_1.default);
+// Authentication session
 app.use((req, res) => {
     res.status(404);
     if (req.accepts("html")) {

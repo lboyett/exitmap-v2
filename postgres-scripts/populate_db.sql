@@ -57,6 +57,12 @@ values
 	'Approach is known for being somewhat confusing. There are many possible turns, and the rocks make navigation difficult. See photos for directions to the exit.', 
 	'It is illegal to land on the road. Park rangers have been known to give jumpers tickets. That being said, the road is a good out if you cant make it across the trees to
 	the actual landing area.', 
+	2, true, false),
+	('Der Rotenfels', 'earth', B'100', 'intermediate', 'semi', '0', 600, 650, 49.817315, 7.831314,
+	'Bad Kreuznach', 'Rhineland-Pfalz', 'DE', 'Germany', 0, 10, '0',
+	'This jump is really easy, and very fun. It has an absolutly beautiful view. Usually there will be people at the exit point. Watch out for climbers, as they like to climb the cliffs.', 
+	'Park at the parking lot at the top of the hill and take the trail to the exit point.', 
+	'Land across the river in the big grass field.', 
 	2, true, false);
 
 insert into

@@ -5,6 +5,7 @@ import * as AWS from "@aws-sdk/client-s3";
 import { QueryResult } from "pg";
 import uniqid from "uniqid";
 import path from "path";
+import passport from "passport";
 
 import {
   getExit,
@@ -56,17 +57,21 @@ router.post("/exits", async (req, res, next) => {
   }
 });
 
-router.post("/users", async (req, res, next) => {
-  const user_data = req.body.headers;
-  try {
-    const response = await addUser(user_data);
-    console.log(response);
-    res.send("OK");
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
+// router.post("/users", async (req, res, next) => {
+//   const user_data = req.body.headers;
+//   try {
+//     const response = await addUser(user_data);
+//     console.log(response);
+//     res.send("OK");
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send(err);
+//   }
+// });
+
+router.post('/login', (req, res, next) => {
+  console.log('You just posted to the /login route')
+})
 
 router.post("/users", async (req, res, next) => {
   const user_data = req.body.headers;

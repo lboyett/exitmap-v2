@@ -74,7 +74,7 @@ function ExitCard(props: ExitCardProps) {
           <Flex className="exit-card-hiking">
             <FaHiking className="exit-card-hiking-icon" />
             <Text className="exit-card-hiking-time">
-              {props.hikingtime} hrs
+              {props.hikingtime} min
             </Text>
           </Flex>
         </Grid>
