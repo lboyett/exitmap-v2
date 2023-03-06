@@ -3,7 +3,6 @@
   width: 95vw;
   margin: 0 auto !important;
   column-gap: 24px;
-  border: 1px solid blue;
 }
 
 .exit-images-container-mobile {
@@ -11,11 +10,6 @@
 }
 .exit-page-map-mobile {
   display: none;
-}
-
-.exit-page-map-wide {
-  height: 100%;
-  border: 1px solid red;
 }
 
 @media only screen and (max-width: 700px) {

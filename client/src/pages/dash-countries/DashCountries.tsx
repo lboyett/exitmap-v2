@@ -16,6 +16,7 @@ interface Country {
   code: string;
   country: string;
   num_jumps: number;
+  regions: any;
 }
 
 interface MyObj {
@@ -31,15 +32,22 @@ function DashCountries() {
     const arr = [] as string[];
     if (data !== undefined) {
       let obj = {} as MyObj;
-      const arr = [] as Country[];
-      data.forEach(({ country_code, country_name }) => {
+      data.forEach(({ country_code, country_name, region }) => {
         obj[country_code] = {
           num_jumps: (obj[country_code] ? obj[country_code].num_jumps : 0) + 1,
           country: country_name,
           code: country_code,
+          regions:
+            obj[country_code] !== undefined
+              ? [...obj[country_code].regions, region]
+              : [region],
         };
       });
-      setCountries(Object.entries(obj).map((i) => i[1]));
+      const arr = Object.entries(obj);
+      arr.forEach((obj) => (obj[1].regions = [...new Set(obj[1].regions)]));
+      obj = Object.fromEntries(arr);
+      console.log(obj);
+      setCountries(Object.entries(obj).map((obj) => obj[1]));
     }
   }, [data]);
 

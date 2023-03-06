@@ -14,11 +14,8 @@ import { exitsData } from "../../../data/sample-exit-card-data";
 function Country() {
   let { country } = useParams();
 
-  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
-  const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
-  const lightMode = useColorModeValue(true, false);
 
   return (
     <div className="country">
@@ -34,7 +31,7 @@ function Country() {
           );
         })}
       </UnorderedList>
-      
+
       <UnorderedList>
         <Flex className="exit-cards-container">
           {exitsData.map((exit, i) => {
