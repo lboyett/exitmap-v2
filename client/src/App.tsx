@@ -10,10 +10,23 @@ import { Routes, Route } from "react-router-dom";
 import "./app.css";
 import { ExitDataContext } from "./ExitDataContext";
 import { useState, useMemo, useEffect } from "react";
-import useReviewedExitsFetch from "./hooks/useReviewedExitsFetch";
+import axios, { AxiosResponse} from "axios";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
+
+  const url = `http://localhost:8000/exits/reviewed`;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = (await axios.get(url)) as AxiosResponse;
+        setExitDataContext(response.data);
+      } catch (err: any) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   const exitsData = useMemo(
     () => ({ exitDataContext, setExitDataContext }),
