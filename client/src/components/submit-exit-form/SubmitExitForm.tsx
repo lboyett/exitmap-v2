@@ -323,9 +323,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           <Input
             type="number"
             className={inputColorMode}
-            value={lat || ""}
+            defaultValue={lat || ""}
             name="lat"
-            readOnly
             required
           />
           <FormErrorMessage>Must choose a valid location</FormErrorMessage>
@@ -336,9 +335,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           <Input
             type="number"
             className={inputColorMode}
-            value={lng || ""}
+            defaultValue={lng || ""}
             name="lng"
-            readOnly
             required
           />
         </FormControl>
