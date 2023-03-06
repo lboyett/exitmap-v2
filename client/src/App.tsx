@@ -10,7 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import "./app.css";
 import { ExitDataContext } from "./ExitDataContext";
 import { useState, useMemo, useEffect } from "react";
-import axios, { AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -20,8 +20,8 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const response = (await axios.get(url)) as AxiosResponse;
-        setExitDataContext(response.data);
+        const { data } = (await axios.get(url)) as AxiosResponse;
+        setExitDataContext(data);
       } catch (err: any) {
         console.log(err);
       }
@@ -52,8 +52,8 @@ function App() {
           <Route path="home" element={<DashHome />} />
           <Route path="submit" element={<DashSubmit />} />
           <Route path="countries" element={<DashCountries />} />
-          <Route path="countries/:country" element={<Country />} />
-          <Route path="countries/:country/:exit" element={<Exit />} />
+          <Route path="countries/:country_code" element={<Country />} />
+          <Route path="countries/:country_code/:exit" element={<Exit />} />
         </Routes>
       </ExitDataContext.Provider>
     </div>

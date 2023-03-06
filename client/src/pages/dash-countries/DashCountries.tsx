@@ -10,38 +10,23 @@ import { countriesList } from "../../data/countries-data";
 import { useNavigate } from "react-router-dom";
 import CountryCard from "../../components/country-card/CountryCard";
 import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
-import { useEffect, useState } from "react";
-
-interface Country {
-  code: string;
-  country: string;
-  num_jumps: number;
-}
-
-interface MyObj {
-  [key: string]: Country;
-}
+import { useContext, useEffect, useState } from "react";
+import { useGetCountriesFromExit } from "../../hooks/useGetCountriesFromExits";
+import { ExitDataContext } from "../../ExitDataContext";
+import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
+import Country from "../../type-definitions/country-type";
 
 function DashCountries() {
   const navigate = useNavigate();
-  const { data, error, loading} = useReviewedExitsFetch();
+  const { data, error, loading } = useReviewedExitsFetch();
+  const { exitDataContext, setExitDataContext } = useContext(ExitDataContext);
   const [countries, setCountries] = useState<Country[]>();
 
   useEffect(() => {
-    const arr = [] as string[];
-    if (data !== undefined) {
-      let obj = {} as MyObj;
-      const arr = [] as Country[];
-      data.forEach(({ country_code, country_name }) => {
-        obj[country_code] = {
-          num_jumps: (obj[country_code] ? obj[country_code].num_jumps : 0) + 1,
-          country: country_name,
-          code: country_code,
-        };
-      });
-      setCountries(Object.entries(obj).map((i) => i[1]));
+    if (exitDataContext) {
+      setCountries(getCountriesFromExits(exitDataContext));
     }
-  }, [data]);
+  }, [exitDataContext]);
 
   const lettersArr = [] as string[];
   for (let i = 65; i < 91; i++) {
