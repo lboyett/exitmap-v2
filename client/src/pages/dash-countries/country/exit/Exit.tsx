@@ -64,7 +64,7 @@ function Exit() {
           <Box className="exit-right">
             <ExitImages class="wide" imgArr={exitImages} />
             <div className="exit-page-map-wide">
-              <Map
+             <Map
                 editable={false}
                 exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
               />
