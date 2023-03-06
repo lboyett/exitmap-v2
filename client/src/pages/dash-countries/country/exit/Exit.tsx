@@ -24,12 +24,13 @@ function Exit() {
   const exitsUrl = "http://localhost:8000/exits";
 
   useEffect(() => {
-    getExit(exitsUrl);
+    getExit(exitsUrl); 
   }, []);
 
   async function getExit(exitsUrl: string) {
     try {
       const res = await axios.get(`${exitsUrl}/2`);
+      console.log(res.data.data)
       setExitRes(res.data.data[0]);
       setExitImages(res.data.images);
       setExitComments(res.data.comments); // Look into promise.all
@@ -63,7 +64,7 @@ function Exit() {
           <Box className="exit-right">
             <ExitImages class="wide" imgArr={exitImages} />
             <div className="exit-page-map-wide">
-              <Map
+             <Map
                 editable={false}
                 exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
               />

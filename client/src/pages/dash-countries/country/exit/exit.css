@@ -12,6 +12,10 @@
   display: none;
 }
 
+.exit-page-map-wide {
+  height: 60vw;
+}
+
 @media only screen and (max-width: 700px) {
   .exit-images-container-mobile {
     display: inline;
@@ -21,6 +25,7 @@
   }
   .exit-page-map-mobile {
     display: block;
+    height: 80vh;
   }
   .exit-page-map-wide {
     display: none;
