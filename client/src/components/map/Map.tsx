@@ -60,6 +60,10 @@ export default function Map(props: MapProps) {
   });
 
   useEffect(() => {
+    if (isLoaded) console.log(`%c Map loaded`, "color: lime");
+  }, [isLoaded]);
+
+  useEffect(() => {
     if (data !== undefined) setExits(data);
   }, [data]);
 
