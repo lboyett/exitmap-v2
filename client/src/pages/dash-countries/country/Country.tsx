@@ -16,6 +16,7 @@ import Exit from "../../../type-definitions/exit";
 import { ExitDataContext } from "../../../ExitDataContext";
 import CountryType from "../../../type-definitions/country-type";
 import { getCountriesFromExits } from "../../../utils/getCountriesFromExits";
+import { countriesCodesJson } from "../../../data/countries-with-codes";
 
 function Country() {
   let { country_code } = useParams();
@@ -28,6 +29,7 @@ function Country() {
       const countries = getCountriesFromExits(exitDataContext);
       countries.forEach((country) => {
         if (country.code === country_code) {
+          console.log(country)
           setCountry(country);
         }
       });
