@@ -14,8 +14,9 @@ import { useNavigate } from "react-router-dom";
 import countryImage from "../../assets/country-image.jpeg";
 import "./exit-card.css";
 import { FaHiking } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Exit from "../../type-definitions/exit";
+import axios from "axios";
 
 interface ExitCardProps {
   exit: Exit;
@@ -23,9 +24,18 @@ interface ExitCardProps {
 
 function ExitCard({ exit }: ExitCardProps) {
   const navigate = useNavigate();
-
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
+  const [image, setImage] = useState<any>();
+  const [imageUrl, setImageUrl] = useState<string>();
+
+  useEffect(() => {
+    const url = `http://localhost:8000/images/${exit._id}/main`;
+    (async () => {
+      const img = await axios.get(url);
+      setImageUrl(img.data);
+    })();
+  }, []);
 
   function legalityColorPicker() {
     switch (exit.legality) {
@@ -61,7 +71,7 @@ function ExitCard({ exit }: ExitCardProps) {
           navigate(`${exit._id}`);
         }}
       >
-        <Image src={countryImage} loading="lazy" />
+        <Image src={imageUrl} loading="lazy" />
         <Grid
           className="exit-card-grid"
           templateColumns="3fr 1fr"

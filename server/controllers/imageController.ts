@@ -31,3 +31,18 @@ export async function addImage(
     );
   });
 }
+
+export async function getMainImageKey(exit_id: string) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM images WHERE exit = $1 AND is_main = true;",
+      [exit_id],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(results.rows[0].url);
+      }
+    );
+  });
+}

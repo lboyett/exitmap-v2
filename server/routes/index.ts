@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import * as AWS from "@aws-sdk/client-s3";
+import { GetObjectCommand, ListObjectsCommand } from "@aws-sdk/client-s3";
 import { QueryResult } from "pg";
 import uniqid from "uniqid";
 import path from "path";
@@ -12,7 +13,11 @@ import {
   getReviewedExits,
   addExit,
 } from "../controllers/exitController";
-import { getExitImages, addImage } from "../controllers/imageController";
+import {
+  getExitImages,
+  addImage,
+  getMainImageKey,
+} from "../controllers/imageController";
 import { getExitComments } from "../controllers/commentController";
 import { addUser } from "../controllers/userController";
 const router = express.Router();
@@ -69,9 +74,9 @@ router.post("/exits", async (req, res, next) => {
 //   }
 // });
 
-router.post('/login', (req, res, next) => {
-  console.log('You just posted to the /login route')
-})
+router.post("/login", (req, res, next) => {
+  console.log("You just posted to the /login route");
+});
 
 router.post("/users", async (req, res, next) => {
   const user_data = req.body.headers;
@@ -82,6 +87,8 @@ router.post("/users", async (req, res, next) => {
     res.send(err);
   }
 });
+
+//-------- IMAGES ----------------------
 
 const s3 = new AWS.S3Client({
   apiVersion: "2006-03-01",
@@ -126,6 +133,16 @@ router.post("/images", uploadFile, async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
+  }
+});
+
+router.get("/images/:exit_id/main", async (req, res, next) => {
+  try {
+    const key = await getMainImageKey(req.params.exit_id);
+    res.send(key);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal server error");
   }
 });
 

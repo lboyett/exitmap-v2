@@ -28,12 +28,12 @@
 }
 
 .exit-card-grid {
-	align-items: center;
+  align-items: center;
   font-size: clamp(1rem, 1.8vw, 2.5rem) !important;
 }
 
 .exit-card-legality {
-	text-align: end;
+  text-align: end;
   justify-self: end;
   padding: 0 8px 0 8px;
   border-radius: 8px;
@@ -42,16 +42,16 @@
 .exit-card-description {
   overflow: hidden;
   margin-bottom: 12px;
-	font-size: clamp(0.8rem, 1.2vw, 2.5rem) !important;
+  font-size: clamp(0.8rem, 1.2vw, 2.5rem) !important;
   max-height: 50px;
 }
 
 .exit-card-height {
-	align-self: flex-end;
+  align-self: flex-end;
 }
 
 .exit-card-hiking {
-	align-self: flex-end;
+  align-self: flex-end;
   align-items: end;
   gap: 6px;
   white-space: nowrap;
@@ -59,4 +59,8 @@
 
 .exit-card-hiking-icon {
   align-self: center;
+}
+
+.exit-card img {
+  object-fit: cover;
 }

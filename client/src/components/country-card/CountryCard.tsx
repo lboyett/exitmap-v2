@@ -42,19 +42,18 @@ export default function CountryCard({ country }: CountryCardProps) {
     >
       <Image src={url} loading="lazy" />
       <Flex direction="column">
-        <Flex>
+        <Flex alignItems="center">
           <Heading as="h4">{country.country}</Heading>
-          <Spacer />
+        </Flex>
+        <Spacer />
+        <Flex>
+          <Text>{country.code}</Text>
           <Image
             className="flag"
             src={`https://countryflagsapi.com/svg/${country.code}`}
             crossOrigin="anonymous"
             loading="lazy"
           />
-        </Flex>
-        <Spacer />
-        <Flex>
-          <Text>{country.code}</Text>
           <Spacer />
           <Text>{country.num_jumps} jumps</Text>
         </Flex>

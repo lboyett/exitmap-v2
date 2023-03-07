@@ -97,8 +97,8 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
 //     res.status(500).send(err);
 //   }
 // });
-router.post('/login', (req, res, next) => {
-    console.log('You just posted to the /login route');
+router.post("/login", (req, res, next) => {
+    console.log("You just posted to the /login route");
 });
 router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user_data = req.body.headers;
@@ -110,6 +110,7 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.send(err);
     }
 }));
+//-------- IMAGES ----------------------
 const s3 = new AWS.S3Client({
     apiVersion: "2006-03-01",
     region: "eu-central-1",
@@ -154,6 +155,16 @@ router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0,
     catch (err) {
         console.log(err);
         res.status(500).send(err);
+    }
+}));
+router.get("/images/:exit_id/main", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const key = yield (0, imageController_1.getMainImageKey)(req.params.exit_id);
+        res.send(key);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send("Internal server error");
     }
 }));
 exports.default = router;
