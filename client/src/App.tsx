@@ -53,7 +53,7 @@ function App() {
           <Route path="submit" element={<DashSubmit />} />
           <Route path="countries" element={<DashCountries />} />
           <Route path="countries/:country_code" element={<Country />} />
-          <Route path="countries/:country_code/:exit" element={<Exit />} />
+          <Route path="countries/:country_code/:exit_id" element={<Exit />} />
         </Routes>
       </ExitDataContext.Provider>
     </div>

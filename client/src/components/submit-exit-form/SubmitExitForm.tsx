@@ -72,8 +72,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
   const [sdChecked, setSdChecked] = useState<boolean>(false);
   const [tsChecked, setTsChecked] = useState<boolean>(false);
   const [wsChecked, setWsChecked] = useState<boolean>(false);
-  const lat = props.latLng ? props.latLng.lat : undefined;
-  const lng = props.latLng ? props.latLng.lng : undefined;
+  const [lng, setLng] = useState<number>();
+  const [lat, setLat] = useState<number>();
   const country_code = props.country_code ? props.country_code : null;
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const lightMode = useColorModeValue(true, false);
@@ -83,6 +83,12 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       _checked: { bgColor: txt_500, border: "none" },
     },
   };
+
+  useEffect(() => {
+    if (!props.latLng) return;
+    setLat(props.latLng.lat);
+    setLng(props.latLng.lng);
+  }, [props.latLng]);
 
   const exitUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
@@ -94,7 +100,10 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       setErrorMessage("Please select an exit type");
       return;
     }
-
+    if (country_code && country_code.length > 2) {
+      setErrorMessage("Please choose a valid location");
+      return;
+    }
     let country_name = null;
     if (country_code && country_code in countriesCodesJson) {
       country_name = countriesCodesJson[country_code];
@@ -323,21 +332,35 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           <Input
             type="number"
             className={inputColorMode}
-            defaultValue={lat || ""}
+            value={lat || ""}
             name="lat"
             required
+            onChange={(e) => {
+              setLng(+e.target.value);
+            }}
           />
           <FormErrorMessage>Must choose a valid location</FormErrorMessage>
           <FormHelperText>click map to add location</FormHelperText>
         </FormControl>
-        <FormControl>
+        <FormControl
+          isInvalid={
+            country_code
+              ? country_code.length > 2 || country_code == undefined
+                ? true
+                : false
+              : false
+          }
+        >
           <FormLabel>Longitude</FormLabel>
           <Input
             type="number"
             className={inputColorMode}
-            defaultValue={lng || ""}
+            value={lng || ""}
             name="lng"
             required
+            onChange={(e) => {
+              setLng(+e.target.value);
+            }}
           />
         </FormControl>
       </Flex>

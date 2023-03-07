@@ -59,7 +59,12 @@ function Country() {
           {country
             ? country.regions.map((region) => {
                 return (
-                  <ListItem className="state" background={bg_500} key={region}>
+                  <ListItem
+                    className="state"
+                    background={bg_500}
+                    border="1px solid"
+                    key={region}
+                  >
                     {region}
                   </ListItem>
                 );
@@ -71,16 +76,7 @@ function Country() {
           <Flex className="exit-cards-container">
             {exits.map((exit, i) => {
               if (!exit) return;
-              return (
-                <ExitCard
-                  name={exit.name}
-                  description={exit.description}
-                  height={exit.height_impact}
-                  legality={exit.legality}
-                  hikingtime={exit.hiking_time_mins}
-                  key={i}
-                />
-              );
+              return <ExitCard exit={exit} key={i} />;
             })}
           </Flex>
         </UnorderedList>

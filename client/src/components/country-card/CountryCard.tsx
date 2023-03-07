@@ -7,10 +7,9 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import countryImage from "../../assets/country-image.jpeg";
-import axios from "axios";
+import "./country-card.css";
 
 interface Country {
   country: string;
@@ -43,7 +42,16 @@ export default function CountryCard({ country }: CountryCardProps) {
     >
       <Image src={url} loading="lazy" />
       <Flex direction="column">
-        <Heading as="h4">{country.country}</Heading>
+        <Flex>
+          <Heading as="h4">{country.country}</Heading>
+          <Spacer />
+          <Image
+            className="flag"
+            src={`https://countryflagsapi.com/svg/${country.code}`}
+            crossOrigin="anonymous"
+            loading="lazy"
+          />
+        </Flex>
         <Spacer />
         <Flex>
           <Text>{country.code}</Text>
