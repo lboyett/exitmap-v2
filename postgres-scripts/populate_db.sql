@@ -57,12 +57,6 @@ values
 	'Approach is known for being somewhat confusing. There are many possible turns, and the rocks make navigation difficult. See photos for directions to the exit.', 
 	'It is illegal to land on the road. Park rangers have been known to give jumpers tickets. That being said, the road is a good out if you cant make it across the trees to
 	the actual landing area.', 
-	2, true, false),
-	('Der Rotenfels', 'earth', B'100', 'intermediate', 'semi', '0', 600, 650, 49.817315, 7.831314,
-	'Bad Kreuznach', 'Rhineland-Pfalz', 'DE', 'Germany', 0, 10, '0',
-	'This jump is really easy, and very fun. It has an absolutly beautiful view. Usually there will be people at the exit point. Watch out for climbers, as they like to climb the cliffs.', 
-	'Park at the parking lot at the top of the hill and take the trail to the exit point.', 
-	'Land across the river in the big grass field.', 
 	2, true, false);
 
 insert into
@@ -82,12 +76,13 @@ insert into
 	images
 		(submitted_by, 
 		"exit", 
-		url, 
+		url,
+		key,
 		is_main, 
 		is_deleted)
 values
-	(1, 1, 'https://sah-archipedia.org/sites/default/files/pictures/full/ID-01-083-0070_001.jpg', true, false),
-	(1, 2, 'https://www.verticalperceptions.com/img-get2/I0000tS5KXmDnMiE/fit=1000x750/DSC-0289.jpg', true, false);
+	(1, 1, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201453002-4xpe01htcleydtcjv.webp','1678201453002-4xpe01htcleydtcjv.webp', true, false),
+	(1, 2, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201515892-4xpe01htcleydup2s.webp','1678201515892-4xpe01htcleydup2s.webp', true, false);
 
 
 

@@ -32,7 +32,6 @@ function Exit() {
       setExitRes(res.data.data[0]);
       setExitImages(res.data.images);
       setExitComments(res.data.comments); // Look into promise.all
-      console.log(res.data.comments);
     } catch (err: any) {
       if (err) {
         console.log(err); // NEED TO UPDATE THE ERROR HANDLING

@@ -41,7 +41,7 @@ create table exits (
 	access_approach varchar(10000),
 	landing_area varchar(10000),
 	submitted_by int  references users (_id) on delete restrict on update restrict,
-	is_reviewed boolean default false,
+	is_reviewed boolean default true,
 	is_deleted boolean default false,
 	created_at timestamptz(0) not null default now()
 );
@@ -61,6 +61,7 @@ create table images (
 	submitted_by int not null references users (_id) on delete restrict on update restrict,
 	exit int not null references exits (_id) on delete restrict on update restrict,
 	url varchar(2083) not null,
+	key varchar(255) not null,
 	is_main boolean default false,
 	is_deleted boolean default false,
 	created_at timestamptz(0) not null default now()
