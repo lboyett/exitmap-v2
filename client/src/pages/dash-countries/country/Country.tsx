@@ -29,7 +29,6 @@ function Country() {
       const countries = getCountriesFromExits(exitDataContext);
       countries.forEach((country) => {
         if (country.code === country_code) {
-          console.log(country)
           setCountry(country);
         }
       });
