@@ -1,16 +1,16 @@
 import "./exit.css";
 import { useEffect, useState } from "react";
-import NavBar from "../../../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBar";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
-import { exitComments } from "../../../../data/sample-exit-comments";
-import ExitTitle from "./exit-components/ExitTitle";
-import ExitDetails from "./exit-components/ExitDetails";
-import ExitComments from "./exit-components/ExitComments";
-import ExitImages from "./exit-components/ExitImages";
-import Map from "../../../../components/map/Map";
-import exit from "../../../../type-definitions/exit";
-import { imgArrType } from "./exit-components/ExitImages";
-import { commentsTypes } from "./exit-components/ExitComments";
+import { exitComments } from "../../data/sample-exit-comments";
+import ExitTitle from "../../components/exit-title/ExitTitle";
+import ExitDetails from "../../components/exit-details/ExitDetails";
+import ExitComments from "../../components/exit-comments/ExitComments";
+import ExitImages from "../../components/exit-images/ExitImages";
+import Map from "../../components/map/Map";
+import exit from "../../type-definitions/exit";
+import { imgArrType } from "../../components/exit-images/ExitImages";
+import { commentsTypes } from "../../components/exit-comments/ExitComments";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 

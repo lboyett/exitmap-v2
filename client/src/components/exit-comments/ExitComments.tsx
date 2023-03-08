@@ -1,4 +1,4 @@
-import avatar from "../../../../../assets/avatar.jpeg";
+import avatar from "../../assets/avatar.jpeg";
 import {
   Image,
   Flex,

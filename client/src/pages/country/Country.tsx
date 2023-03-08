@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import NavBar from "../../../components/navbar/NavBar";
+import NavBar from "../../components/navbar/NavBar";
 import {
   useColorModeValue,
   UnorderedList,
@@ -8,15 +8,15 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import "./country.css";
-import { statesArr } from "../../../data/states-data";
-import ExitCard from "../../../components/exit-card/ExitCard";
-import { exitsData } from "../../../data/sample-exit-card-data";
-import useReviewedExitsFetch from "../../../hooks/useReviewedExitsFetch";
-import Exit from "../../../type-definitions/exit";
-import { ExitDataContext } from "../../../ExitDataContext";
-import CountryType from "../../../type-definitions/country-type";
-import { getCountriesFromExits } from "../../../utils/getCountriesFromExits";
-import { countriesCodesJson } from "../../../data/countries-with-codes";
+import { statesArr } from "../../data/states-data";
+import ExitCard from "../../components/exit-card/ExitCard";
+import { exitsData } from "../../data/sample-exit-card-data";
+import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
+import Exit from "../../type-definitions/exit";
+import { ExitDataContext } from "../../ExitDataContext";
+import CountryType from "../../type-definitions/country-type";
+import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
+import { countriesCodesJson } from "../../data/countries-with-codes";
 
 function Country() {
   let { country_code } = useParams();
