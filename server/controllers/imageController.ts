@@ -18,12 +18,13 @@ export async function getExitImages(exit_id: string) {
 export async function addImage(
   submitted_by: number,
   exit: number,
-  url: string
+  url: string,
+  key: string
 ) {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO images (submitted_by, exit, url, is_main) values ($1,$2,$3,true) RETURNING *",
-      [submitted_by, exit, url],
+      "INSERT INTO images (submitted_by, exit, url, key, is_main) values ($1,$2,$3,$4,true) RETURNING *",
+      [submitted_by, exit, url, key],
       (err, results) => {
         if (err) reject(err);
         resolve(results);
@@ -32,7 +33,7 @@ export async function addImage(
   });
 }
 
-export async function getMainImageKey(exit_id: string) {
+export async function getMainImageData(exit_id: string) {
   return new Promise((resolve, reject) => {
     pool.query(
       "SELECT * FROM images WHERE exit = $1 AND is_main = true;",
@@ -41,7 +42,7 @@ export async function getMainImageKey(exit_id: string) {
         if (err) {
           reject(err);
         }
-        resolve(results.rows[0].url);
+        resolve(results.rows[0].key);
       }
     );
   });

@@ -16,6 +16,7 @@ export interface imgArrType {
   is_main: boolean;
   submitted_by: number;
   url: string;
+  key: string;
   _id: number;
 }
 
@@ -31,7 +32,8 @@ function ExitImages(props: ExitImagesPropTypes) {
     let imagesArray: string[] = [];
     if (props.imgArr) {
       props.imgArr.forEach((image) => {
-        imagesArray.push(image.url);
+        const url = `https://ik.imagekit.io/lboyett/${image.key}?tr=w-600`;
+        imagesArray.push(url);
       });
       setImgState(imagesArray);
     }
@@ -53,7 +55,7 @@ function ExitImages(props: ExitImagesPropTypes) {
           {imgState.map((image: string, i: number) => {
             return (
               <SwiperSlide key={i} className="swiper-slide">
-                <img src={image} />
+                <img src={image} decoding="async" />
               </SwiperSlide>
             );
           })}

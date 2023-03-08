@@ -54,7 +54,7 @@ function Country() {
       <div className="country">
         <NavBar currentPage="exits" />
 
-        <h1 className="country-header">{country_code}</h1>
+        <h1 className="country-header">{country?.country}</h1>
         <UnorderedList className="states-bar" color={out_500}>
           {country
             ? country.regions.map((region) => {

@@ -92,6 +92,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
 
   const exitUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage(undefined);

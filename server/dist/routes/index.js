@@ -61,6 +61,7 @@ router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, f
         const exitData = yield (0, exitController_1.getExit)(req.params.id);
         aggregate("data", exitData);
         const exitImages = yield (0, imageController_1.getExitImages)(req.params.id);
+        console.log(exitImages);
         aggregate("images", exitImages);
         const exitComments = yield (0, commentController_1.getExitComments)(req.params.id);
         aggregate("comments", exitComments);
@@ -148,8 +149,9 @@ router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0,
     const exit = req.body.exit;
     const submitted_by = req.body.submitted_by;
     const url = req.file.location;
+    const key = req.file.key;
     try {
-        const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url));
+        const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url, key));
         res.status(200).send(response.rows[0]);
     }
     catch (err) {
@@ -159,12 +161,22 @@ router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0,
 }));
 router.get("/images/:exit_id/main", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const key = yield (0, imageController_1.getMainImageKey)(req.params.exit_id);
-        res.send(key);
+        const data = yield (0, imageController_1.getMainImageData)(req.params.exit_id);
+        res.status(200).send(data);
     }
     catch (err) {
         console.log(err);
         res.status(500).send("Internal server error");
+    }
+}));
+//-----------------COMMENTS---------------------------------
+router.post("/comments", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield (0, commentController_1.addComment)(req.body.comment, req.body.author_id, req.body.exit_id);
+        res.status(200).send(response);
+    }
+    catch (err) {
+        res.status(500).send(err);
     }
 }));
 exports.default = router;

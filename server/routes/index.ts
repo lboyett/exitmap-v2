@@ -16,9 +16,9 @@ import {
 import {
   getExitImages,
   addImage,
-  getMainImageKey,
+  getMainImageData,
 } from "../controllers/imageController";
-import { getExitComments } from "../controllers/commentController";
+import { getExitComments, addComment } from "../controllers/commentController";
 import { addUser } from "../controllers/userController";
 const router = express.Router();
 
@@ -37,6 +37,7 @@ router.get("/exits/:id", async (req, res, next) => {
     const exitData = await getExit(req.params.id);
     aggregate("data", exitData);
     const exitImages = await getExitImages(req.params.id);
+    console.log(exitImages);
     aggregate("images", exitImages);
     const exitComments = await getExitComments(req.params.id);
     aggregate("comments", exitComments);
@@ -127,8 +128,14 @@ router.post("/images", uploadFile, async (req, res, next) => {
   const exit = req.body.exit;
   const submitted_by = req.body.submitted_by;
   const url = req.file.location;
+  const key = req.file.key;
   try {
-    const response = (await addImage(submitted_by, exit, url)) as QueryResult;
+    const response = (await addImage(
+      submitted_by,
+      exit,
+      url,
+      key
+    )) as QueryResult;
     res.status(200).send(response.rows[0]);
   } catch (err) {
     console.log(err);
@@ -138,11 +145,25 @@ router.post("/images", uploadFile, async (req, res, next) => {
 
 router.get("/images/:exit_id/main", async (req, res, next) => {
   try {
-    const key = await getMainImageKey(req.params.exit_id);
-    res.send(key);
+    const data = await getMainImageData(req.params.exit_id);
+    res.status(200).send(data);
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal server error");
+  }
+});
+
+//-----------------COMMENTS---------------------------------
+router.post("/comments", async (req, res, next) => {
+  try {
+    const response = await addComment(
+      req.body.comment,
+      req.body.author_id,
+      req.body.exit_id
+    );
+    res.status(200).send(response);
+  } catch (err) {
+    res.status(500).send(err);
   }
 });
 

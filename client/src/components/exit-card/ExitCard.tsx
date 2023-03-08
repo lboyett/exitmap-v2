@@ -32,8 +32,10 @@ function ExitCard({ exit }: ExitCardProps) {
   useEffect(() => {
     const url = `http://localhost:8000/images/${exit._id}/main`;
     (async () => {
-      const img = await axios.get(url);
-      setImageUrl(img.data);
+      const { data } = await axios.get(url);
+      const imageKitUrl = `https://ik.imagekit.io/lboyett/${data}?tr=w-300`;
+      console.log(imageKitUrl);
+      setImageUrl(imageKitUrl);
     })();
   }, []);
 
@@ -71,7 +73,7 @@ function ExitCard({ exit }: ExitCardProps) {
           navigate(`${exit._id}`);
         }}
       >
-        <Image src={imageUrl} loading="lazy" />
+        <Image src={imageUrl} loading="lazy" decoding="async" />
         <Grid
           className="exit-card-grid"
           templateColumns="3fr 1fr"

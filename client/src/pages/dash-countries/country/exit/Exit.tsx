@@ -2,7 +2,6 @@ import "./exit.css";
 import { useEffect, useState } from "react";
 import NavBar from "../../../../components/navbar/NavBar";
 import { Box, Grid, useColorModeValue } from "@chakra-ui/react";
-import { exitData } from "../../../../data/sample-exit-data";
 import { exitComments } from "../../../../data/sample-exit-comments";
 import ExitTitle from "./exit-components/ExitTitle";
 import ExitDetails from "./exit-components/ExitDetails";
@@ -16,7 +15,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 function Exit() {
-  const exit = exitData[0];
   const [exitRes, setExitRes] = useState<exit>();
   const [exitImages, setExitImages] = useState<imgArrType[]>();
   const [exitComments, setExitComments] = useState<commentsTypes[]>();
@@ -31,10 +29,10 @@ function Exit() {
   async function getExit(exitsUrl: string) {
     try {
       const res = await axios.get(`${exitsUrl}/${exit_id}`);
-      console.log(res.data.data);
       setExitRes(res.data.data[0]);
       setExitImages(res.data.images);
       setExitComments(res.data.comments); // Look into promise.all
+      console.log(res.data.comments);
     } catch (err: any) {
       if (err) {
         console.log(err); // NEED TO UPDATE THE ERROR HANDLING
@@ -59,7 +57,11 @@ function Exit() {
                 exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
               />
             </div>
-            <ExitComments comments={exitComments} />
+            <ExitComments
+              comments={exitComments}
+              exit_id={exit_id}
+              getExit={() => getExit(exitsUrl)}
+            />
           </Box>
 
           <Box className="exit-right">
