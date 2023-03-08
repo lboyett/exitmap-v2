@@ -32,6 +32,11 @@
   align-items: center;
 }
 
+.info-box-exit-name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 700px) {
   .map-container {
     max-height: 90vh;

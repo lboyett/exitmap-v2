@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -41,7 +42,7 @@ interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function Map(props: MapProps) {
   const [center, setCenter] = useState<Coordinate>({ lat: 0, lng: 0 });
-  const [zoom, setZoom] = useState<number>(7);
+  const [zoom, setZoom] = useState<number>(5);
   const [exits, setExits] = useState<Exit[]>();
   const [exitPageLocation, setExitPageLocation] =
     useState<exit_location_type>();
@@ -49,6 +50,7 @@ export default function Map(props: MapProps) {
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
   const [searchBox, setSearchBox] = useState<SearchBox>();
   const { data, error, loading } = useReviewedExitsFetch(); //FixThis
+  const navigate = useNavigate();
 
   const lightMode = useColorModeValue(true, false);
   const mapStyle = lightMode ? null : darkMapStyle;
@@ -163,7 +165,7 @@ export default function Map(props: MapProps) {
                     {activeMarker === exit._id ? (
                       <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
                         <div className="info-box-content">
-                          <Text color="black">{exit.name}</Text>
+                          <Text color="black" className="info-box-exit-name" onClick={() => navigate(`../countries/${exit.country_code}/${exit._id}`)}>{exit.name}</Text>
                           <Text color="black">{exit.height_impact} ft</Text>
                         </div>
                       </InfoWindowF>
