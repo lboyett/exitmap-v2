@@ -10,7 +10,7 @@ import { countriesList } from "../../data/countries-data";
 import { useNavigate } from "react-router-dom";
 import CountryCard from "../../components/country-card/CountryCard";
 import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
-import { useContext, useEffect, useState } from "react";
+import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
 import { useGetCountriesFromExit } from "../../hooks/useGetCountriesFromExits";
 import { ExitDataContext } from "../../ExitDataContext";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
@@ -36,6 +36,14 @@ function DashCountries() {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
+  function handleClickScroll(e: BaseSyntheticEvent){
+    const element = document.getElementById(`country-${e.target.innerText}`)
+    if (element) {
+      element.scrollIntoView({behavior: 'smooth'})
+    }
+
+  }
+
   return (
     <div className="dash-countries">
       <NavBar currentPage="exits" />
@@ -47,13 +55,13 @@ function DashCountries() {
           background={bg_500}
         >
           {lettersArr.map((letter) => {
-            return <ListItem key={letter}>{letter}</ListItem>;
+            return <ListItem key={letter} className={'scroll-letter'} onClick={(e) => handleClickScroll(e)}>{letter}</ListItem>;
           })}
         </UnorderedList>
         <UnorderedList className="country-list">
           {countries
             ? countries.map((country, i) => {
-                return <CountryCard key={i} country={country} />;
+                return <CountryCard key={i} country={country}/>;
               })
             : null}
         </UnorderedList>

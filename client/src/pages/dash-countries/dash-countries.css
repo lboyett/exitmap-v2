@@ -11,12 +11,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min-content;
+  width: 2.3rem;
   list-style-type: none !important;
-  font-size: 2vh !important;
-  padding: 0 0.5em;
+  font-size: clamp(0.9rem, 1.1vw, 1.3rem) !important;
+  padding: 0.5rem 0.5em;
   border-radius: 10px;
   position: fixed;
+  cursor: pointer;
+}
+
+.scroll-letter {
+  transition: font-size 0.2s;
+}
+
+.scroll-letter:hover {
+  font-size: 130%;
 }
 
 .country-list {

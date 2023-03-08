@@ -31,6 +31,7 @@ export default function CountryCard({ country }: CountryCardProps) {
   return (
     <ListItem
       className="country-card"
+      id={`country-${country.country[0]}`}
       key={country.country}
       color={out_500}
       border="1px solid"
