@@ -17,6 +17,7 @@ import { ExitDataContext } from "../../ExitDataContext";
 import CountryType from "../../type-definitions/country-type";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
 import { countriesCodesJson } from "../../data/countries-with-codes";
+import RegionCard from "../../components/region-card/RegionCard";
 
 function Country() {
   let { country_code } = useParams();
@@ -48,6 +49,14 @@ function Country() {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
+  function filterJumpsByRegion(region: string, exits: (Exit | undefined)[]) {
+    if (exits === undefined) return;
+    exits.forEach((exit) => {
+      if (exit === undefined) return;
+      if (!(exit.region === region)) console.log(exit.name);
+    });
+  }
+
   if (!exits) {
     return <></>;
   } else {
@@ -56,18 +65,17 @@ function Country() {
         <NavBar currentPage="exits" />
 
         <h1 className="country-header">{country?.country}</h1>
-        <UnorderedList className="states-bar" color={out_500}>
+        <UnorderedList className="regions-bar" color={out_500}>
           {country
             ? country.regions.map((region) => {
                 return (
-                  <ListItem
-                    className="state"
-                    background={bg_500}
-                    border="1px solid"
+                  <RegionCard
+                    region={region}
                     key={region}
-                  >
-                    {region}
-                  </ListItem>
+                    filterJumpsByRegion={(region: string) =>
+                      filterJumpsByRegion(region, exits)
+                    }
+                  />
                 );
               })
             : null}

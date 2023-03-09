@@ -1,0 +1,7 @@
+.region {
+  padding: 2px;
+  white-space: nowrap;
+  font-size: clamp(1rem, 2vw, 2rem) !important;
+  font-weight: 200;
+  border-radius: 6px;
+}
