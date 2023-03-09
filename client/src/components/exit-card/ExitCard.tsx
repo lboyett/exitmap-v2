@@ -38,6 +38,10 @@ function ExitCard({ exit }: ExitCardProps) {
     })();
   }, []);
 
+  useEffect(() => {
+    "ran";
+  }, []);
+
   function legalityColorPicker() {
     switch (exit.legality) {
       case "legal":

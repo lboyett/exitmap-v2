@@ -37,28 +37,30 @@ function Country() {
   }, [exitDataContext]);
 
   useEffect(() => {
+    const exitArray = initializeExitArray(exitDataContext);
+    setExits(exitArray);
+  }, [exitDataContext]);
+
+  function initializeExitArray(exitDataContext: any) {
     let exitArray: Array<Exit> = [];
     exitDataContext?.forEach((exit: Exit) => {
       if (exit.country_code === country_code) {
         exitArray.push(exit);
       }
     });
-    console.log(exitArray)
     if (exitArray[0] && exitArray[1]) {
-    exitArray.sort((a,b) => a.name.localeCompare(b.name))
+      exitArray.sort((a, b) => a.name.localeCompare(b.name));
     }
-    setExits(exitArray);
-  }, [exitDataContext]);
+    return exitArray;
+  }
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   function filterJumpsByRegion(region: string, exits: (Exit | undefined)[]) {
-    if (exits === undefined) return;
-    exits.forEach((exit) => {
-      if (exit === undefined) return;
-      if (!(exit.region === region)) console.log(exit.name);
-    });
+    const exitArray = initializeExitArray(exitDataContext);
+    const filteredArray = exitArray.filter((exit) => exit.region === region);
+    setExits([...filteredArray]);
   }
 
   if (!exits) {
@@ -87,9 +89,9 @@ function Country() {
 
         <UnorderedList>
           <Flex className="exit-cards-container">
-            {exits.map((exit, i) => {
+            {exits.map((exit) => {
               if (!exit) return;
-              return <ExitCard exit={exit} key={i} />;
+              return <ExitCard exit={exit} key={exit._id} />;
             })}
           </Flex>
         </UnorderedList>
