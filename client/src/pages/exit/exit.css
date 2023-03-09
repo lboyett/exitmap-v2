@@ -5,6 +5,11 @@
   column-gap: 24px;
 }
 
+.css-a5mhaz {
+  /* This is the tab container for the map */
+  height: 600px;
+}
+
 .exit-images-container-mobile {
   display: none;
 }
@@ -27,7 +32,7 @@
     display: block;
     height: 80vh;
   }
-  .exit-page-map-wide {
+  .exit-right {
     display: none;
   }
 }
