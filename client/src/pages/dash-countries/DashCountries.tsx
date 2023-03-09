@@ -34,6 +34,7 @@ function DashCountries() {
   }
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   function handleClickScroll(e: BaseSyntheticEvent) {
@@ -58,6 +59,7 @@ function DashCountries() {
               <ListItem
                 key={letter}
                 className={"scroll-letter"}
+                _hover={{ color: txt_300, fontWeight: `400 !important` }}
                 onClick={(e) => handleClickScroll(e)}
               >
                 {letter}

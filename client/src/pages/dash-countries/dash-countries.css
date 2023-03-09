@@ -21,11 +21,24 @@
 }
 
 .scroll-letter {
-  transition: font-size 0.2s;
+  height: 1.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
 }
 
+li:has(+ .scroll-letter:hover) {
+  transform: scale(1.2);
+  color: #fff2db;
+}
 .scroll-letter:hover {
-  font-size: 130%;
+  transform: scale(1.6);
+}
+.scroll-letter:hover + li {
+  transform: scale(1.2);
+  color: #fff2db;
 }
 
 .country-list {

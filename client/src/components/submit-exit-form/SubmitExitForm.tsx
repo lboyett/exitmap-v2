@@ -1,4 +1,3 @@
-import "./submit-exit-form.css";
 import {
   FormControl,
   FormLabel,
@@ -16,45 +15,29 @@ import {
   useColorModeValue,
   Spinner,
 } from "@chakra-ui/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
+
+import "./submit-exit-form.css";
 import FileInput from "./file-input/FileInput";
-import axios from "axios";
 import { countriesCodesJson } from "../../data/countries-with-codes";
+import {
+  validateCheckboxes,
+  validateLocation,
+  getCountryName,
+  compileExitData,
+  submitExitDataWithoutImage,
+  submitExitDataWithImage,
+} from "./submit-exit-functions";
 
 interface Coordinate {
   lat: number;
   lng: number;
 }
-
 interface SubmitFormProps {
   latLng: Coordinate | undefined;
   country_code: string | undefined;
   onSuccess: Function;
 }
-
-interface FormInputs extends HTMLFormControlsCollection {
-  exit_name: HTMLInputElement;
-  object_type: HTMLInputElement;
-  sd: HTMLInputElement;
-  ts: HTMLInputElement;
-  ws: HTMLInputElement;
-  experience_required: HTMLInputElement;
-  legality: HTMLInputElement;
-  bust_factor: HTMLInputElement;
-  height_impact: HTMLInputElement;
-  height_landing: HTMLInputElement;
-  lat: HTMLInputElement;
-  lng: HTMLInputElement;
-  city: HTMLInputElement;
-  region: HTMLInputElement;
-  hiking_time_hrs: HTMLInputElement;
-  hiking_time_mins: HTMLInputElement;
-  approach_difficulty: HTMLInputElement;
-  description: HTMLInputElement;
-  access_approach: HTMLInputElement;
-  landing_area: HTMLInputElement;
-}
-
 interface Checkbox extends HTMLInputElement {
   checked: boolean;
 }
@@ -90,75 +73,40 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     setLng(props.latLng.lng);
   }, [props.latLng]);
 
-  const exitUrl = "http://localhost:8000/exits";
-  const imageUrl = "http://localhost:8000/images";
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>,
+    formData: FormData | undefined,
+    checkboxes: boolean[],
+    country_code: string | null,
+    countriesCodesJson: { [key: string]: string },
+    units: string
+  ) {
     e.preventDefault();
     setErrorMessage(undefined);
     setSuccessMessage(undefined);
-    if (!sdChecked && !tsChecked && !wsChecked) {
+    if (!validateCheckboxes(checkboxes)) {
       setErrorMessage("Please select an exit type");
       return;
     }
-    if (country_code && country_code.length > 2) {
+    if (!validateLocation(country_code)) {
       setErrorMessage("Please choose a valid location");
       return;
     }
-    let country_name = null;
-    if (country_code && country_code in countriesCodesJson) {
-      country_name = countriesCodesJson[country_code];
+    let country_name: string | null;
+    country_name = null;
+    if (getCountryName(country_code, countriesCodesJson)) {
+      country_name = getCountryName(country_code, countriesCodesJson);
     }
-    const target = e.target as HTMLFormElement;
-    const inputs = target.elements as FormInputs;
-    const exit_data = {
-      name: inputs.exit_name.value,
-      object_type: inputs.object_type.value.toLowerCase(),
-      exit_type: `${+inputs.sd.checked}${+inputs.ts.checked}${+inputs.ws
-        .checked}`,
-      exp_req: inputs.experience_required.value.toLowerCase(),
-      legality: inputs.legality.value.toLowerCase(),
-      bust_factor: inputs.bust_factor.value,
-      height_impact:
-        units == "m"
-          ? Math.floor(+inputs.height_impact.value * 3.28)
-          : Math.floor(+inputs.height_impact.value),
-      height_landing:
-        units == "m"
-          ? Math.floor(+inputs.height_landing.value * 3.28)
-          : Math.floor(+inputs.height_landing.value),
-      lat: inputs.lat.value,
-      lng: inputs.lng.value,
-      city: inputs.city.value,
-      region: inputs.region.value,
-      country_code: country_code,
-      country_name: country_name,
-      hiking_time_hrs: inputs.hiking_time_hrs.value
-        ? inputs.hiking_time_hrs.value
-        : null,
-      hiking_time_mins: inputs.hiking_time_mins.value
-        ? inputs.hiking_time_mins.value
-        : null,
-      approach_diff: +inputs.approach_difficulty.value,
-      description: inputs.description.value,
-      access_approach: inputs.access_approach.value,
-      landing_area: inputs.landing_area.value,
-      submitted_by: 1, //USERID
-    };
+    const exit_data = compileExitData(e, country_code, country_name, units);
     setSubmitting(true);
     try {
-      const exitRes = await axios.post(exitUrl, exit_data);
       if (!formData) {
+        await submitExitDataWithoutImage(exit_data);
         setSubmitting(false);
         props.onSuccess();
         return;
       }
-      const exit = exitRes.data._id;
-      formData?.delete("exit");
-      formData?.delete("submitted_by");
-      formData?.append("exit", exit);
-      formData?.append("submitted_by", "1"); //USERID
-      const imgRes = await axios.post(imageUrl, formData);
+      await submitExitDataWithImage(exit_data, formData);
       props.onSuccess();
     } catch (err) {
       console.log(err);
@@ -186,7 +134,19 @@ export default function SubmitExitForm(props: SubmitFormProps) {
   }
 
   return (
-    <form className="submit-exit-form" onSubmit={(e) => handleSubmit(e)}>
+    <form
+      className="submit-exit-form"
+      onSubmit={(e) =>
+        handleSubmit(
+          e,
+          formData,
+          [sdChecked, tsChecked, wsChecked],
+          country_code,
+          countriesCodesJson,
+          units
+        )
+      }
+    >
       <FormControl>
         <FormLabel>Exit Name</FormLabel>
         <Input
