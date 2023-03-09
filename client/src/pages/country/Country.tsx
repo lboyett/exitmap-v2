@@ -37,12 +37,16 @@ function Country() {
   }, [exitDataContext]);
 
   useEffect(() => {
-    let exitArray: Array<Exit | undefined> = [];
+    let exitArray: Array<Exit> = [];
     exitDataContext?.forEach((exit: Exit) => {
       if (exit.country_code === country_code) {
         exitArray.push(exit);
       }
     });
+    console.log(exitArray)
+    if (exitArray[0] && exitArray[1]) {
+    exitArray.sort((a,b) => a.name.localeCompare(b.name))
+    }
     setExits(exitArray);
   }, [exitDataContext]);
 
