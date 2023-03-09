@@ -131,7 +131,8 @@ export default function Map(props: MapProps) {
                   const lng = searchResults[0].geometry?.location?.lng();
                   if (lat && lng) {
                     setCenter({ lat: lat, lng: lng });
-                    setZoom(7);
+                    setAddedMarker({lat: lat, lng: lng});
+                    setZoom(15);
                   }
                 }
               }
