@@ -7,7 +7,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./country-card.css";
 
@@ -28,6 +28,10 @@ export default function CountryCard({ country }: CountryCardProps) {
   const [image, setImage] = useState<any>(null);
   const url = `http://localhost:8000/country-images/${country.code}.webp`;
 
+  function imageFallback(e: SyntheticEvent<HTMLImageElement, Event>) {
+    e.currentTarget.src = `https://countryflagsapi.com/png/${country.code}`;
+  }
+
   return (
     <ListItem
       className="country-card"
@@ -41,14 +45,18 @@ export default function CountryCard({ country }: CountryCardProps) {
       }}
       onClick={() => navigate(country.code)}
     >
-      <Image src={url} loading="lazy" />
+      <Image
+        src={url}
+        loading="lazy"
+        crossOrigin="anonymous"
+        onError={imageFallback}
+      />
       <Flex direction="column">
         <Flex alignItems="center">
           <Heading as="h4">{country.country}</Heading>
         </Flex>
         <Spacer />
         <Flex>
-          <Text>{country.code}</Text>
           <Image
             className="flag"
             src={`https://countryflagsapi.com/svg/${country.code}`}

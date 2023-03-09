@@ -24,7 +24,11 @@ function DashCountries() {
 
   useEffect(() => {
     if (exitDataContext) {
-      setCountries(getCountriesFromExits(exitDataContext));
+      const arr = getCountriesFromExits(exitDataContext).sort((a, b) => {
+        if (a.country < b.country) return -1;
+        else return 1;
+      });
+      setCountries(arr);
     }
   }, [exitDataContext]);
 

@@ -102,12 +102,11 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     try {
       if (!formData) {
         await submitExitDataWithoutImage(exit_data);
-        setSubmitting(false);
         props.onSuccess();
-        return;
+      } else {
+        await submitExitDataWithImage(exit_data, formData);
+        props.onSuccess();
       }
-      await submitExitDataWithImage(exit_data, formData);
-      props.onSuccess();
     } catch (err) {
       console.log(err);
       setErrorMessage(
