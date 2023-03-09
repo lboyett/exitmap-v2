@@ -117,15 +117,13 @@ function ExitDetails(props: any) {
     }
   }
 
-  function returnBustColor() {
+  function returnBFColor() {
     switch (props.exit.bust_factor) {
-      case 'na':
-        return('white')
-      case "low":
+      case "0":
         return ('lime')
-      case "moderate":
+      case "0.5":
         return ('yellow')
-      case "high":
+      case "1":
         return ('red')
     }
   }
@@ -184,7 +182,7 @@ function ExitDetails(props: any) {
             </Box>
             {props.exit.legality}
           </Flex>
-          <Flex className="exit-legality" color={returnBustColor()}>
+          <Flex className="exit-legality" color={returnBFColor()}>
             <Box color={out_500}>
               <GiHandcuffs />
             </Box>
