@@ -74,8 +74,8 @@ function Exit() {
           <Box className="exit-right">
             <Tabs isLazy={tabsIsLazy}>
               <TabList>
-                <Tab _selected={{color:`${txt_500}`, bg: `${bg_500}`}}><p onClick={changeIsLazy}>Images</p></Tab>
-                <Tab _selected={{color:`${txt_500}`, bg: `${bg_500}`}}>Map</Tab>
+                <Tab _selected={{color:`${txt_500}`, bg: `${bg_500}`}}>Images</Tab>
+                <Tab _selected={{color:`${txt_500}`, bg: `${bg_500}`}}><p onClick={changeIsLazy}>Map</p></Tab>
               </TabList>
 
               <TabPanels>

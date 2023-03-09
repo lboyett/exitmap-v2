@@ -16,7 +16,7 @@
 }
 
 .exit-card h4 {
-  font-size: clamp(1.8rem, 3vw, 3rem) !important;
+  font-size: clamp(1.8rem, 3vw, 2.3rem) !important;
   font-weight: 400 !important;
   white-space: nowrap;
   max-width: 300px;
@@ -24,6 +24,7 @@
 
 .exit-card img {
   width: 30%;
+  object-fit: contain;
   margin-right: 0.5rem;
 }
 
@@ -40,17 +41,20 @@
 }
 
 .exit-card-description {
+  grid-column: 1 / 3;
   overflow: hidden;
-  margin-bottom: 12px;
-  font-size: clamp(0.8rem, 1.2vw, 2.5rem) !important;
-  max-height: 50px;
+  /* margin-bottom: 12px; */
+  font-size: clamp(0.8rem, 1.2vw, 1rem) !important;
+  max-height: 80px;
 }
 
 .exit-card-height {
+  grid-column: 1 / 2;
   align-self: flex-end;
 }
 
 .exit-card-hiking {
+  grid-column: 2 / 3;
   align-self: flex-end;
   align-items: end;
   gap: 6px;

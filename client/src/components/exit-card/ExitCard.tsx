@@ -51,7 +51,7 @@ function ExitCard({ exit }: ExitCardProps) {
 
   let description: string;
   if (exit.description.length > 70) {
-    description = `${exit.description.slice(0, 70)}...`;
+    description = `${exit.description.slice(0, 120)}...`;
   } else {
     description = exit.description;
   }
@@ -75,7 +75,7 @@ function ExitCard({ exit }: ExitCardProps) {
         <Grid
           className="exit-card-grid"
           templateColumns="3fr 1fr"
-          templateRows={"0.5fr 1fr 0.5fr"}
+          templateRows={"0.5fr 1fr"}
         >
           <Heading as="h4">{exit.name}</Heading>
           <Text

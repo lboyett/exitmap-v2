@@ -5,6 +5,10 @@
   column-gap: 24px;
 }
 
+.exit-right {
+  margin-top: 12px;
+}
+
 .css-a5mhaz {
   /* This is the tab container for the map */
   height: 600px;
