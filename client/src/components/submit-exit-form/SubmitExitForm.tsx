@@ -159,12 +159,14 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       formData?.append("exit", exit);
       formData?.append("submitted_by", "1"); //USERID
       const imgRes = await axios.post(imageUrl, formData);
-      setSubmitting(false);
       props.onSuccess();
     } catch (err) {
       console.log(err);
+      setErrorMessage(
+        "Error while submitting exit. Please try again or contact us."
+      );
+    } finally {
       setSubmitting(false);
-      setErrorMessage("Submission error");
     }
   }
 
