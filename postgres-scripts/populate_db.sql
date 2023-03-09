@@ -57,6 +57,12 @@ values
 	'Approach is known for being somewhat confusing. There are many possible turns, and the rocks make navigation difficult. See photos for directions to the exit.', 
 	'It is illegal to land on the road. Park rangers have been known to give jumpers tickets. That being said, the road is a good out if you cant make it across the trees to
 	the actual landing area.', 
+	2, true, false),
+	('Marys Gash', 'earth', B'100', 'intermediate', 'legal', '0', 475, 1100, 38.516284, -109.999808,
+	'Moab', 'Utah', 'US', 'United States', 0, 20, '0',
+	'This is another classic jump in Moab. It is one of the most accessible jumps in Mineral Bottom, about an hour drive from downtown Moab. Usually people will jump this as a sunset load as the view of the sunset is incredible, and it is an easy hike.', 
+	'At the parking lot, start walking towards the canyon and hug the cliff on the left. The exit is all the way at the end of the cliff on the left, so just go as far as you can.', 
+	'You can land on the road or in the fields next to the road, but watch out for boulders. The landing area is wide open, but it is somewhat of a flight, so if you pull dirty low on this exit you might have to land in a boulder field.', 
 	2, true, false);
 
 insert into
@@ -83,6 +89,7 @@ insert into
 values
 	(1, 1, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201453002-4xpe01htcleydtcjv.webp','1678201453002-4xpe01htcleydtcjv.webp', true, false),
 	(1, 2, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201515892-4xpe01htcleydup2s.webp','1678201515892-4xpe01htcleydup2s.webp', true, false);
+	(1, 3, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201515892-4xpe01htcleydup2s.webp','1678201515892-4xpe01htcleydup2s.webp', true, false);
 
 
 
