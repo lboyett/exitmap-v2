@@ -1,5 +1,6 @@
 import { ListItem, useColorModeValue } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CountryExitContext } from "../../pages/country/Country";
 
 import "./region-card.css";
 
@@ -15,21 +16,22 @@ export default function RegionCard({
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
+  const countryExits = useContext(CountryExitContext);
   const [active, setActive] = useState(false);
 
   function handleClick(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     if (active) {
-      console.log("ran");
       setActive(false);
+      filterJumpsByRegion(false);
       return;
     }
     filterJumpsByRegion((e.target as HTMLDivElement).innerHTML);
     setActive(true);
   }
 
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
+  // useEffect(() => {
+  //   console.log(countryExits);
+  // }, [countryExits]);
 
   return (
     <ListItem

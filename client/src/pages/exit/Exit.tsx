@@ -1,7 +1,16 @@
 import "./exit.css";
 import { useEffect, useState } from "react";
 import NavBar from "../../components/navbar/NavBar";
-import { Box, Grid, useColorModeValue, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  useColorModeValue,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} from "@chakra-ui/react";
 import { exitComments } from "../../data/sample-exit-comments";
 import ExitTitle from "../../components/exit-title/ExitTitle";
 import ExitDetails from "../../components/exit-details/ExitDetails";
@@ -18,7 +27,7 @@ function Exit() {
   const [exitRes, setExitRes] = useState<exit>();
   const [exitImages, setExitImages] = useState<imgArrType[]>();
   const [exitComments, setExitComments] = useState<commentsTypes[]>();
-  const [ tabsIsLazy, setTabsIsLazy ] = useState(true);
+  const [tabsIsLazy, setTabsIsLazy] = useState(true);
   const { exit_id } = useParams();
 
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
@@ -44,7 +53,7 @@ function Exit() {
   }
 
   function changeIsLazy() {
-    setTabsIsLazy(false)
+    setTabsIsLazy(false);
   }
 
   if (exitRes == undefined) {
@@ -74,20 +83,27 @@ function Exit() {
           <Box className="exit-right">
             <Tabs isLazy={tabsIsLazy}>
               <TabList>
-                <Tab _selected={{color:`${txt_500}`, bg: `${bg_500}`}}><p onClick={changeIsLazy}>Images</p></Tab>
-                <Tab _selected={{color:`${txt_500}`, bg: `${bg_500}`}}>Map</Tab>
+                <Tab _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}>
+                  <p>Images</p>
+                </Tab>
+                <Tab
+                  _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}
+                  onClick={changeIsLazy}
+                >
+                  Map
+                </Tab>
               </TabList>
 
               <TabPanels>
                 <TabPanel>
-                <ExitImages class="wide" imgArr={exitImages} />
+                  <ExitImages class="wide" imgArr={exitImages} />
                 </TabPanel>
 
                 <TabPanel>
-                <Map
-                editable={false}
-                exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
-              />
+                  <Map
+                    editable={false}
+                    exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
