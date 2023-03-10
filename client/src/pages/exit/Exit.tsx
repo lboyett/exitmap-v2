@@ -84,13 +84,10 @@ function Exit() {
             <Tabs isLazy={tabsIsLazy}>
               <TabList>
                 <Tab _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}>
-                  <p>Images</p>
+                  Images
                 </Tab>
-                <Tab
-                  _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}
-                  onClick={changeIsLazy}
-                >
-                  Map
+                <Tab _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}>
+                  <p onClick={changeIsLazy}>Map</p>
                 </Tab>
               </TabList>
 
