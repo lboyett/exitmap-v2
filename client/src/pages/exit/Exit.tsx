@@ -22,12 +22,14 @@ import { imgArrType } from "../../components/exit-images/ExitImages";
 import { commentsTypes } from "../../components/exit-comments/ExitComments";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 function Exit() {
   const [exitRes, setExitRes] = useState<exit>();
   const [exitImages, setExitImages] = useState<imgArrType[]>();
   const [exitComments, setExitComments] = useState<commentsTypes[]>();
   const [tabsIsLazy, setTabsIsLazy] = useState(true);
+  const { height, width } = useWindowDimensions();
   const { exit_id } = useParams();
 
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
@@ -68,10 +70,10 @@ function Exit() {
             <ExitImages class="mobile" imgArr={exitImages} />
             <ExitDetails exit={exitRes} />
             <div className="exit-page-map-mobile">
-              <Map
+              {(width < 700) ? <Map
                 editable={false}
                 exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
-              />
+              /> : null }
             </div>
             <ExitComments
               comments={exitComments}
