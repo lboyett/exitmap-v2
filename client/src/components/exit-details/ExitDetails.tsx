@@ -14,9 +14,11 @@ import {
 } from "react-icons/fa";
 import { GiHandcuffs, GiCableStayedBridge } from "react-icons/gi";
 import { BsEmojiNeutral } from "react-icons/bs";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 function ExitDetails(props: any) {
   const [experienceArr, setExperienceArr] = useState<string[]>([]);
+  const { height, width } = useWindowDimensions();
 
   const [activeAccess, setActiveAccess] = useState("");
   const [activeXAccess, setActiveXAccess] = useState("");
@@ -136,6 +138,7 @@ function ExitDetails(props: any) {
             Exit Details
             {returnExitTypeIcon()}
           </Flex>
+
           <Flex>
             <Flex className="exit-height">
               <FaArrowsAltV fontSize={"24px"} style={{ marginRight: "4px" }} />
@@ -146,9 +149,51 @@ function ExitDetails(props: any) {
               Landing: {props.exit.height_landing} ft.
             </Flex>
           </Flex>
+
+          {/* Only show below on mobile */}
+          {(width < 800 && width > 700 || width < 415) ? <Flex>
+            <Box className="exit-details-middle">
+              <Flex className="exit-jump-type">
+                {props.exit.exit_type[0] === "1" ? (
+                  <FaCheck color="lime" />
+                ) : (
+                  <FaTimes color="red" />
+                )}
+                Slider down
+              </Flex>
+              <Flex className="exit-jump-type">
+                {props.exit.exit_type[1] === "1" ? (
+                  <FaCheck color="lime" />
+                ) : (
+                  <FaTimes color="red" />
+                )}
+                Tracking suit
+              </Flex>
+              <Flex className="exit-jump-type">
+                {props.exit.exit_type[2] === "1" ? (
+                  <FaCheck color="lime" />
+                ) : (
+                  <FaTimes color="red" />
+                )}
+                Wingsuit
+              </Flex>
+            </Box>
+            <Box className="exit-details-right">
+              <Flex className="exit-legality" color={returnLegalColor()}>
+                <Box color={out_500}>{returnLegalIcon()}</Box>
+                {props.exit.legality}
+              </Flex>
+              <Flex className="exit-legality" color={returnBFColor()}>
+                <Box color={out_500}>
+                  <GiHandcuffs />
+                </Box>
+                low
+              </Flex>
+            </Box>
+          </Flex> : null }
         </Box>
 
-        <Box className="exit-details-middle">
+        {(width >= 800 || width <=700 && width >= 415) ? <Box className="exit-details-middle">
           <Flex className="exit-jump-type">
             {props.exit.exit_type[0] === "1" ? (
               <FaCheck color="lime" />
@@ -173,9 +218,9 @@ function ExitDetails(props: any) {
             )}
             Wingsuit
           </Flex>
-        </Box>
+        </Box> : null}
 
-        <Box className="exit-details-right">
+        {(width >= 800 || width <=700 && width >= 415) ? <Box className="exit-details-right">
           <Flex className="exit-legality" color={returnLegalColor()}>
             <Box color={out_500}>{returnLegalIcon()}</Box>
             {props.exit.legality}
@@ -186,7 +231,7 @@ function ExitDetails(props: any) {
             </Box>
             low
           </Flex>
-        </Box>
+        </Box> : null}
       </Flex>
 
       <Box className="exit-experience" color={txt_300} borderColor={txt_300}>

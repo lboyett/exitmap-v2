@@ -29,6 +29,7 @@
 .exit-details-middle {
   width: max-content;
   padding-right: 24px;
+  margin-bottom: 12px;
 }
 
 .exit-jump-type {
