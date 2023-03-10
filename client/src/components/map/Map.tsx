@@ -98,6 +98,11 @@ export default function Map(props: MapProps) {
       });
   }
 
+  function navigateToExit(exit: Exit){
+      navigate(`../countries/${exit.country_code}/${exit._id}`);
+      navigate(0)
+  }
+
   async function handleMapClick(lat: number, lng: number) {
     setAddedMarker({ lat: lat, lng: lng });
     try {
@@ -170,11 +175,7 @@ export default function Map(props: MapProps) {
                           <Text
                             color="black"
                             className="info-box-exit-name"
-                            onClick={() =>
-                              navigate(
-                                `../countries/${exit.country_code}/${exit._id}`
-                              )
-                            }
+                            onClick={() => navigateToExit(exit)}
                           >
                             {exit.name}
                           </Text>
