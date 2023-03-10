@@ -11,19 +11,27 @@ import CountryType from "../../type-definitions/country-type";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
 import RegionCard from "../../components/region-card/RegionCard";
 
-export const CountryExitContext = createContext<any>(null); //FixThis
+interface Region {
+  region: string;
+  active: boolean;
+}
 
 function Country() {
   let { country_code } = useParams();
   const [exits, setExits] = useState<Array<Exit | undefined>>();
   const { exitDataContext, setExitDataContext } = useContext(ExitDataContext);
   const [country, setCountry] = useState<CountryType>();
+  const [activeRegions, setActiveRegions] = useState<Region[]>();
 
   useEffect(() => {
     if (exitDataContext) {
       const countries = getCountriesFromExits(exitDataContext);
       countries.forEach((country) => {
         if (country.code === country_code) {
+          const activeRegionsArr = country.regions.map((region) => {
+            return { region: region, active: true };
+          }) as Region[];
+          setActiveRegions(activeRegionsArr);
           setCountry(country);
         }
       });
@@ -48,27 +56,43 @@ function Country() {
     return exitArray;
   }
 
-  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
-  const out_500 = useColorModeValue("out_light.500", "out_dark.500");
-
-  function filterJumpsByRegion(
-    region: string | boolean,
-    exits: (Exit | undefined)[]
-  ) {
-    if (region === false) {
-      const data = initializeExitArray(exitDataContext);
-      console.log(data);
-      setExits(data);
-      return;
-    }
-    const exitArray = initializeExitArray(exitDataContext);
-    const filteredArray = exitArray.filter((exit) => exit.region === region);
-    setExits([...filteredArray]);
+  function changeActiveRegion(activeRegion: string) {
+    if (!activeRegions) return;
+    const regions = activeRegions.map((region) => {
+      if (region.region === activeRegion)
+        return { region: region.region, active: true };
+      return { region: region.region, active: false };
+    });
+    setActiveRegions(regions);
   }
 
-  useEffect(() => {
-    console.log(exits);
-  }, [exits]);
+  function checkIfExitDisplayed(exit: Exit, activeRegions: Region[]) {
+    let boo = false;
+    activeRegions.forEach((activeRegion) => {
+      if (exit.region === activeRegion.region && activeRegion.active)
+        boo = true;
+    });
+    return boo;
+  }
+
+  function checkIfRegionCardIsSelected(
+    region: string,
+    activeRegions: Region[]
+  ) {
+    let arr = [] as any;
+    activeRegions.map((activeRegion) => {
+      if (activeRegion.active) arr.push(activeRegion);
+    });
+    if (arr.length > 1) return false;
+    let boo = false;
+    activeRegions.forEach((activeRegion) => {
+      if (region === activeRegion.region && activeRegion.active) boo = true;
+    });
+    return boo;
+  }
+
+  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   if (!exits) {
     return <></>;
@@ -78,29 +102,37 @@ function Country() {
         <NavBar currentPage="exits" />
 
         <h1 className="country-header">{country?.country}</h1>
-        <CountryExitContext.Provider value={exits}>
-          <UnorderedList className="regions-bar" color={out_500}>
-            {country
-              ? country.regions.map((region) => {
-                  return (
-                    <RegionCard
-                      region={region}
-                      key={region}
-                      filterJumpsByRegion={(region: string | boolean) =>
-                        filterJumpsByRegion(region, exits)
-                      }
-                    />
-                  );
-                })
-              : null}
-          </UnorderedList>
-        </CountryExitContext.Provider>
+        <UnorderedList className="regions-bar" color={out_500} padding="0.5rem">
+          {country
+            ? country.regions.map((region) => {
+                if (!region || !activeRegions) return;
+                let boo = false;
+                if (checkIfRegionCardIsSelected(region, activeRegions)) {
+                  boo = true;
+                }
+                return (
+                  <RegionCard
+                    isActive={boo}
+                    region={region}
+                    key={region}
+                    activateRegion={(region: string) =>
+                      changeActiveRegion(region)
+                    }
+                  />
+                );
+              })
+            : null}
+        </UnorderedList>
 
         <UnorderedList>
           <Flex className="exit-cards-container">
             {exits.map((exit) => {
-              if (!exit) return;
-              return <ExitCard exit={exit} key={exit._id} />;
+              if (!exit || !activeRegions) return;
+              let boo = false;
+              if (checkIfExitDisplayed(exit, activeRegions)) {
+                boo = true;
+              }
+              return <ExitCard exit={exit} key={exit._id} isDisplayed={boo} />;
             })}
           </Flex>
         </UnorderedList>

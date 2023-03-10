@@ -13,7 +13,7 @@ import {
   FaCircle,
 } from "react-icons/fa";
 import { GiHandcuffs, GiCableStayedBridge } from "react-icons/gi";
-import { BsEmojiNeutral } from 'react-icons/bs';
+import { BsEmojiNeutral } from "react-icons/bs";
 
 function ExitDetails(props: any) {
   const [experienceArr, setExperienceArr] = useState<string[]>([]);
@@ -109,22 +109,22 @@ function ExitDetails(props: any) {
   function returnLegalColor() {
     switch (props.exit.legality) {
       case "legal":
-        return ('lime')
+        return "lime";
       case "semi":
-        return ('yellow')
+        return "yellow";
       case "illegal":
-        return ('red')
+        return "red";
     }
   }
 
   function returnBFColor() {
     switch (props.exit.bust_factor) {
       case "0":
-        return ('lime')
+        return "lime";
       case "0.5":
-        return ('yellow')
+        return "yellow";
       case "1":
-        return ('red')
+        return "red";
     }
   }
 
@@ -138,11 +138,11 @@ function ExitDetails(props: any) {
           </Flex>
           <Flex>
             <Flex className="exit-height">
-              <FaArrowsAltV fontSize={"24px"} style={{marginRight: '4px'}}/>
+              <FaArrowsAltV fontSize={"24px"} style={{ marginRight: "4px" }} />
               Impact: {props.exit.height_impact} ft.
             </Flex>
             <Flex className="exit-height">
-              <FaArrowsAltV fontSize={"24px"} style={{marginRight: '4px'}}/>
+              <FaArrowsAltV fontSize={"24px"} style={{ marginRight: "4px" }} />
               Landing: {props.exit.height_landing} ft.
             </Flex>
           </Flex>
@@ -150,7 +150,7 @@ function ExitDetails(props: any) {
 
         <Box className="exit-details-middle">
           <Flex className="exit-jump-type">
-            {props.exit.exit_type[0] === '1' ? (
+            {props.exit.exit_type[0] === "1" ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -158,7 +158,7 @@ function ExitDetails(props: any) {
             Slider down
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.exit_type[1] === '1' ? (
+            {props.exit.exit_type[1] === "1" ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -166,7 +166,7 @@ function ExitDetails(props: any) {
             Tracking suit
           </Flex>
           <Flex className="exit-jump-type">
-            {props.exit.exit_type[2] === '1' ? (
+            {props.exit.exit_type[2] === "1" ? (
               <FaCheck color="lime" />
             ) : (
               <FaTimes color="red" />
@@ -177,9 +177,7 @@ function ExitDetails(props: any) {
 
         <Box className="exit-details-right">
           <Flex className="exit-legality" color={returnLegalColor()}>
-            <Box color={out_500}>
-              {returnLegalIcon()}
-            </Box>
+            <Box color={out_500}>{returnLegalIcon()}</Box>
             {props.exit.legality}
           </Flex>
           <Flex className="exit-legality" color={returnBFColor()}>
