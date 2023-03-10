@@ -42,7 +42,11 @@ export async function getMainImageData(exit_id: string) {
         if (err) {
           reject(err);
         }
-        resolve(results.rows[0].key);
+        if (results.rows[0]) {
+          resolve(results.rows[0].key);
+        } else {
+          resolve("exit_fallback.jpg");
+        }
       }
     );
   });
