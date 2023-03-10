@@ -41,6 +41,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
   const [hideIcon, setHideIcon] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [ numComments, setNumComments] = useState(6); 
   const comments = props.comments;
 
   console.log(
@@ -89,6 +90,10 @@ function ExitComments(props: ExitCommentsPropTypes) {
     }
   }
 
+  function showMoreComments() {
+    setNumComments(numComments + 3)
+  }
+
   if (!comments) {
     return <></>;
   } else {
@@ -131,7 +136,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
           </FormControl>
         </form>
 
-        {comments.map((comment: any, i: number) => {
+        {comments.slice(0,numComments).map((comment: any, i: number) => {
           return (
             <Flex className="comment" key={i}>
               <Image src={avatar} className="avatar-comments" />
@@ -142,7 +147,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
                   </Text>
                   <Text fontWeight={"200"} fontSize="0.8rem">
                     {formatDistance(
-                      new Date(comment.created_at),
+                      new Date(comment.comment_created_at),
                       endOfDay(new Date()),
                       { addSuffix: true }
                     )}
@@ -153,6 +158,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
             </Flex>
           );
         })}
+        <Button className="more-comments-button" onClick={showMoreComments}>View more comments</Button>
       </div>
     );
   }

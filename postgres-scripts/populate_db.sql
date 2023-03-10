@@ -74,6 +74,16 @@ insert into
 		updated_at, 
 		is_deleted)
 values
+	('This is a message on exit 1 made by user 1 in 2016', 1, 1, TIMESTAMPTZ '2016-03-26 10:10:10-05:00', TIMESTAMPTZ '2016-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2016', 1, 1, TIMESTAMPTZ '2016-03-26 10:10:10-05:00', TIMESTAMPTZ '2016-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
 	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
 	('This is a message on exit 1 made by user 3', 3, 1, now(), now(), false),
 	('This is a message on exit 2 made by user 2', 2, 2, now(), now(), false);
@@ -88,7 +98,7 @@ insert into
 		is_deleted)
 values
 	(1, 1, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201453002-4xpe01htcleydtcjv.webp','1678201453002-4xpe01htcleydtcjv.webp', true, false),
-	(1, 2, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201515892-4xpe01htcleydup2s.webp','1678201515892-4xpe01htcleydup2s.webp', true, false);
+	(1, 2, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201515892-4xpe01htcleydup2s.webp','1678201515892-4xpe01htcleydup2s.webp', true, false),
 	(1, 3, 'https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/1678201515892-4xpe01htcleydup2s.webp','1678201515892-4xpe01htcleydup2s.webp', true, false);
 
 

@@ -52,3 +52,9 @@
 .inactive {
 	display: none !important;
 }
+
+.more-comments-button {
+	display: block !important;
+	margin: 0 auto;
+	margin-bottom: 36px;
+}

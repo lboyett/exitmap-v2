@@ -3,9 +3,10 @@ import pool from "../pool-config";
 export async function getExitComments(exit_id: string) {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT * FROM comments JOIN users ON comments.author = users._id WHERE exit = $1 ",
+      "SELECT comments.created_at AS comment_created_at, * FROM comments JOIN users ON comments.author = users._id WHERE exit = $1 ",
       [exit_id],
       (err, results) => {
+        console.log(results)
         if (err) {
           reject(err);
         }
