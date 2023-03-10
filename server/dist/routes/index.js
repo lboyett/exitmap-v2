@@ -41,6 +41,7 @@ const multer_s3_1 = __importDefault(require("multer-s3"));
 const AWS = __importStar(require("@aws-sdk/client-s3"));
 const uniqid_1 = __importDefault(require("uniqid"));
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
@@ -169,7 +170,7 @@ router.get("/images/:exit_id/main", (req, res, next) => __awaiter(void 0, void 0
         res.status(500).send("Internal server error");
     }
 }));
-//-----------------COMMENTS---------------------------------
+//============================COMMENTS============================
 router.post("/comments", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield (0, commentController_1.addComment)(req.body.comment, req.body.author_id, req.body.exit_id);
@@ -177,6 +178,21 @@ router.post("/comments", (req, res, next) => __awaiter(void 0, void 0, void 0, f
     }
     catch (err) {
         res.status(500).send(err);
+    }
+}));
+//===================FLAG SVGS============================
+router.post("/upload-flags", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const svg = req.body.svg;
+    const code = req.body.code;
+    try {
+        fs_1.default.writeFile(`./public/country-flags/${code}.svg`, req.body.svg, (err) => {
+            if (err)
+                console.log(err);
+        });
+        res.status(200).send("Ok");
+    }
+    catch (err) {
+        console.log(err);
     }
 }));
 exports.default = router;

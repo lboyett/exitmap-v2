@@ -7,6 +7,7 @@ import { QueryResult } from "pg";
 import uniqid from "uniqid";
 import path from "path";
 import passport from "passport";
+import fs from "fs";
 
 import {
   getExit,
@@ -153,7 +154,7 @@ router.get("/images/:exit_id/main", async (req, res, next) => {
   }
 });
 
-//-----------------COMMENTS---------------------------------
+//============================COMMENTS============================
 router.post("/comments", async (req, res, next) => {
   try {
     const response = await addComment(
@@ -164,6 +165,21 @@ router.post("/comments", async (req, res, next) => {
     res.status(200).send(response);
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+
+//===================FLAG SVGS============================
+
+router.post("/upload-flags", async (req, res) => {
+  const svg = req.body.svg;
+  const code = req.body.code;
+  try {
+    fs.writeFile(`./public/country-flags/${code}.svg`, req.body.svg, (err) => {
+      if (err) console.log(err);
+    });
+    res.status(200).send("Ok");
+  } catch (err) {
+    console.log(err);
   }
 });
 

@@ -43,16 +43,6 @@ function ExitComments(props: ExitCommentsPropTypes) {
   const [errorMessage, setErrorMessage] = useState<string>();
   const comments = props.comments;
 
-  console.log(
-    props.comments
-      ? props.comments.sort((a, b) => {
-          return (
-            (new Date(a.created_at) as any) - (new Date(b.created_at) as any)
-          );
-        })
-      : null
-  );
-
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
 

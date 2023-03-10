@@ -27,9 +27,10 @@ export default function CountryCard({ country }: CountryCardProps) {
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
   const [image, setImage] = useState<any>(null);
   const url = `http://localhost:8000/country-images/${country.code}.webp`;
+  const flagUrl = `http://localhost:8000/country-flags/${country.code}.svg`;
 
   function imageFallback(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = `https://countryflagsapi.com/png/${country.code}`;
+    e.currentTarget.src = flagUrl;
   }
 
   return (
@@ -59,7 +60,7 @@ export default function CountryCard({ country }: CountryCardProps) {
         <Flex>
           <Image
             className="flag"
-            src={`https://countryflagsapi.com/svg/${country.code}`}
+            src={flagUrl}
             crossOrigin="anonymous"
             loading="lazy"
           />

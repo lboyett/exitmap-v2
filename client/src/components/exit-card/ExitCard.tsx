@@ -35,13 +35,8 @@ function ExitCard({ exit, isDisplayed }: ExitCardProps) {
     (async () => {
       const { data } = await axios.get(url);
       const imageKitUrl = `https://ik.imagekit.io/lboyett/${data}?tr=w-300`;
-      console.log(imageKitUrl);
       setImageUrl(imageKitUrl);
     })();
-  }, []);
-
-  useEffect(() => {
-    "ran";
   }, []);
 
   function legalityColorPicker() {

@@ -82,7 +82,7 @@ function Exit() {
 
           <Box className="exit-right">
             <Tabs isLazy={tabsIsLazy}>
-              <TabList>
+              <TabList className="tab-list">
                 <Tab _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}>
                   Images
                 </Tab>
