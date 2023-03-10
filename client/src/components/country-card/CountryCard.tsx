@@ -7,9 +7,10 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./country-card.css";
+import axios from "axios";
 
 interface Country {
   country: string;

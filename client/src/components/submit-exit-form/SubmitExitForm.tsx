@@ -155,7 +155,10 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           required
         />
       </FormControl>
-      <FileInput updateForm={(formData: FormData) => setFormData(formData)} />
+      <FileInput
+        updateForm={(formData: FormData) => setFormData(formData)}
+        isInvalidFileType={false}
+      />
       <Flex className="input-group">
         <FormControl>
           <FormLabel>Type of Object</FormLabel>

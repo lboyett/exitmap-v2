@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const index_1 = __importDefault(require("./routes/index"));
+const utilities_1 = __importDefault(require("./routes/utilities"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
@@ -16,6 +17,7 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static("public"));
 app.use("/", index_1.default);
+app.use("/utilities", utilities_1.default);
 // Authentication session
 app.use((req, res) => {
     res.status(404);

@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import indexRouter from "./routes/index";
+import utilitiesRouter from "./routes/utilities";
 import logger from "morgan";
 import cors from "cors";
 import pool from "./pool-config";
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use("/", indexRouter);
+app.use("/utilities", utilitiesRouter);
 
 // Authentication session
 

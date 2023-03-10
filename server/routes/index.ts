@@ -168,19 +168,4 @@ router.post("/comments", async (req, res, next) => {
   }
 });
 
-//===================FLAG SVGS============================
-
-router.post("/upload-flags", async (req, res) => {
-  const svg = req.body.svg;
-  const code = req.body.code;
-  try {
-    fs.writeFile(`./public/country-flags/${code}.svg`, req.body.svg, (err) => {
-      if (err) console.log(err);
-    });
-    res.status(200).send("Ok");
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 export default router;

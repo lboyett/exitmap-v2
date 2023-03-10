@@ -14,9 +14,13 @@ import "./file-input.css";
 
 interface FileInputProps {
   updateForm: Function;
+  isInvalidFileType: boolean;
 }
 
-export default function FileInput({ updateForm }: FileInputProps) {
+export default function FileInput({
+  updateForm,
+  isInvalidFileType,
+}: FileInputProps) {
   const [fileName, setFileName] = useState("");
   const [formData, setFormData] = useState<FormData>();
   const [borderColor, setBorderColor] = useState<string>();

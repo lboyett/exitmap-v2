@@ -117,3 +117,7 @@ export async function submitExitDataWithImage(
     return err;
   }
 }
+export async function validateFileType(formData: FormData) {
+  const url = "http://localhost:8000/validate-file";
+  axios.post(url, formData);
+}

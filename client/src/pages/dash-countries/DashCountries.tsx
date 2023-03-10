@@ -50,31 +50,9 @@ function DashCountries() {
     }
   }
 
-  async function downloadCountrySvgs() {
-    const arr = Object.keys(countriesCodesJson);
-    arr.forEach(async (code) => {
-      try {
-        const flag = await axios.get(`https://countryflagsapi.com/svg/${code}`);
-        const res = await axios.post("http://localhost:8000/upload-flags", {
-          svg: flag.data,
-          code: code,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    });
-  }
-
   return (
     <div className="dash-countries">
       <NavBar currentPage="exits" />
-      <button
-        onClick={() => {
-          downloadCountrySvgs();
-        }}
-      >
-        Click
-      </button>
       <Box className="content">
         <UnorderedList
           className="letter-bar"
