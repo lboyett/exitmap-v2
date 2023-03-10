@@ -72,29 +72,28 @@ function ExitCard({ exit }: ExitCardProps) {
         }}
       >
         <Image src={imageUrl} loading="lazy" decoding="async" />
-        <Grid
-          className="exit-card-grid"
-          templateColumns="3fr 1fr"
-          templateRows={"0.5fr 1fr"}
-        >
-          <Heading as="h4">{exit.name}</Heading>
-          <Text
-            className="exit-card-legality"
-            style={{ color: legalityColorPicker() }}
-            bg="black "
-          >
-            {exit.legality}
-          </Text>
-          <Text className="exit-card-description">{description}</Text>
-          <Spacer />
-          <Text className="exit-card-height">{exit.height_impact} ft</Text>
-          <Flex className="exit-card-hiking">
-            <FaHiking className="exit-card-hiking-icon" />
-            <Text className="exit-card-hiking-time">
-              {exit.hiking_time_hrs} hrs {exit.hiking_time_mins} min
+        <Flex className="exit-card-flex">
+          <Flex className="exit-card-top">
+            <Heading as="h4">{exit.name}</Heading>
+            <Text
+              className="exit-card-legality"
+              style={{ color: legalityColorPicker() }}
+              bg="black "
+            >
+              {exit.legality}
             </Text>
           </Flex>
-        </Grid>
+          <Text className="exit-card-description">{description}</Text>
+          <Flex className="exit-card-bottom">
+            <Text className="exit-card-height">{exit.height_impact} ft</Text>
+            <Flex className="exit-card-hiking">
+              <FaHiking className="exit-card-hiking-icon" />
+              <Text className="exit-card-hiking-time">
+                {exit.hiking_time_hrs} hrs {exit.hiking_time_mins} min
+              </Text>
+            </Flex>
+          </Flex>
+        </Flex>
       </ListItem>
     </div>
   );

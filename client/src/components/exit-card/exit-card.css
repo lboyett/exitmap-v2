@@ -1,7 +1,7 @@
 .exit-card {
   border-radius: 10px;
-  min-height: clamp(10rem, 12vw, 10rem);
-  width: clamp(23rem, 46vw, 50rem);
+  height: clamp(10rem, 12vw, 10rem);
+  width: clamp(24rem, 46vw, 50rem);
   overflow: hidden;
   display: flex;
 }
@@ -10,13 +10,23 @@
   cursor: pointer;
 }
 
+.exit-card-top {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exit-card-bottom {
+  align-items: center;
+  justify-content: space-between;
+}
+
 .exit-card > div {
   flex-grow: 1;
   padding: 0.5rem;
 }
 
 .exit-card h4 {
-  font-size: clamp(1.8rem, 3vw, 2.3rem) !important;
+  font-size: clamp(1.8rem, 3vw, 2.5rem) !important;
   font-weight: 400 !important;
   white-space: nowrap;
   max-width: 300px;
@@ -28,9 +38,11 @@
   margin-right: 0.5rem;
 }
 
-.exit-card-grid {
-  align-items: center;
-  font-size: clamp(1rem, 1.8vw, 2.5rem) !important;
+.exit-card-flex {
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  font-size: clamp(1rem, 1.8vw, 2rem) !important;
 }
 
 .exit-card-legality {
@@ -45,7 +57,7 @@
   overflow: hidden;
   /* margin-bottom: 12px; */
   font-size: clamp(0.8rem, 1.2vw, 1rem) !important;
-  max-height: 80px;
+  /* max-height: 120px; */
 }
 
 .exit-card-height {
@@ -68,3 +80,12 @@
 .exit-card img {
   object-fit: cover;
 }
+
+@media only screen and (max-width: 415px) {
+  .css-tu0njr {
+    margin-left: 0.5rem !important;
+  }
+}
+
+
+
