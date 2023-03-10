@@ -41,18 +41,18 @@ function ExitComments(props: ExitCommentsPropTypes) {
   const [hideIcon, setHideIcon] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
-  const [ numComments, setNumComments] = useState(6); 
+  const [ numComments, setNumComments] = useState(3); 
   const comments = props.comments;
 
-  console.log(
-    props.comments
-      ? props.comments.sort((a, b) => {
-          return (
-            (new Date(a.created_at) as any) - (new Date(b.created_at) as any)
-          );
-        })
-      : null
-  );
+  // console.log(
+  //   props.comments
+  //     ? props.comments.sort((a, b) => {
+  //         return (
+  //           (new Date(a.created_at) as any) - (new Date(b.created_at) as any)
+  //         );
+  //       })
+  //     : null
+  // );
 
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -92,6 +92,10 @@ function ExitComments(props: ExitCommentsPropTypes) {
 
   function showMoreComments() {
     setNumComments(numComments + 3)
+  }
+
+  function showLessComments() {
+    setNumComments(3)
   }
 
   if (!comments) {
@@ -158,7 +162,8 @@ function ExitComments(props: ExitCommentsPropTypes) {
             </Flex>
           );
         })}
-        <Button className="more-comments-button" onClick={showMoreComments}>View more comments</Button>
+        {(comments.length > 3 && numComments < comments.length) ? <Button className="more-comments-button" onClick={showMoreComments}>View more comments</Button> : null}
+        {(numComments >= comments.length) ? <Button className="more-comments-button" onClick={showLessComments}>View less comments</Button> : null}
       </div>
     );
   }
