@@ -41,6 +41,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
   const [hideIcon, setHideIcon] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [numComments, setNumComments] = useState(3);
   const comments = props.comments;
 
   const lightMode = useColorModeValue(true, false);
@@ -77,6 +78,14 @@ function ExitComments(props: ExitCommentsPropTypes) {
       setSubmitting(false);
       setErrorMessage(err.message);
     }
+  }
+
+  function showMoreComments() {
+    setNumComments(numComments + 3);
+  }
+
+  function showLessComments() {
+    setNumComments(3);
   }
 
   if (!comments) {
@@ -121,7 +130,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
           </FormControl>
         </form>
 
-        {comments.map((comment: any, i: number) => {
+        {comments.slice(0, numComments).map((comment: any, i: number) => {
           return (
             <Flex className="comment" key={i}>
               <Image src={avatar} className="avatar-comments" />
@@ -132,7 +141,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
                   </Text>
                   <Text fontWeight={"200"} fontSize="0.8rem">
                     {formatDistance(
-                      new Date(comment.created_at),
+                      new Date(comment.comment_created_at),
                       endOfDay(new Date()),
                       { addSuffix: true }
                     )}
@@ -143,6 +152,16 @@ function ExitComments(props: ExitCommentsPropTypes) {
             </Flex>
           );
         })}
+        {comments.length > 3 && numComments < comments.length ? (
+          <Button className="more-comments-button" onClick={showMoreComments}>
+            View more comments
+          </Button>
+        ) : null}
+        {numComments >= comments.length ? (
+          <Button className="more-comments-button" onClick={showLessComments}>
+            View less comments
+          </Button>
+        ) : null}
       </div>
     );
   }

@@ -76,6 +76,7 @@ export default function Map(props: MapProps) {
         lat: props.exit_location.lat,
         lng: props.exit_location.lng,
       });
+      setZoom(15)
       return;
     }
     if (navigator.geolocation) {
@@ -95,6 +96,11 @@ export default function Map(props: MapProps) {
           setActiveMarker(id);
         }
       });
+  }
+
+  function navigateToExit(exit: Exit){
+      navigate(`../countries/${exit.country_code}/${exit._id}`);
+      navigate(0)
   }
 
   async function handleMapClick(lat: number, lng: number) {
@@ -131,7 +137,7 @@ export default function Map(props: MapProps) {
                   const lng = searchResults[0].geometry?.location?.lng();
                   if (lat && lng) {
                     setCenter({ lat: lat, lng: lng });
-                    setAddedMarker({lat: lat, lng: lng});
+                    setAddedMarker({ lat: lat, lng: lng });
                     setZoom(15);
                   }
                 }
@@ -166,7 +172,13 @@ export default function Map(props: MapProps) {
                     {activeMarker === exit._id ? (
                       <InfoWindowF onCloseClick={() => setActiveMarker(0)}>
                         <div className="info-box-content">
-                          <Text color="black" className="info-box-exit-name" onClick={() => navigate(`../countries/${exit.country_code}/${exit._id}`)}>{exit.name}</Text>
+                          <Text
+                            color="black"
+                            className="info-box-exit-name"
+                            onClick={() => navigateToExit(exit)}
+                          >
+                            {exit.name}
+                          </Text>
                           <Text color="black">{exit.height_impact} ft</Text>
                         </div>
                       </InfoWindowF>
