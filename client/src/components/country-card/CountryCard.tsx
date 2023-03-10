@@ -64,7 +64,9 @@ export default function CountryCard({ country }: CountryCardProps) {
             loading="lazy"
           />
           <Spacer />
-          <Text>{country.num_jumps} jumps</Text>
+          <Text>
+            {country.num_jumps == 1 ? `1 jump` : `${country.num_jumps} jumps`}
+          </Text>
         </Flex>
       </Flex>
     </ListItem>
