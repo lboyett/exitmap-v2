@@ -7,18 +7,24 @@ interface RegionCardProps {
   region: string;
   activateRegion: Function;
   isActive: boolean;
+  resetActivatedRegions: Function;
 }
 
 export default function RegionCard({
   region,
   activateRegion,
   isActive,
+  resetActivatedRegions,
 }: RegionCardProps) {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   function handleClick(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    if (isActive) {
+      resetActivatedRegions();
+      return;
+    }
     activateRegion((e.target as HTMLLIElement).innerHTML);
   }
 

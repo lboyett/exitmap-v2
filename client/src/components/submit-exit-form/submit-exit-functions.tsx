@@ -73,8 +73,8 @@ export function compileExitData(
         : Math.floor(+inputs.height_landing.value),
     lat: inputs.lat.value,
     lng: inputs.lng.value,
-    city: inputs.city.value,
-    region: inputs.region.value,
+    city: lowercaseInput(inputs.city.value),
+    region: lowercaseInput(inputs.region.value),
     country_code: country_code,
     country_name: country_name,
     hiking_time_hrs: inputs.hiking_time_hrs.value
@@ -120,4 +120,10 @@ export async function submitExitDataWithImage(
 export async function validateFileType(formData: FormData) {
   const url = "http://localhost:8000/validate-file";
   axios.post(url, formData);
+}
+
+export function lowercaseInput(input: string) {
+  if (input.length > 1) {
+    return `${input[0].toUpperCase}${input.slice(1).toLowerCase}`;
+  } else return input.toUpperCase();
 }

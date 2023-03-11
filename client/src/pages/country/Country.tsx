@@ -25,16 +25,7 @@ function Country() {
 
   useEffect(() => {
     if (exitDataContext) {
-      const countries = getCountriesFromExits(exitDataContext);
-      countries.forEach((country) => {
-        if (country.code === country_code) {
-          const activeRegionsArr = country.regions.map((region) => {
-            return { region: region, active: true };
-          }) as Region[];
-          setActiveRegions(activeRegionsArr);
-          setCountry(country);
-        }
-      });
+      initializeRegionsCards(exitDataContext);
     }
   }, [exitDataContext]);
 
@@ -42,6 +33,19 @@ function Country() {
     const exitArray = initializeExitArray(exitDataContext);
     setExits(exitArray);
   }, [exitDataContext]);
+
+  function initializeRegionsCards(exitData: any) {
+    const countries = getCountriesFromExits(exitData);
+    countries.forEach((country) => {
+      if (country.code === country_code) {
+        const activeRegionsArr = country.regions.map((region) => {
+          return { region: region, active: true };
+        }) as Region[];
+        setActiveRegions(activeRegionsArr);
+        setCountry(country);
+      }
+    });
+  }
 
   function initializeExitArray(exitDataContext: any) {
     let exitArray: Array<Exit> = [];
@@ -91,6 +95,10 @@ function Country() {
     return boo;
   }
 
+  function resetActivatedRegions(exitData: any) {
+    initializeRegionsCards(exitData);
+  }
+
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
@@ -117,6 +125,9 @@ function Country() {
                     key={region}
                     activateRegion={(region: string) =>
                       changeActiveRegion(region)
+                    }
+                    resetActivatedRegions={() =>
+                      resetActivatedRegions(exitDataContext)
                     }
                   />
                 );
