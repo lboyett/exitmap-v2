@@ -332,11 +332,16 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       <Flex className="input-group">
         <FormControl>
           <FormLabel>City</FormLabel>
-          <Input type="text" className={inputColorMode} name="city" />
+          <Input type="text" className={inputColorMode} name="city" required />
         </FormControl>
         <FormControl>
           <FormLabel>Region / State</FormLabel>
-          <Input type="text" className={inputColorMode} name="region" />
+          <Input
+            type="text"
+            className={inputColorMode}
+            name="region"
+            required
+          />
         </FormControl>
       </Flex>
       <Flex className="input-group">

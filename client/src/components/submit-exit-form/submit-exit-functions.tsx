@@ -124,6 +124,6 @@ export async function validateFileType(formData: FormData) {
 
 export function lowercaseInput(input: string) {
   if (input.length > 1) {
-    return `${input[0].toUpperCase}${input.slice(1).toLowerCase}`;
+    return `${input[0].toUpperCase()}${input.slice(1).toLowerCase()}`;
   } else return input.toUpperCase();
 }

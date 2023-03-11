@@ -61,7 +61,6 @@ router.get("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, f
         const exitData = yield (0, exitController_1.getExit)(req.params.id);
         aggregate("data", exitData);
         const exitImages = yield (0, imageController_1.getExitImages)(req.params.id);
-        console.log(exitImages);
         aggregate("images", exitImages);
         const exitComments = yield (0, commentController_1.getExitComments)(req.params.id);
         aggregate("comments", exitComments);

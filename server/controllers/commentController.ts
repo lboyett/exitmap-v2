@@ -6,11 +6,9 @@ export async function getExitComments(exit_id: string) {
       "SELECT comments.created_at AS comment_created_at, * FROM comments JOIN users ON comments.author = users._id WHERE exit = $1 ",
       [exit_id],
       (err, results) => {
-        console.log(results)
         if (err) {
           reject(err);
         }
-        console.log(results.rows);
         resolve(results.rows);
       }
     );

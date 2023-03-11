@@ -38,7 +38,6 @@ router.get("/exits/:id", async (req, res, next) => {
     const exitData = await getExit(req.params.id);
     aggregate("data", exitData);
     const exitImages = await getExitImages(req.params.id);
-    console.log(exitImages);
     aggregate("images", exitImages);
     const exitComments = await getExitComments(req.params.id);
     aggregate("comments", exitComments);
