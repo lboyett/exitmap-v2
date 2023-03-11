@@ -75,16 +75,15 @@ insert into
 		is_deleted)
 values
 	('This is a message on exit 1 made by user 1 in 2016', 1, 1, TIMESTAMPTZ '2016-03-26 10:10:10-05:00', TIMESTAMPTZ '2016-03-26 10:10:10-05:00', false),
-	('This is a message on exit 1 made by user 1 in 2016', 1, 1, TIMESTAMPTZ '2016-03-26 10:10:10-05:00', TIMESTAMPTZ '2016-03-26 10:10:10-05:00', false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
-	('This is a message on exit 1 made by user 1', 1, 1, now(), now(), false),
+	('This is a message on exit 1 made by user 1 in 2017', 1, 1, TIMESTAMPTZ '2017-03-26 10:10:10-05:00', TIMESTAMPTZ '2017-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2018', 1, 1, TIMESTAMPTZ '2018-03-26 10:10:10-05:00', TIMESTAMPTZ '2018-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2019', 1, 1, TIMESTAMPTZ '2019-03-26 10:10:10-05:00', TIMESTAMPTZ '2019-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2020', 1, 1, TIMESTAMPTZ '2020-03-26 10:10:10-05:00', TIMESTAMPTZ '2020-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2021', 1, 1, TIMESTAMPTZ '2021-03-26 10:10:10-05:00', TIMESTAMPTZ '2021-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2022', 1, 1, TIMESTAMPTZ '2022-03-26 10:10:10-05:00', TIMESTAMPTZ '2022-03-26 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2023', 1, 1, TIMESTAMPTZ '2023-03-11 10:10:10-05:00', TIMESTAMPTZ '2023-03-11 10:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2023', 1, 1, TIMESTAMPTZ '2023-03-11 14:10:10-05:00', TIMESTAMPTZ '2023-03-11 14:10:10-05:00', false),
+	('This is a message on exit 1 made by user 1 in 2023', 1, 1, TIMESTAMPTZ '2023-03-11 18:10:10-05:00', TIMESTAMPTZ '2023-03-11 18:10:10-05:00', false),
 	('This is a message on exit 1 made by user 3', 3, 1, now(), now(), false),
 	('This is a message on exit 2 made by user 2', 2, 2, now(), now(), false);
 

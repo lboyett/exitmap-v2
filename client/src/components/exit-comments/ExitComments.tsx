@@ -11,7 +11,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import "./exit-comments.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
 import { format, formatDistance, endOfDay } from "date-fns";
@@ -19,7 +19,7 @@ import { format, formatDistance, endOfDay } from "date-fns";
 export interface commentsTypes {
   author: number;
   comment: string;
-  created_at: string;
+  comment_created_at: string;
   exit: number;
   is_deleted: boolean;
   updated_at: string;
@@ -130,7 +130,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
           </FormControl>
         </form>
 
-        {comments.slice(0, numComments).map((comment: any, i: number) => {
+        {comments.sort((a, b) => b.comment_created_at.localeCompare(a.comment_created_at)).slice(0, numComments).map((comment: any, i: number) => {
           return (
             <Flex className="comment" key={i}>
               <Image src={avatar} className="avatar-comments" />

@@ -268,7 +268,7 @@ function ExitDetails(props: any) {
             onClick={() => showTextAccess()}
           />
         </Flex>
-        <Text className={`exit-access-description ${activeAccess}`} color={'white'}>
+        <Box className={`exit-access-description ${activeAccess}`} color={'white'}>
           <Flex gap={'6px'} fontSize={'1.2rem'}>
           <FaHiking className="exit-card-hiking-icon" />
           <Text className="exit-card-hiking-time">
@@ -276,7 +276,7 @@ function ExitDetails(props: any) {
           </Text>
           </Flex>
           {props.exit.access_approach}
-        </Text>
+        </Box>
       </Box>
 
       <Box
