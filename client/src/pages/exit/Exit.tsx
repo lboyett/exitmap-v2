@@ -45,14 +45,6 @@ function Exit() {
     getExit(exitsUrl);
   }, []);
 
-  // useEffect(() => {
-  //   console.log(exitRes)
-  // }, [exitRes]);
-
-  // useEffect(() => {
-  //   console.log(formData)
-  // }, [formData]);
-
   async function submitExitImage(formData: FormData | undefined) {
     formData?.delete("exit");
     formData?.delete("submitted_by");
@@ -122,7 +114,6 @@ function Exit() {
               <TabPanels>
                 <TabPanel>
                   <ExitImages class="wide" imgArr={exitImages} />
-                  {/* <Button className="upload-image">Upload new image</Button> */}
                   <form onSubmit={() => submitExitImage(formData)}>
                   <FileInput
                     updateForm={(formData: FormData) => setFormData(formData)}
