@@ -157,7 +157,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
             View more comments
           </Button>
         ) : null}
-        {numComments >= comments.length ? (
+        {(numComments >= comments.length && comments.length > 3) ? (
           <Button className="more-comments-button" onClick={showLessComments}>
             View less comments
           </Button>
