@@ -101,7 +101,8 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     setSubmitting(true);
     try {
       if (!formData) {
-        await submitExitDataWithoutImage(exit_data);
+        const res = await submitExitDataWithoutImage(exit_data);
+        if (res.code === "ERR_NETWORK") throw new Error("Server issue");
         props.onSuccess();
       } else {
         await submitExitDataWithImage(exit_data, formData);

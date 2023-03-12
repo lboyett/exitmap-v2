@@ -6,7 +6,7 @@ const router = express.Router();
 const upload = multer().single("image");
 
 router.post("/validate-file", upload, (req, res) => {
-  console.log(req);
+  console.log(req.file);
   res.send("ok");
 });
 

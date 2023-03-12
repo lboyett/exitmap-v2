@@ -129,6 +129,7 @@ router.post("/images", uploadFile, async (req, res, next) => {
   const submitted_by = req.body.submitted_by;
   const url = req.file.location;
   const key = req.file.key;
+  console.log(req.file);
   try {
     const response = (await addImage(
       submitted_by,

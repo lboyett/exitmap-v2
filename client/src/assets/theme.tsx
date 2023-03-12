@@ -8,6 +8,13 @@ const config: ThemeConfig = {
 
 export const theme = extendTheme(
   {
+    components: {
+      Button: {
+        baseStyle: {
+          border: "1px solid",
+        },
+      },
+    },
     styles: {
       global: (props: any) => ({
         "html, body": {

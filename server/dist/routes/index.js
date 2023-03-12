@@ -149,6 +149,7 @@ router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0,
     const submitted_by = req.body.submitted_by;
     const url = req.file.location;
     const key = req.file.key;
+    console.log(req.file);
     try {
         const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url, key));
         res.status(200).send(response.rows[0]);

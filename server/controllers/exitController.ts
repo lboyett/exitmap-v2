@@ -127,7 +127,10 @@ export async function addExit({
           console.log(err);
           reject(err);
         }
-        resolve(results.rows[0]);
+        if (results.rows) {
+          console.log(results.rows);
+          resolve(results.rows[0]);
+        }
       }
     );
   });

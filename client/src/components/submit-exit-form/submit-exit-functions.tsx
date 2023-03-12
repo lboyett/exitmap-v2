@@ -79,10 +79,10 @@ export function compileExitData(
     country_name: country_name,
     hiking_time_hrs: inputs.hiking_time_hrs.value
       ? inputs.hiking_time_hrs.value
-      : null,
+      : 0,
     hiking_time_mins: inputs.hiking_time_mins.value
       ? inputs.hiking_time_mins.value
-      : null,
+      : 0,
     approach_diff: +inputs.approach_difficulty.value,
     description: inputs.description.value,
     access_approach: inputs.access_approach.value,
