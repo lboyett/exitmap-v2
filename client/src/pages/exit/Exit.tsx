@@ -11,6 +11,18 @@ import {
   Tab,
   TabPanel,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  Image,
+  ModalCloseButton,
+  ModalBody,
+  List,
+  ListItem,
+  Text,
+  Flex,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { exitComments } from "../../data/sample-exit-comments";
 import ExitTitle from "../../components/exit-title/ExitTitle";
@@ -30,7 +42,9 @@ function Exit() {
   const [exitRes, setExitRes] = useState<exit>();
   const [exitImages, setExitImages] = useState<imgArrType[]>();
   const [exitComments, setExitComments] = useState<commentsTypes[]>();
-  const [ formData, setFormData ] = useState<FormData>()
+  const [ noImage, setNoImage ] = useState(false)
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [formData, setFormData] = useState<FormData>();
   const [tabsIsLazy, setTabsIsLazy] = useState(true);
   const { height, width } = useWindowDimensions();
   const { exit_id } = useParams();
@@ -45,15 +59,19 @@ function Exit() {
     getExit(exitsUrl);
   }, []);
 
+  useEffect(() => {
+    setNoImage(false)
+  }, [formData]);
+
   async function submitExitImage(formData: FormData | undefined) {
     formData?.delete("exit");
     formData?.delete("submitted_by");
-     if (exitRes) formData?.append("exit", exitRes._id.toString());
+    if (exitRes) formData?.append("exit", exitRes._id.toString());
     formData?.append("submitted_by", "1");
     try {
-      const res = await axios.post(imageUrl, formData)
+      const res = await axios.post(imageUrl, formData);
     } catch (err: any) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -113,14 +131,41 @@ function Exit() {
 
               <TabPanels>
                 <TabPanel>
+
+                  <Modal isOpen={isOpen} onClose={() => {
+                    setNoImage(false)
+                    onClose()}
+                    }>
+                    <ModalOverlay />
+                    <ModalContent className="modal" bg={bg_500}>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <form onSubmit={(e) => {
+                          if (!formData) {
+                            e.preventDefault()
+                            setNoImage(true)
+                            return
+                          }
+                          submitExitImage(formData)
+                          }}>
+                          <FileInput
+                            updateForm={(formData: FormData) => {
+                              setFormData(formData)
+                            }
+                            }
+                            isInvalidFileType={false}
+                          />
+                          <Flex className='upload-button-container'>
+                          <Button type="submit">Upload</Button>
+                          {noImage ? <Text className='image-error-message'>Please upload an image</Text> : null}
+                          </Flex>
+                        </form>
+                      </ModalBody>
+                    </ModalContent>
+                  </Modal>
+                  
                   <ExitImages class="wide" imgArr={exitImages} />
-                  <form onSubmit={() => submitExitImage(formData)}>
-                  <FileInput
-                    updateForm={(formData: FormData) => setFormData(formData)}
-                    isInvalidFileType={false}
-                  />
-                  <Button type="submit">Upload</Button>
-                  </form>
+                  <Button onClick={onOpen} className='open-upload-modal-button'>Upload Image</Button>
                 </TabPanel>
 
                 <TabPanel>

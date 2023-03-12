@@ -120,6 +120,17 @@ function ExitDetails(props: any) {
     }
   }
 
+  function returnLegalStatus() {
+    switch (props.exit.legality) {
+      case "legal":
+        return "legal";
+      case "semi":
+        return "semi-legal";
+      case "illegal":
+        return "illegal";
+    }
+  }
+
   function returnBFColor() {
     switch (props.exit.bust_factor) {
       case "0":
@@ -152,7 +163,7 @@ function ExitDetails(props: any) {
           </Flex>
 
           {/* Only show below on mobile */}
-          {(width < 800 && width > 700) || width < 415 ? (
+          {(width < 875 && width > 700) || width < 415 ? (
             <Flex>
               <Box className="exit-details-middle">
                 <Flex className="exit-jump-type">
@@ -183,7 +194,7 @@ function ExitDetails(props: any) {
               <Box className="exit-details-right">
                 <Flex className="exit-legality" color={returnLegalColor()}>
                   <Box color={out_500}>{returnLegalIcon()}</Box>
-                  {props.exit.legality}
+                  <Text className="legal-status">{returnLegalStatus()}</Text>
                 </Flex>
                 <Flex className="exit-legality" color={returnBFColor()}>
                   <Box color={out_500}>
@@ -196,7 +207,7 @@ function ExitDetails(props: any) {
           ) : null}
         </Box>
 
-        {width >= 800 || (width <= 700 && width >= 415) ? (
+        {width >= 875 || (width <= 700 && width >= 415) ? (
           <Box className="exit-details-middle">
             <Flex className="exit-jump-type">
               {props.exit.exit_type[0] === "1" ? (
@@ -225,11 +236,11 @@ function ExitDetails(props: any) {
           </Box>
         ) : null}
 
-        {width >= 800 || (width <= 700 && width >= 415) ? (
+        {width >= 875 || (width <= 700 && width >= 415) ? (
           <Box className="exit-details-right">
             <Flex className="exit-legality" color={returnLegalColor()}>
               <Box color={out_500}>{returnLegalIcon()}</Box>
-              {props.exit.legality}
+              <Text className="legal-status">{returnLegalStatus()}</Text>
             </Flex>
             <Flex className="exit-legality" color={returnBFColor()}>
               <Box color={out_500}>
@@ -268,12 +279,15 @@ function ExitDetails(props: any) {
             onClick={() => showTextAccess()}
           />
         </Flex>
-        <Box className={`exit-access-description ${activeAccess}`} color={'white'}>
-          <Flex gap={'6px'} fontSize={'1.2rem'}>
-          <FaHiking className="exit-card-hiking-icon" />
-          <Text className="exit-card-hiking-time">
-            {props.exit.hiking_time_hrs} hrs {props.exit.hiking_time_mins} min
-          </Text>
+        <Box
+          className={`exit-access-description ${activeAccess}`}
+          color={"white"}
+        >
+          <Flex gap={"6px"} fontSize={"1.2rem"}>
+            <FaHiking className="exit-card-hiking-icon" />
+            <Text className="exit-card-hiking-time">
+              {props.exit.hiking_time_hrs} hrs {props.exit.hiking_time_mins} min
+            </Text>
           </Flex>
           {props.exit.access_approach}
         </Box>
@@ -291,7 +305,10 @@ function ExitDetails(props: any) {
             onClick={() => showTextLanding()}
           />
         </Flex>
-        <Text className={`exit-landing-description ${activeLanding}`} color={'white'}>
+        <Text
+          className={`exit-landing-description ${activeLanding}`}
+          color={"white"}
+        >
           {props.exit.landing_area}
         </Text>
       </Box>

@@ -19,7 +19,6 @@
 }
 .exit-page-map-mobile {
   display: none;
-  
 }
 
 .exit-page-map-wide {
@@ -44,4 +43,13 @@
   .exit-right {
     display: none;
   }
+}
+.upload-button-container {
+  margin-top: 1rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.image-error-message {
+  color: red;
 }
