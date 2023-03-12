@@ -53,6 +53,7 @@ function ExitImages(props: ExitImagesPropTypes) {
           className="mySwiper"
         >
           {imgState.map((image: string, i: number) => {
+            console.log("Image loaded")
             return (
               <SwiperSlide key={i} className="swiper-slide">
                 <img src={image} decoding="async" />

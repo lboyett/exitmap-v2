@@ -52,8 +52,10 @@ function DashCountries() {
 
   return (
     <div className="dash-countries">
-      <NavBar currentPage="exits" />
-      <Box className="content">
+      <div className="countries-page-nav-bar">
+      <NavBar currentPage="exits"/>
+      </div>
+      <Box className="content" paddingTop={'110px'}>
         <UnorderedList
           className="letter-bar"
           color={out_500}
