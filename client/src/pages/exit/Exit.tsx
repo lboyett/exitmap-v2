@@ -10,6 +10,7 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Button,
 } from "@chakra-ui/react";
 import { exitComments } from "../../data/sample-exit-comments";
 import ExitTitle from "../../components/exit-title/ExitTitle";
@@ -23,11 +24,13 @@ import { commentsTypes } from "../../components/exit-comments/ExitComments";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import FileInput from "../../components/submit-exit-form/file-input/FileInput";
 
 function Exit() {
   const [exitRes, setExitRes] = useState<exit>();
   const [exitImages, setExitImages] = useState<imgArrType[]>();
   const [exitComments, setExitComments] = useState<commentsTypes[]>();
+  const [ formData, setFormData ] = useState<FormData>()
   const [tabsIsLazy, setTabsIsLazy] = useState(true);
   const { height, width } = useWindowDimensions();
   const { exit_id } = useParams();
@@ -36,10 +39,23 @@ function Exit() {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
   const exitsUrl = "http://localhost:8000/exits";
+  const imageUrl = "http://localhost:8000/images";
 
   useEffect(() => {
     getExit(exitsUrl);
   }, []);
+
+  async function submitExitImage(formData: FormData | undefined) {
+    formData?.delete("exit");
+    formData?.delete("submitted_by");
+     if (exitRes) formData?.append("exit", exitRes._id.toString());
+    formData?.append("submitted_by", "1");
+    try {
+      const res = await axios.post(imageUrl, formData)
+    } catch (err: any) {
+      console.log(err)
+    }
+  }
 
   async function getExit(exitsUrl: string) {
     try {
@@ -70,10 +86,12 @@ function Exit() {
             <ExitImages class="mobile" imgArr={exitImages} />
             <ExitDetails exit={exitRes} />
             <div className="exit-page-map-mobile">
-              {(width < 700) ? <Map
-                editable={false}
-                exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
-              /> : null }
+              {width < 700 ? (
+                <Map
+                  editable={false}
+                  exit_location={{ lat: +exitRes.lat, lng: +exitRes.lng }}
+                />
+              ) : null}
             </div>
             <ExitComments
               comments={exitComments}
@@ -96,6 +114,13 @@ function Exit() {
               <TabPanels>
                 <TabPanel>
                   <ExitImages class="wide" imgArr={exitImages} />
+                  <form onSubmit={() => submitExitImage(formData)}>
+                  <FileInput
+                    updateForm={(formData: FormData) => setFormData(formData)}
+                    isInvalidFileType={false}
+                  />
+                  <Button type="submit">Upload</Button>
+                  </form>
                 </TabPanel>
 
                 <TabPanel>
