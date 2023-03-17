@@ -15,7 +15,7 @@ router.post("/validate-file", upload, (req, res) => {
   ];
   if (!mimeTypes.includes(req.file.mimetype)) {
     res.status(415).send(false);
-  } else if (req.file.size / 1000000 > 10) {
+  } else if (req.file.size / (1024 * 1024) > 10) {
     res.status(413).send(false);
   } else {
     res.status(200).send(true);
