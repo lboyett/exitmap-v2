@@ -15,7 +15,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
@@ -70,7 +69,7 @@ export default function Map(props: MapProps) {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const mapStyle = lightMode ? null : darkMapStyle;
 
-  const { isLoaded } = useJsApiLoader({
+  const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: libraries,
@@ -79,6 +78,10 @@ export default function Map(props: MapProps) {
   useEffect(() => {
     if (isLoaded) console.log(`%c Map loaded`, "color: lime");
   }, [isLoaded]);
+
+  useEffect(() => {
+    if (isLoaded) console.log(loadError);
+  }, [loadError]);
 
   useEffect(() => {
     if (data !== undefined) setExits(data);

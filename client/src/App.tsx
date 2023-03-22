@@ -11,9 +11,23 @@ import "./app.css";
 import { ExitDataContext } from "./ExitDataContext";
 import { useState, useMemo, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modalErrorMessage, setModalErrorMessage] = useState("");
+
+  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
   const url = `http://localhost:8000/exits/reviewed`;
 
@@ -23,7 +37,8 @@ function App() {
         const { data } = (await axios.get(url)) as AxiosResponse;
         setExitDataContext(data);
       } catch (err: any) {
-        console.log(err);
+        onOpen();
+        setModalErrorMessage("Please try again or contact us.");
       }
     })();
   }, []);
@@ -56,6 +71,16 @@ function App() {
           <Route path="countries/:country_code/:exit_id" element={<Exit />} />
         </Routes>
       </ExitDataContext.Provider>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent className="modal" bg={bg_500}>
+          <ModalHeader className="modal-header" color="red">
+            Server Error
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{modalErrorMessage}</ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
