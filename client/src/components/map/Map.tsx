@@ -7,7 +7,19 @@ import {
   InfoWindowF,
   StandaloneSearchBox,
 } from "@react-google-maps/api";
-import { useColorModeValue, Text, Box } from "@chakra-ui/react";
+import {
+  useColorModeValue,
+  Text,
+  Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import Exit from "../../type-definitions/exit";
@@ -50,9 +62,12 @@ export default function Map(props: MapProps) {
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
   const [searchBox, setSearchBox] = useState<SearchBox>();
   const { data, error, loading } = useReviewedExitsFetch(); //FixThis
+  const [modalErrorMessage, setModalErrorMessage] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
   const lightMode = useColorModeValue(true, false);
+  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const mapStyle = lightMode ? null : darkMapStyle;
 
   const { isLoaded } = useJsApiLoader({
@@ -76,7 +91,7 @@ export default function Map(props: MapProps) {
         lat: props.exit_location.lat,
         lng: props.exit_location.lng,
       });
-      setZoom(15)
+      setZoom(15);
       return;
     }
     if (navigator.geolocation) {
@@ -98,9 +113,9 @@ export default function Map(props: MapProps) {
       });
   }
 
-  function navigateToExit(exit: Exit){
-      navigate(`../countries/${exit.country_code}/${exit._id}`);
-      navigate(0)
+  function navigateToExit(exit: Exit) {
+    navigate(`../countries/${exit.country_code}/${exit._id}`);
+    navigate(0);
   }
 
   async function handleMapClick(lat: number, lng: number) {
@@ -119,8 +134,18 @@ export default function Map(props: MapProps) {
       });
       const l = response.results.length;
       return response.results[l - 1].address_components[0].short_name;
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      if (err.code === "OVER_QUERY_LIMIT") {
+        onOpen();
+        setModalErrorMessage(
+          "You have exceeded your geocoder limit. In order to keep ExitMap free, please limit your clicks on the map."
+        );
+      } else {
+        onOpen();
+        setModalErrorMessage(
+          "Error choosing location on map. Please try again or contact us."
+        );
+      }
     }
   }
 
@@ -195,6 +220,16 @@ export default function Map(props: MapProps) {
           ) : null}
           {exitPageLocation ? <MarkerF position={exitPageLocation} /> : null}
         </GoogleMap>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent className="modal" bg={bg_500}>
+            <ModalHeader className="modal-header" color="red">
+              Geocoder Error
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>{modalErrorMessage}</ModalBody>
+          </ModalContent>
+        </Modal>
       </Box>
     );
   } else {
