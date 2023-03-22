@@ -135,3 +135,15 @@ export async function addExit({
     );
   });
 }
+
+export async function deleteExit(id: number) {
+  return new Promise((resolve, reject) => {
+    pool.query("DELETE FROM exits WHERE _id = $1", [id], (err, results) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      resolve(results.rowCount);
+    });
+  });
+}

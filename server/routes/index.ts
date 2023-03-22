@@ -13,6 +13,7 @@ import {
   getExit,
   getReviewedExits,
   addExit,
+  deleteExit,
 } from "../controllers/exitController";
 import {
   getExitImages,
@@ -22,6 +23,8 @@ import {
 import { getExitComments, addComment } from "../controllers/commentController";
 import { addUser } from "../controllers/userController";
 const router = express.Router();
+
+// =========================== Exits ===========================
 
 router.get("/exits/reviewed", async (req, res, next) => {
   try {
@@ -63,6 +66,18 @@ router.post("/exits", async (req, res, next) => {
   }
 });
 
+router.delete("/exits/:id", async (req, res, next) => {
+  try {
+    const response = (await deleteExit(+req.params.id)) as QueryResult | number;
+    console.log(response);
+    if (response === 0) throw new Error("Delete failed");
+    res.status(200).send(response.toString()); //FixThis
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+});
+
 // router.post("/users", async (req, res, next) => {
 //   const user_data = req.body.headers;
 //   try {
@@ -89,7 +104,7 @@ router.post("/users", async (req, res, next) => {
   }
 });
 
-//-------- IMAGES ----------------------
+//=========================== IMAGES ===========================
 
 const s3 = new AWS.S3Client({
   apiVersion: "2006-03-01",

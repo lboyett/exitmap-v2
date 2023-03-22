@@ -46,6 +46,7 @@ const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
 const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
+// =========================== Exits ===========================
 router.get("/exits/reviewed", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield (0, exitController_1.getReviewedExits)();
@@ -86,6 +87,19 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.status(500).send(err);
     }
 }));
+router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = (yield (0, exitController_1.deleteExit)(+req.params.id));
+        console.log(response);
+        if (response === 0)
+            throw new Error("Delete failed");
+        res.status(200).send(response.toString()); //FixThis
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err.message);
+    }
+}));
 // router.post("/users", async (req, res, next) => {
 //   const user_data = req.body.headers;
 //   try {
@@ -110,7 +124,7 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.send(err);
     }
 }));
-//-------- IMAGES ----------------------
+//=========================== IMAGES ===========================
 const s3 = new AWS.S3Client({
     apiVersion: "2006-03-01",
     region: "eu-central-1",

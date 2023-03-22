@@ -101,20 +101,44 @@ export async function submitExitDataWithoutImage(exit_data: any) {
   }
 }
 export async function submitExitDataWithImage(
-  exit_data: any,
+  exit_data: any, //FixThis
   formData: FormData
 ) {
+  try {
+    const exit_id = await postExit(exit_data);
+    await postImage(formData, exit_id);
+  } catch (err) {
+    console.log("theres an error");
+    throw err;
+  }
+}
+
+async function postExit(exit_data: any) {
   const exitUrl = "http://localhost:8000/exits";
-  const imageUrl = "http://localhost:8000/images";
   try {
     const { data } = await axios.post(exitUrl, exit_data);
-    formData?.delete("exit");
-    formData?.delete("submitted_by");
-    formData?.append("exit", data._id);
-    formData?.append("submitted_by", "1"); //USERID
+    return data._id;
+  } catch (err) {
+    throw err; //FixThis
+  }
+}
+
+async function postImage(formData: FormData, exit_id: any) {
+  const exitUrl = "http://localhost:8000/exits";
+  const imageUrl = "http://localhost:8000/images";
+  formData?.delete("exit");
+  formData?.delete("submitted_by");
+  formData?.append("exit", exit_id);
+  formData?.append("submitted_by", "1"); //USERID
+  try {
     await axios.post(imageUrl, formData);
   } catch (err) {
-    return err;
+    try {
+      const res = await axios.delete(`${exitUrl}/${exit_id}`);
+      throw err;
+    } catch (err) {
+      throw err; //FixThis
+    }
   }
 }
 
