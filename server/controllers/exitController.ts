@@ -128,7 +128,6 @@ export async function addExit({
           reject(err);
         }
         if (results.rows) {
-          console.log(results.rows);
           resolve(results.rows[0]);
         }
       }

@@ -21,5 +21,5 @@ export default function useReviewedExitsFetch() {
       }
     })();
   }, []);
-  return { data, error, loading};
+  return { data, error, loading };
 }

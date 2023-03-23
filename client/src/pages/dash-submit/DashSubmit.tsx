@@ -38,6 +38,7 @@ function DashSubmit() {
             country_code={countryCode}
             onSuccess={() => {
               setSubmitSuccess(true);
+              setAddedMarker(undefined);
             }}
           />
         )}

@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -38,9 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const multer_s3_1 = __importDefault(require("multer-s3"));
-const AWS = __importStar(require("@aws-sdk/client-s3"));
+const client_s3_1 = require("@aws-sdk/client-s3");
+const client_s3_2 = require("@aws-sdk/client-s3");
 const uniqid_1 = __importDefault(require("uniqid"));
 const path_1 = __importDefault(require("path"));
+const s3_request_presigner_1 = require("@aws-sdk/s3-request-presigner");
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
@@ -90,7 +69,6 @@ router.post("/exits", (req, res, next) => __awaiter(void 0, void 0, void 0, func
 router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = (yield (0, exitController_1.deleteExit)(+req.params.id));
-        console.log(response);
         if (response === 0)
             throw new Error("Delete failed");
         res.status(200).send(response.toString()); //FixThis
@@ -125,7 +103,7 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 //=========================== IMAGES ===========================
-const s3 = new AWS.S3Client({
+const s3 = new client_s3_1.S3Client({
     apiVersion: "2006-03-01",
     region: "eu-central-1",
 });
@@ -158,12 +136,29 @@ function uploadFile(req, res, next) {
         }
     });
 }
-router.post("/images", uploadFile, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const exit = req.body.exit;
-    const submitted_by = req.body.submitted_by;
-    const url = req.file.location;
-    const key = req.file.key;
-    console.log(req.file);
+router.get("/signed-url", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const key = `${Date.now()}-${(0, uniqid_1.default)()}`;
+    const s3 = new client_s3_1.S3Client({
+        apiVersion: "2006-03-01",
+        region: "eu-central-1",
+    });
+    const command = new client_s3_2.PutObjectCommand({
+        Bucket: "lboyett-exitmap-v2",
+        Key: key,
+    });
+    try {
+        const url = yield (0, s3_request_presigner_1.getSignedUrl)(s3, command, {
+            expiresIn: 30,
+        });
+        res.send({ signedUrl: url, key: key });
+    }
+    catch (err) {
+        console.log(err);
+    }
+}));
+router.post("/images", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { submitted_by, exit, url, key } = req.body;
+    console.log(req.body);
     try {
         const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url, key));
         res.status(200).send(response.rows[0]);

@@ -108,7 +108,6 @@ export async function submitExitDataWithImage(
     const exit_id = await postExit(exit_data);
     await postImage(formData, exit_id);
   } catch (err) {
-    console.log("theres an error");
     throw err;
   }
 }
@@ -123,16 +122,40 @@ async function postExit(exit_data: any) {
   }
 }
 
+async function getSignedUrl() {
+  const url = "http://localhost:8000/signed-url";
+  try {
+    const { data } = await axios.get(url);
+    return data;
+  } catch (err) {
+    console.log("this is an error");
+    throw err;
+  }
+}
+
 async function postImage(formData: FormData, exit_id: any) {
   const exitUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
   formData?.delete("exit");
   formData?.delete("submitted_by");
-  formData?.append("exit", exit_id);
-  formData?.append("submitted_by", "1"); //USERID
+  //formData?.append("exit", exit_id);
+  //formData?.append("submitted_by", "1"); //USERID
   try {
-    await axios.post(imageUrl, formData);
+    const { signedUrl, key } = await getSignedUrl();
+    const file = formData.get("image") as File;
+    await axios.put(signedUrl, file, {
+      headers: {
+        "Content-Type": file.type,
+      },
+    });
+    await axios.post(imageUrl, {
+      submitted_by: 1, //USERID
+      exit: exit_id,
+      url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
+      key: key,
+    });
   } catch (err) {
+    console.log(err);
     try {
       const res = await axios.delete(`${exitUrl}/${exit_id}`);
       throw err;

@@ -1,13 +1,14 @@
 import express, { Express, Request, Response } from "express";
 import multer from "multer";
 import multerS3 from "multer-s3";
-import * as AWS from "@aws-sdk/client-s3";
-import { GetObjectCommand, ListObjectsCommand } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
+import { ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 import { QueryResult } from "pg";
 import uniqid from "uniqid";
 import path from "path";
 import passport from "passport";
 import fs from "fs";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import {
   getExit,
@@ -69,7 +70,6 @@ router.post("/exits", async (req, res, next) => {
 router.delete("/exits/:id", async (req, res, next) => {
   try {
     const response = (await deleteExit(+req.params.id)) as QueryResult | number;
-    console.log(response);
     if (response === 0) throw new Error("Delete failed");
     res.status(200).send(response.toString()); //FixThis
   } catch (err: any) {
@@ -106,11 +106,13 @@ router.post("/users", async (req, res, next) => {
 
 //=========================== IMAGES ===========================
 
-const s3 = new AWS.S3Client({
+const s3 = new S3Client({
   apiVersion: "2006-03-01",
   region: "eu-central-1",
 });
+
 const bucketName = "lboyett-exitmap-v2";
+
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -139,12 +141,29 @@ function uploadFile(req: Request, res: Response, next: Function) {
   });
 }
 
-router.post("/images", uploadFile, async (req, res, next) => {
-  const exit = req.body.exit;
-  const submitted_by = req.body.submitted_by;
-  const url = req.file.location;
-  const key = req.file.key;
-  console.log(req.file);
+router.get("/signed-url", async (req, res, next) => {
+  const key = `${Date.now()}-${uniqid()}`;
+  const s3 = new S3Client({
+    apiVersion: "2006-03-01",
+    region: "eu-central-1",
+  });
+  const command = new PutObjectCommand({
+    Bucket: "lboyett-exitmap-v2",
+    Key: key,
+  });
+  try {
+    const url = await getSignedUrl(s3 as any, command as any, {
+      expiresIn: 30,
+    });
+    res.send({ signedUrl: url, key: key });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/images", async (req, res, next) => {
+  const { submitted_by, exit, url, key } = req.body;
+  console.log(req.body);
   try {
     const response = (await addImage(
       submitted_by,
