@@ -1,6 +1,18 @@
 import "./exit-details.css";
 import { useState, useEffect } from "react";
-import { Flex, Box, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Text,
+  useColorModeValue,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Heading,
+  Spacer,
+} from "@chakra-ui/react";
 import {
   FaRegBuilding,
   FaBroadcastTower,
@@ -266,52 +278,38 @@ function ExitDetails(props: any) {
           </Text>
         </Flex>
       </Box>
+      <Accordion allowMultiple className="accordion" borderColor={txt_300}>
+        <AccordionItem borderTop="none">
+          <AccordionButton padding="0.5rem 0">
+            <Heading fontWeight={400} color={txt_300}>
+              Approach & Access
+            </Heading>
+            <Spacer />
+            <AccordionIcon color={txt_300} />
+          </AccordionButton>
+          <AccordionPanel>
+            <Flex gap={"6px"} fontSize={"1.2rem"}>
+              <FaHiking className="exit-card-hiking-icon" />
+              <Text className="exit-card-hiking-time">
+                {props.exit.hiking_time_hrs} hrs {props.exit.hiking_time_mins}{" "}
+                min
+              </Text>
+            </Flex>
+            {props.exit.access_approach}
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton padding="0.5rem 0">
+            <Heading fontWeight={400} color={txt_300}>
+              Landing Area
+            </Heading>
+            <Spacer />
 
-      <Box
-        className="exit-access-container"
-        color={txt_300}
-        borderColor={txt_300}
-      >
-        <Flex className="exit-access" onClick={() => showTextAccess()}>
-          Access and Approach
-          <FaTimes
-            className={`exit-x ${activeXAccess}`}
-            onClick={() => showTextAccess()}
-          />
-        </Flex>
-        <Box
-          className={`exit-access-description ${activeAccess}`}
-          color={"white"}
-        >
-          <Flex gap={"6px"} fontSize={"1.2rem"}>
-            <FaHiking className="exit-card-hiking-icon" />
-            <Text className="exit-card-hiking-time">
-              {props.exit.hiking_time_hrs} hrs {props.exit.hiking_time_mins} min
-            </Text>
-          </Flex>
-          {props.exit.access_approach}
-        </Box>
-      </Box>
-
-      <Box
-        className="exit-landing-container"
-        color={txt_300}
-        borderColor={txt_300}
-      >
-        <Flex className="exit-landing" onClick={() => showTextLanding()}>
-          Landing Area
-          <FaTimes
-            className={`exit-x ${activeXLanding}`}
-            onClick={() => showTextLanding()}
-          />
-        </Flex>
-        <Text
-          className={`exit-landing-description ${activeLanding}`}
-          color={"white"}
-        >
-          {props.exit.landing_area}
-        </Text>
-      </Box>
+            <AccordionIcon color={txt_300} />
+          </AccordionButton>
+          <AccordionPanel>{props.exit.landing_area}</AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
