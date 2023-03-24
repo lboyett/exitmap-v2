@@ -19,6 +19,7 @@ const client_s3_1 = require("@aws-sdk/client-s3");
 const client_s3_2 = require("@aws-sdk/client-s3");
 const uniqid_1 = __importDefault(require("uniqid"));
 const path_1 = __importDefault(require("path"));
+const passport_1 = __importDefault(require("passport"));
 const s3_request_presigner_1 = require("@aws-sdk/s3-request-presigner");
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
@@ -89,9 +90,38 @@ router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0
 //     res.status(500).send(err);
 //   }
 // });
-router.post("/login", (req, res, next) => {
-    console.log("You just posted to the /login route");
+// router.post("/login", (req, res, next) => {
+//   const login_data = req.body.headers;
+//   console.log(login_data);
+// });
+router.post("/login", passport_1.default.authenticate('local', {
+    successRedirect: '/success',
+    failureRedirect: '/failure'
+}));
+router.get("/success", (req, res) => {
+    console.log("SUCCESS!!!!!!!!!!!!");
 });
+router.get("/failure", (req, res) => {
+    console.log("FAILURE!!!!!!!!!!!!");
+});
+// router.post("/populate-test-users", (req, res, next) => {
+//   let salt = crypto.randomBytes(16);
+//   pool.query('INSERT INTO users (username, first_name, last_name, email, hashed_password, salt, is_approved, is_admin, is_deleted) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
+//     req.body.username, 
+//     req.body.first_name, 
+//     req.body.last_name, 
+//     req.body.email, 
+//     crypto.pbkdf2Sync(req.body.password, salt, 310000, 32, 'sha256'),
+//     salt, 
+//     true, 
+//     true, 
+//     false
+//   ])
+// })
+router.post("/populate-test-users", (req, res, next) => {
+    (0, userController_1.populateTestUsers)();
+});
+// YOU NEED TO FIGURE OUT HOW TO POPULATE MULTIPLE USERS ALL AT ONE CLICK OF THE BUTTON
 router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user_data = req.body.headers;
     try {

@@ -1,7 +1,27 @@
-.auth-test {
-	background-color: white;
-	color: black;
-	height: 50px;
-	width: 180px;
-	margin: 40px;
+.login-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  color: white;
+  background-color: rgb(32, 33, 36);
+  height: 370px;
+  width: 400px;
+  border-radius: 1rem;
+  padding-left: 3%;
+  padding-right: 5%;
+  padding-top: 2rem;
+}
+
+.login-form > h2 {
+  font-weight: 300 !important;
+	margin-bottom: 1rem;
+}
+
+.login-form .chakra-form-control > input {
+	margin-bottom: 1rem;
 }

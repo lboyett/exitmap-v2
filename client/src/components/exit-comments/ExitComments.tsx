@@ -14,7 +14,7 @@ import "./exit-comments.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
-import { format, formatDistance, endOfDay } from "date-fns";
+import { format, formatDistance, endOfDay, endOfSecond, startOfSecond } from "date-fns";
 
 export interface commentsTypes {
   author: number;
@@ -130,34 +130,39 @@ function ExitComments(props: ExitCommentsPropTypes) {
           </FormControl>
         </form>
 
-        {comments.sort((a, b) => b.comment_created_at.localeCompare(a.comment_created_at)).slice(0, numComments).map((comment: any, i: number) => {
-          return (
-            <Flex className="comment" key={i}>
-              <Image src={avatar} className="avatar-comments" />
-              <Box>
-                <Flex alignItems={"center"}>
-                  <Text className="comment-username">
-                    {"@" + comment.username}
-                  </Text>
-                  <Text fontWeight={"200"} fontSize="0.8rem">
-                    {formatDistance(
-                      new Date(comment.comment_created_at),
-                      endOfDay(new Date()),
-                      { addSuffix: true }
-                    )}
-                  </Text>
-                </Flex>
-                <Text>{comment.comment}</Text>
-              </Box>
-            </Flex>
-          );
-        })}
+        {comments
+          .sort((a, b) =>
+            b.comment_created_at.localeCompare(a.comment_created_at)
+          )
+          .slice(0, numComments)
+          .map((comment: any, i: number) => {
+            return (
+              <Flex className="comment" key={i}>
+                <Image src={avatar} className="avatar-comments" />
+                <Box>
+                  <Flex alignItems={"center"}>
+                    <Text className="comment-username">
+                      {"@" + comment.username}
+                    </Text>
+                    <Text fontWeight={"200"} fontSize="0.8rem">
+                      {formatDistance(
+                        new Date(comment.comment_created_at),
+                        startOfSecond(new Date()),
+                        { addSuffix: true }
+                      )}
+                    </Text>
+                  </Flex>
+                  <Text>{comment.comment}</Text>
+                </Box>
+              </Flex>
+            );
+          })}
         {comments.length > 3 && numComments < comments.length ? (
           <Button className="more-comments-button" onClick={showMoreComments}>
             View more comments
           </Button>
         ) : null}
-        {(numComments >= comments.length && comments.length > 3) ? (
+        {numComments >= comments.length && comments.length > 3 ? (
           <Button className="more-comments-button" onClick={showLessComments}>
             View less comments
           </Button>

@@ -7,7 +7,8 @@ import { QueryResult } from "pg";
 import uniqid from "uniqid";
 import path from "path";
 import passport from "passport";
-import fs from "fs";
+import pool from "../pool-config";
+import crypto from "crypto";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import {
@@ -22,7 +23,7 @@ import {
   getMainImageData,
 } from "../controllers/imageController";
 import { getExitComments, addComment } from "../controllers/commentController";
-import { addUser } from "../controllers/userController";
+import { addUser, populateTestUsers, UserData as UserDataType } from "../controllers/userController";
 const router = express.Router();
 
 // =========================== Exits ===========================
@@ -90,9 +91,44 @@ router.delete("/exits/:id", async (req, res, next) => {
 //   }
 // });
 
-router.post("/login", (req, res, next) => {
-  console.log("You just posted to the /login route");
-});
+// router.post("/login", (req, res, next) => {
+//   const login_data = req.body.headers;
+//   console.log(login_data);
+// });
+
+router.post("/login", passport.authenticate('local', {
+  successRedirect: '/success',
+  failureRedirect: '/failure'
+}));
+
+router.get("/success", (req, res) => {
+  console.log("SUCCESS!!!!!!!!!!!!")
+})
+
+router.get("/failure", (req, res) => {
+  console.log("FAILURE!!!!!!!!!!!!")
+})
+
+// router.post("/populate-test-users", (req, res, next) => {
+//   let salt = crypto.randomBytes(16);
+//   pool.query('INSERT INTO users (username, first_name, last_name, email, hashed_password, salt, is_approved, is_admin, is_deleted) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
+//     req.body.username, 
+//     req.body.first_name, 
+//     req.body.last_name, 
+//     req.body.email, 
+//     crypto.pbkdf2Sync(req.body.password, salt, 310000, 32, 'sha256'),
+//     salt, 
+//     true, 
+//     true, 
+//     false
+//   ])
+// })
+
+router.post("/populate-test-users", (req, res, next) => {
+  populateTestUsers()
+})
+
+// YOU NEED TO FIGURE OUT HOW TO POPULATE MULTIPLE USERS ALL AT ONE CLICK OF THE BUTTON
 
 router.post("/users", async (req, res, next) => {
   const user_data = req.body.headers;

@@ -1,10 +1,13 @@
+
 create table users (
 	_id int generated always as identity primary key not null,
 	username varchar(30) not null unique,
 	first_name varchar(255),
 	last_name varchar(255),
 	email citext not null unique,
-	password varchar(255) not null,
+	-- password varchar(255) not null,
+	hashed_password bytea,
+  salt bytea, 
 	is_approved boolean not null default false,
 	is_admin boolean not null default false,
 	is_deleted boolean not null default false,

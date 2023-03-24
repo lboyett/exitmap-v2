@@ -9,7 +9,7 @@
 .signup-box {
   color: white;
   background-color: rgb(32, 33, 36);
-  height: 700px;
+  height: 660px;
   width: 400px;
   border-radius: 1rem;
   padding-left: 3%;
@@ -19,6 +19,7 @@
 
 .signup-form > h2 {
   font-weight: 300 !important;
+	margin-bottom: 1rem;
 }
 
 .signup-form > label {

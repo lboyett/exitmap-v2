@@ -389,7 +389,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       <FormControl>
         <FormLabel>Description</FormLabel>
         <Textarea
-          resize="none"
           className={inputColorMode}
           name="description"
           required
@@ -398,7 +397,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       <FormControl>
         <FormLabel>Access and Approach</FormLabel>
         <Textarea
-          resize="none"
           className={inputColorMode}
           name="access_approach"
           required
@@ -407,7 +405,6 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       <FormControl>
         <FormLabel>Landing Area</FormLabel>
         <Textarea
-          resize="none"
           className={inputColorMode}
           name="landing_area"
         />
