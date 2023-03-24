@@ -136,10 +136,6 @@ async function getSignedUrl() {
 async function postImage(formData: FormData, exit_id: any) {
   const exitUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
-  formData?.delete("exit");
-  formData?.delete("submitted_by");
-  //formData?.append("exit", exit_id);
-  //formData?.append("submitted_by", "1"); //USERID
   try {
     const { signedUrl, key } = await getSignedUrl();
     const file = formData.get("image") as File;
