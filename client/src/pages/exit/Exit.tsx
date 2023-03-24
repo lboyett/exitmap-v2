@@ -42,7 +42,7 @@ function Exit() {
   const [exitRes, setExitRes] = useState<exit>();
   const [exitImages, setExitImages] = useState<imgArrType[]>();
   const [exitComments, setExitComments] = useState<commentsTypes[]>();
-  const [ noImage, setNoImage ] = useState(false)
+  const [noImage, setNoImage] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [formData, setFormData] = useState<FormData>();
   const [tabsIsLazy, setTabsIsLazy] = useState(true);
@@ -51,6 +51,7 @@ function Exit() {
 
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const lightMode = useColorModeValue(true, false);
 
   const exitsUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
@@ -60,7 +61,7 @@ function Exit() {
   }, []);
 
   useEffect(() => {
-    setNoImage(false)
+    setNoImage(false);
   }, [formData]);
 
   async function submitExitImage(formData: FormData | undefined) {
@@ -121,51 +122,70 @@ function Exit() {
           <Box className="exit-right">
             <Tabs isLazy={tabsIsLazy} align="center">
               <TabList className="tab-list">
-                <Tab _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}>
+                <Tab
+                  _selected={{
+                    color: `white`,
+                    bg: `${lightMode ? txt_500 : bg_500}`,
+                  }}
+                >
                   Images
                 </Tab>
-                <Tab _selected={{ color: `${txt_500}`, bg: `${bg_500}` }}>
+                <Tab
+                  _selected={{
+                    color: `white`,
+                    bg: `${lightMode ? txt_500 : bg_500}`,
+                  }}
+                >
                   <p onClick={changeIsLazy}>Map</p>
                 </Tab>
               </TabList>
 
               <TabPanels>
                 <TabPanel>
-
-                  <Modal isOpen={isOpen} onClose={() => {
-                    setNoImage(false)
-                    onClose()}
-                    }>
+                  <Modal
+                    isOpen={isOpen}
+                    onClose={() => {
+                      setNoImage(false);
+                      onClose();
+                    }}
+                  >
                     <ModalOverlay />
                     <ModalContent className="modal" bg={bg_500}>
                       <ModalCloseButton />
                       <ModalBody>
-                        <form onSubmit={(e) => {
-                          if (!formData) {
-                            e.preventDefault()
-                            setNoImage(true)
-                            return
-                          }
-                          submitExitImage(formData)
-                          }}>
+                        <form
+                          onSubmit={(e) => {
+                            if (!formData) {
+                              e.preventDefault();
+                              setNoImage(true);
+                              return;
+                            }
+                            submitExitImage(formData);
+                          }}
+                        >
                           <FileInput
                             updateForm={(formData: FormData) => {
-                              setFormData(formData)
-                            }
-                            }
+                              setFormData(formData);
+                            }}
                             isInvalidFileType={false}
                           />
-                          <Flex className='upload-button-container'>
-                          <Button type="submit">Upload</Button>
-                          {noImage ? <Text className='image-error-message'>Please upload an image</Text> : null}
+                          <Flex className="upload-button-container">
+                            <Button type="submit">Upload</Button>
+                            {noImage ? (
+                              <Text className="image-error-message">
+                                Please upload an image
+                              </Text>
+                            ) : null}
                           </Flex>
                         </form>
                       </ModalBody>
                     </ModalContent>
                   </Modal>
-                  
+
                   <ExitImages class="wide" imgArr={exitImages} />
-                  <Button onClick={onOpen} className='open-upload-modal-button'>Upload Image</Button>
+                  <Button onClick={onOpen} className="open-upload-modal-button">
+                    Upload Image
+                  </Button>
                 </TabPanel>
 
                 <TabPanel>
