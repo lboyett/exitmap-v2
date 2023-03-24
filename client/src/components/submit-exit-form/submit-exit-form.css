@@ -106,7 +106,7 @@ label {
 }
 
 textarea {
-  height: 100px !important;
+  min-height: 100px !important;
 }
 
 .submit-div {

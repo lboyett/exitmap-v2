@@ -150,7 +150,7 @@ function Exit() {
                     }}
                   >
                     <ModalOverlay />
-                    <ModalContent className="modal" bg={bg_500}>
+                    <ModalContent className="image-upload-modal" bg={bg_500}>
                       <ModalCloseButton />
                       <ModalBody>
                         <form

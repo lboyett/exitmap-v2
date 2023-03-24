@@ -19,6 +19,7 @@
 }
 .exit-page-map-mobile {
   display: none;
+  margin-top: 1rem;
 }
 
 .exit-page-map-wide {
@@ -44,12 +45,19 @@
     display: none;
   }
 }
+
 .upload-button-container {
   margin-top: 1rem;
   gap: 1rem;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 .image-error-message {
   color: red;
 }
+
+.chakra-modal__close-btn {
+  z-index: 1000;
+}
+

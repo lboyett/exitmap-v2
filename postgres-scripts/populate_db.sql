@@ -4,16 +4,18 @@ insert into
 	first_name,
 	last_name,
 	email,
-	"password",
+	hashed_password,
+	salt,
 	is_approved,
 	is_admin,
 	is_deleted)
 values 
-	('splitseam', 'Luke', 'Boyett', 'lboyett@gmail.com', 'luke', true, true, false),
-	('macjac16', 'Jackson', 'Boyett', 'jackson.boyett@gmail.com', 'jackson', true, true, false),
-	('dillfunk', 'Dill', 'Funk', 'dillfunk@gmail.com', 'dill', true, false, false),
-	('diddydootdat', 'Diddy', 'Doodat', 'diddydoodat@yahoo.com', 'diddy', true, false, false),
-	('stunkbeagle', 'Stunk', 'Beagle', 'stunkbeagle@gmail.com', 'stunk', false, false, false);
+	('splitseam', 'Luke', 'Boyett', 'lboyett@gmail.com', 'luke', 'D;%yL9TS:5PalS/d', true, true, false),
+	('macjac16', 'Jackson', 'Boyett', 'jackson.boyett@gmail.com', 'jackson', 'D;%yL9TS:5PalS/d', true, true, false),
+	('dillfunk', 'Dill', 'Funk', 'dillfunk@gmail.com', 'dill', 'D;%yL9TS:5PalS/d', true, false, false),
+	('diddydootdat', 'Diddy', 'Doodat', 'diddydoodat@yahoo.com', 'diddy', 'D;%yL9TS:5PalS/d', true, false, false),
+	('stunkbeagle', 'Stunk', 'Beagle', 'stunkbeagle@gmail.com', 'stunk', 'D;%yL9TS:5PalS/d', false, false, false),
+	('', '', '', '', '', '', true, true, false);
 
 
 insert into 

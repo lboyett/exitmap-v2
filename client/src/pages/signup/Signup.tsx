@@ -98,6 +98,10 @@ function Signup() {
     setCapState(value);
   }
 
+  function navigateToLogin() {
+    navigate('/login')
+  }
+
   return (
     <div className="signup-page">
       <div className={`signup-box ${inputColorMode}`}>
@@ -147,7 +151,7 @@ function Signup() {
             <Button type="submit" bg={txt_500} color={out_500}>
               SUBMIT
             </Button>
-            <Text className="already-registered">Already registered?</Text>
+            <Text onClick={navigateToLogin} className="already-registered">Already registered?</Text>
           </Flex>
         </form>
       </div>
