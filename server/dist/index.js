@@ -33,19 +33,16 @@ app.use("/", index_1.default);
 app.use("/utilities", utilities_1.default);
 // Authentication session
 passport_1.default.use(new passport_local_1.Strategy(function verify(username, password, cb) {
-    console.log("LOCAL STRAT IS BEING CALLED");
-    console.log(`Username: ${username}`);
-    console.log(`Password: ${password}`);
     pool_config_1.default.query("SELECT * FROM users WHERE email = $1", [username], function (err, user) {
         if (err) {
+            console.log("MOTHERFUCKING BITCH!!!!!!!!!!!!!!!");
             return cb(err);
         }
-        if (!user) {
+        if (!user || !user.rows[0]) { // For some reason, passport will continue with authentication with an undefined user, so I had to add in the second guard clause of !user.rows[0]
             return cb(null, false, {
                 message: "Incorrect username or password.",
             });
         }
-        console.log(user.rows[0]);
         crypto_1.default.pbkdf2(password, user.rows[0].salt, 310000, 32, "sha256", function (err, hashedPassword) {
             if (err) {
                 return cb(err);
