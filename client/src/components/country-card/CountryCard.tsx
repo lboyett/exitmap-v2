@@ -29,9 +29,13 @@ export default function CountryCard({ country }: CountryCardProps) {
   const [image, setImage] = useState<any>(null);
   const url = `http://localhost:8000/country-images/${country.code}.webp`;
   const flagUrl = `http://localhost:8000/country-flags/${country.code}.svg`;
+  const [tryFallback, setTryFallback] = useState(true);
 
   function imageFallback(e: SyntheticEvent<HTMLImageElement, Event>) {
-    e.currentTarget.src = flagUrl;
+    if (tryFallback) {
+      e.currentTarget.src = flagUrl;
+      setTryFallback(false);
+    }
   }
 
   return (

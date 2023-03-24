@@ -94,9 +94,9 @@ router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0
 //   const login_data = req.body.headers;
 //   console.log(login_data);
 // });
-router.post("/login", passport_1.default.authenticate('local', {
-    successRedirect: '/success',
-    failureRedirect: '/failure'
+router.post("/login", passport_1.default.authenticate("local", {
+    successRedirect: "/success",
+    failureRedirect: "/failure",
 }));
 router.get("/success", (req, res) => {
     console.log("SUCCESS!!!!!!!!!!!!");
@@ -107,14 +107,14 @@ router.get("/failure", (req, res) => {
 // router.post("/populate-test-users", (req, res, next) => {
 //   let salt = crypto.randomBytes(16);
 //   pool.query('INSERT INTO users (username, first_name, last_name, email, hashed_password, salt, is_approved, is_admin, is_deleted) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
-//     req.body.username, 
-//     req.body.first_name, 
-//     req.body.last_name, 
-//     req.body.email, 
+//     req.body.username,
+//     req.body.first_name,
+//     req.body.last_name,
+//     req.body.email,
 //     crypto.pbkdf2Sync(req.body.password, salt, 310000, 32, 'sha256'),
-//     salt, 
-//     true, 
-//     true, 
+//     salt,
+//     true,
+//     true,
 //     false
 //   ])
 // })

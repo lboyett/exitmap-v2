@@ -21,46 +21,76 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false,
-}));
-app.use(passport.authenticate('session'));
+app.use(express.static(path.join(__dirname, "../public")));
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.authenticate("session"));
 
 app.use("/", indexRouter);
 app.use("/utilities", utilitiesRouter);
 
 // Authentication session
 
-passport.use(new LocalStrategy(function verify(username, password, cb) {
-  console.log('LOCAL STRAT IS BEING CALLED')
-  console.log(`Username: ${username}`)
-  console.log(`Password: ${password}`)
-  pool.query('SELECT * FROM users WHERE email = $1', [ username ], function(err, user) {
-    if (err) { return cb(err); }
-    if (!user) { return cb(null, false, { message: 'Incorrect username or password.' }); }
-    console.log(user.rows[0])
+passport.use(
+  new LocalStrategy(function verify(username, password, cb) {
+    console.log("LOCAL STRAT IS BEING CALLED");
+    console.log(`Username: ${username}`);
+    console.log(`Password: ${password}`);
+    pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [username],
+      function (err, user) {
+        if (err) {
+          return cb(err);
+        }
+        if (!user) {
+          return cb(null, false, {
+            message: "Incorrect username or password.",
+          });
+        }
+        console.log(user.rows[0]);
 
-    crypto.pbkdf2(password, user.rows[0].salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-      if (err) { return cb(err); }
-      if (!crypto.timingSafeEqual(user.rows[0].hashed_password, hashedPassword)) {
-        return cb(null, false, { message: 'Incorrect username or password.' });
+        crypto.pbkdf2(
+          password,
+          user.rows[0].salt,
+          310000,
+          32,
+          "sha256",
+          function (err, hashedPassword) {
+            if (err) {
+              return cb(err);
+            }
+            if (
+              !crypto.timingSafeEqual(
+                user.rows[0].hashed_password,
+                hashedPassword
+              )
+            ) {
+              return cb(null, false, {
+                message: "Incorrect username or password.",
+              });
+            }
+            return cb(null, user);
+          }
+        );
       }
-      return cb(null, user);
-    });
-  });
-}));
+    );
+  })
+);
 
-passport.serializeUser(function(user: any, cb) {
-  process.nextTick(function() {
+passport.serializeUser(function (user: any, cb) {
+  process.nextTick(function () {
     cb(null, { id: user.id, username: user.username });
   });
 });
 
-passport.deserializeUser(function(user: any, cb) {
-  process.nextTick(function() {
+passport.deserializeUser(function (user: any, cb) {
+  process.nextTick(function () {
     return cb(null, user);
   });
 });
@@ -68,7 +98,7 @@ passport.deserializeUser(function(user: any, cb) {
 app.use((req, res) => {
   res.status(404);
   if (req.accepts("html")) {
-    res.status(404).send("<div>404: Not Found</div>")
+    res.status(404).send("<div>404: Not Found</div>");
     return;
   }
   if (req.accepts("json")) {

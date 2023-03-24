@@ -22,34 +22,38 @@ app.use((0, cors_1.default)());
 app.use((0, morgan_1.default)("dev"));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
-app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+app.use(express_1.default.static(path_1.default.join(__dirname, "../public")));
 app.use((0, express_session_1.default)({
-    secret: 'keyboard cat',
+    secret: "keyboard cat",
     resave: false,
     saveUninitialized: false,
 }));
-app.use(passport_1.default.authenticate('session'));
+app.use(passport_1.default.authenticate("session"));
 app.use("/", index_1.default);
 app.use("/utilities", utilities_1.default);
 // Authentication session
 passport_1.default.use(new passport_local_1.Strategy(function verify(username, password, cb) {
-    console.log('LOCAL STRAT IS BEING CALLED');
+    console.log("LOCAL STRAT IS BEING CALLED");
     console.log(`Username: ${username}`);
     console.log(`Password: ${password}`);
-    pool_config_1.default.query('SELECT * FROM users WHERE email = $1', [username], function (err, user) {
+    pool_config_1.default.query("SELECT * FROM users WHERE email = $1", [username], function (err, user) {
         if (err) {
             return cb(err);
         }
         if (!user) {
-            return cb(null, false, { message: 'Incorrect username or password.' });
+            return cb(null, false, {
+                message: "Incorrect username or password.",
+            });
         }
         console.log(user.rows[0]);
-        crypto_1.default.pbkdf2(password, user.rows[0].salt, 310000, 32, 'sha256', function (err, hashedPassword) {
+        crypto_1.default.pbkdf2(password, user.rows[0].salt, 310000, 32, "sha256", function (err, hashedPassword) {
             if (err) {
                 return cb(err);
             }
             if (!crypto_1.default.timingSafeEqual(user.rows[0].hashed_password, hashedPassword)) {
-                return cb(null, false, { message: 'Incorrect username or password.' });
+                return cb(null, false, {
+                    message: "Incorrect username or password.",
+                });
             }
             return cb(null, user);
         });
