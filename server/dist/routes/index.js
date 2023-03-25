@@ -84,8 +84,16 @@ router.post("/login", passport_1.default.authenticate("local", {
     successRedirect: "/success",
     failureRedirect: "/failure",
 }));
+router.post('/logout', function (req, res, next) {
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
 router.get("/success", (req, res) => {
-    console.log("SUCCESS!!!!!!!!!!!!");
+    res.json('IT WORKSSSSSS');
 });
 router.get("/failure", (req, res) => {
     console.log("FAILURE!!!!!!!!!!!!");

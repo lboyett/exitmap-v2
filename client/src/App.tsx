@@ -8,7 +8,7 @@ import Country from "./pages/country/Country";
 import Exit from "./pages/exit/Exit";
 import { Routes, Route } from "react-router-dom";
 import "./app.css";
-import { ExitDataContext } from "./ExitDataContext";
+import { ExitDataContext } from "./context/ExitDataContext";
 import { useState, useMemo, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import {

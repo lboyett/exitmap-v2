@@ -6,7 +6,7 @@ import "./country.css";
 import { statesArr } from "../../data/states-data";
 import ExitCard from "../../components/exit-card/ExitCard";
 import Exit from "../../type-definitions/exit";
-import { ExitDataContext } from "../../ExitDataContext";
+import { ExitDataContext } from "../../context/ExitDataContext";
 import CountryType from "../../type-definitions/country-type";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
 import RegionCard from "../../components/region-card/RegionCard";

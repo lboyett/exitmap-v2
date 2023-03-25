@@ -83,16 +83,21 @@ router.delete("/exits/:id", async (req, res, next) => {
 
 //================== USERS AND AUTHENTICATION ==========================
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
+router.post("/login", passport.authenticate("local", {
     successRedirect: "/success",
     failureRedirect: "/failure",
   })
 );
 
+router.post('/logout', function(req, res, next) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
+
 router.get("/success", (req, res) => {
-  console.log("SUCCESS!!!!!!!!!!!!");
+  res.json('IT WORKSSSSSS');
 });
 
 router.get("/failure", (req, res) => {

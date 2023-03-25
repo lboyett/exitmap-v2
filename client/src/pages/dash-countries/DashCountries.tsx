@@ -12,7 +12,7 @@ import CountryCard from "../../components/country-card/CountryCard";
 import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
 import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
 import { useGetCountriesFromExit } from "../../hooks/useGetCountriesFromExits";
-import { ExitDataContext } from "../../ExitDataContext";
+import { ExitDataContext } from "../../context/ExitDataContext";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
 import Country from "../../type-definitions/country-type";
 import { countriesCodesJson } from "../../data/countries-with-codes";
