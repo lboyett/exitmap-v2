@@ -68,7 +68,8 @@ function Signup() {
     };
     try {
       const userRes = await axios.post(url, { headers });
-      navigate('/home')
+      // navigate('/home')
+      console.log(userRes.data)
     } catch (err: any) {
       console.log(err.response.data.constraint);
       handleError(err.response.data.constraint);

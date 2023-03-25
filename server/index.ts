@@ -38,22 +38,19 @@ app.use("/utilities", utilitiesRouter);
 
 passport.use(
   new LocalStrategy(function verify(username, password, cb) {
-    console.log("LOCAL STRAT IS BEING CALLED");
-    console.log(`Username: ${username}`);
-    console.log(`Password: ${password}`);
     pool.query(
       "SELECT * FROM users WHERE email = $1",
       [username],
       function (err, user) {
         if (err) {
+          console.log("MOTHERFUCKING BITCH!!!!!!!!!!!!!!!")
           return cb(err);
         }
-        if (!user) {
+        if (!user || !user.rows[0]) { // For some reason, passport will continue with authentication with an undefined user, so I had to add in the second guard clause of !user.rows[0]
           return cb(null, false, {
             message: "Incorrect username or password.",
           });
         }
-        console.log(user.rows[0]);
 
         crypto.pbkdf2(
           password,

@@ -12,6 +12,7 @@ export interface UserData {
   is_approved: boolean;
   is_admin: boolean;
   is_deleted: boolean;
+  password: string;
 }
 
 export async function addUser({
@@ -19,24 +20,26 @@ export async function addUser({
   last_name,
   username,
   email,
-  hashed_password,
+  password,
 }: UserData) {
   return new Promise((resolve, reject) => {
+    let salt = crypto.randomBytes(16)
     pool.query(
       `INSERT INTO users (
         first_name,
 				last_name,
 				username,
 				email,
-				hashed_password) values ($1,$2,$3,$4,$5)
+				hashed_password,
+        salt) values ($1,$2,$3,$4,$5, $6)
         RETURNING *`,
-      [first_name, last_name, username, email, hashed_password],
+      [first_name, last_name, username, email, crypto.pbkdf2Sync(password, salt, 310000, 32, 'sha256'), salt],
       (err, results) => {
         if (err) {
-          console.log('YOU A BITCH BITCH')
+          console.log('!!! There was an error attempting to add a new user !!!')
+          console.log(err)
           reject(err);
         }
-        // console.log(results)
         resolve(results);
       }
     );

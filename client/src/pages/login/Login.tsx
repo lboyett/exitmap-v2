@@ -1,10 +1,11 @@
 import './login.css';
 import axios from 'axios';
 import { useContext } from 'react';
-import { ExitDataContext } from '../../ExitDataContext';
+import { ExitDataContext } from '../../context/ExitDataContext';
 import { Heading, FormControl, FormLabel, Input, Flex, Button, Text, useColorModeValue, useColorMode  } from '@chakra-ui/react';
 import { EventType } from '@testing-library/react';
 import { useNavigate } from 'react-router';
+import { UserContext } from '../../context/UserContext';
 
 interface FormInputs extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -13,6 +14,7 @@ interface FormInputs extends HTMLFormControlsCollection {
 
 function Login() {
 	const navigate = useNavigate();
+  const [userContext, setUserContext] = useContext(UserContext)
 	const { colorMode, toggleColorMode } = useColorMode();
 	const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -20,33 +22,21 @@ function Login() {
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const out_500 = useColorModeValue("out_dark.500", "out_light.500");
 
-  const url = "http://localhost:8000/login";
-
-	// async function login() {
-	// 	try {
-	// 		const loginRes = await axios.post(url, {
-	// 			username: 'username',
-	// 			password: 'password',
-	// 		})
-	// 	} catch (err) {
-	// 		console.log('THERE IS AN ERROR')
-	// 	}
-	// }
-
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+    const url = "http://localhost:8000/login";
 		e.preventDefault();
-		const target = e.target as HTMLFormElement;
+		const target = e.target as HTMLFormElement; 
     const inputs = target.elements as FormInputs;
     const headers = {
       email: inputs.email.value,
       password: inputs.password.value,
     };
-
 		try {
 			const loginRes = await axios.post(url, { 
         username: inputs.email.value,
         password: inputs.password.value
        })
+       console.log(loginRes)
 		} catch (err) {
 			console.log('THERE IS AN ERROR')
 		}
