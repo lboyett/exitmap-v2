@@ -40,6 +40,7 @@ function ExitDetails(props: any) {
 
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
+  const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
 
   useEffect(() => {
@@ -154,6 +155,17 @@ function ExitDetails(props: any) {
     }
   }
 
+  function returnBF() {
+    switch (props.exit.bust_factor) {
+      case "0":
+        return "low";
+      case "0.5":
+        return "medium";
+      case "1":
+        return "high";
+    }
+  }
+
   return (
     <div>
       <Flex color={txt_300} className="exit-details">
@@ -212,7 +224,7 @@ function ExitDetails(props: any) {
                   <Box color={out_500}>
                     <GiHandcuffs />
                   </Box>
-                  low
+                  <Box bg={out_500}>{returnBF()}</Box>
                 </Flex>
               </Box>
             </Flex>

@@ -56,30 +56,42 @@ export default function FileInput({
       setFormData(undefined);
       return;
     }
-    try {
-      const res = (await validateFileOnServer(file)) as
-        | AxiosError
-        | AxiosResponse;
-      if (res instanceof AxiosError) throw res;
+    if (validateFileSize(file)) {
       setFileInvalid(false);
       setFileName(file.name);
       const formData = new FormData();
       formData.append("image", file);
       setFormData(formData);
       return;
-    } catch (err: any) {
+    } else {
       setFileInvalid(true);
-      if (err.response.status === 415) {
-        setErrorMessage(
-          `Please chooose a valid file type (jpeg, png, webp, avif, svg)`
-        );
-      } else if (err.response.status === 413) {
-        setErrorMessage(`Please chooose a file less than 10 MB`);
-      }
+      setErrorMessage(`Please chooose a file less than 10 MB`);
       setFileName("");
       setFormData(undefined);
-      return;
     }
+    // try {
+    //   if (validateFileSize(file)) {
+
+    //   }
+    //   setFileInvalid(false);
+    //   setFileName(file.name);
+    //   const formData = new FormData();
+    //   formData.append("image", file);
+    //   setFormData(formData);
+    //   return;
+    // } catch (err: any) {
+    //   setFileInvalid(true);
+    //   if (err.response.status === 415) {
+    //     setErrorMessage(
+    //       `Please chooose a valid file type (jpeg, png, webp, avif, svg)`
+    //     );
+    //   } else if (err.response.status === 413) {
+    //     setErrorMessage(`Please chooose a file less than 10 MB`);
+    //   }
+    //   setFileName("");
+    //   setFormData(undefined);
+    //   return;
+    // }
   }
 
   useEffect(() => {
@@ -97,6 +109,11 @@ export default function FileInput({
     if (!mimeTypes.includes(file.type)) {
       return false;
     }
+    return true;
+  }
+
+  function validateFileSize(file: File) {
+    if (file.size > 1024 * 1024) return false;
     return true;
   }
 
