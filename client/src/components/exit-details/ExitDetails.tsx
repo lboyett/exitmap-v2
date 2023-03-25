@@ -42,6 +42,7 @@ function ExitDetails(props: any) {
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
+  const lightMode = useColorModeValue(true, false);
 
   useEffect(() => {
     console.log(props.exit);
@@ -168,7 +169,7 @@ function ExitDetails(props: any) {
 
   return (
     <div>
-      <Flex color={txt_300} className="exit-details">
+      <Flex color={txt_500} className="exit-details">
         <Box className="exit-details-left" borderColor={txt_300}>
           <Flex className="exit-details-title" borderColor={txt_300}>
             Exit Details
@@ -262,23 +263,45 @@ function ExitDetails(props: any) {
 
         {width >= 875 || (width <= 700 && width >= 415) ? (
           <Box className="exit-details-right">
-            <Flex className="exit-legality" color={returnLegalColor()}>
+            <Flex
+              className="exit-legality"
+              color={returnLegalColor()}
+              mb="0.5rem"
+            >
               <Box color={out_500}>{returnLegalIcon()}</Box>
-              <Text className="legal-status">{returnLegalStatus()}</Text>
+              <Text
+                className="legal-status"
+                bg={lightMode ? out_500 : ""}
+                p="0 0.5rem"
+                borderRadius="5px"
+              >
+                {returnLegalStatus()}
+              </Text>
             </Flex>
             <Flex className="exit-legality" color={returnBFColor()}>
               <Box color={out_500}>
                 <GiHandcuffs />
               </Box>
-              low
+              <Box
+                bg={lightMode ? out_500 : ""}
+                p="0 0.5rem"
+                borderRadius="5px"
+              >
+                {returnBF()}
+              </Box>
             </Flex>
           </Box>
         ) : null}
       </Flex>
 
-      <Box className="exit-experience" color={txt_300} borderColor={txt_300}>
+      <Box className="exit-experience" color={txt_500} borderColor={txt_300}>
         Experience Level
-        <Flex className="exit-experience-bar">
+        <Flex
+          className="exit-experience-bar"
+          bg={lightMode ? out_500 : ""}
+          p="0 0.5rem"
+          borderRadius="5px"
+        >
           {experienceArr.map((circle, i) => {
             return <FaCircle color={circle} key={i} />;
           })}
@@ -293,11 +316,11 @@ function ExitDetails(props: any) {
       <Accordion allowMultiple className="accordion" borderColor={txt_300}>
         <AccordionItem borderTop="none">
           <AccordionButton padding="0.5rem 0">
-            <Heading fontWeight={400} color={txt_300}>
+            <Heading fontWeight={400} color={txt_500}>
               Approach & Access
             </Heading>
             <Spacer />
-            <AccordionIcon color={txt_300} />
+            <AccordionIcon color={txt_500} />
           </AccordionButton>
           <AccordionPanel>
             <Flex gap={"6px"} fontSize={"1.2rem"}>
@@ -312,12 +335,12 @@ function ExitDetails(props: any) {
         </AccordionItem>
         <AccordionItem>
           <AccordionButton padding="0.5rem 0">
-            <Heading fontWeight={400} color={txt_300}>
+            <Heading fontWeight={400} color={txt_500}>
               Landing Area
             </Heading>
             <Spacer />
 
-            <AccordionIcon color={txt_300} />
+            <AccordionIcon color={txt_500} />
           </AccordionButton>
           <AccordionPanel>{props.exit.landing_area}</AccordionPanel>
         </AccordionItem>
