@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Exit from "../type-definitions/exit";
 import axios, { AxiosResponse } from "axios";
 
-export default function useReviewedExitsFetch() {
+export default function getUserData(user_id: string) {
   const [loading, setLoading] = useState<boolean>();
   const [data, setData] = useState<Exit[]>();
   const [error, setError] = useState<any>();
 
-  const url = `http://localhost:8000/exits/reviewed`;
+  const url = `http://localhost:8000/users/${user_id}`;
   useEffect(() => {
     (async () => {
       try {

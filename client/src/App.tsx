@@ -75,7 +75,7 @@ function App() {
         <ModalOverlay />
         <ModalContent className="modal" bg={bg_500}>
           <ModalHeader className="modal-header" color="red">
-            Server Error
+            Network Error
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>{modalErrorMessage}</ModalBody>

@@ -16,16 +16,15 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   useColorMode,
   useColorModeValue,
   useDisclosure,
   List,
   ListItem,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,6 +46,10 @@ export default function NavBar(props: NavBarProps) {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
 
+  useEffect(() => {
+    (async () => {})();
+  }, []);
+
   return (
     <Flex className="navbar" bg={bg_500}>
       <Heading
@@ -58,7 +61,7 @@ export default function NavBar(props: NavBarProps) {
       >
         ExitMap
       </Heading>
-      <HStack className="navbar-links" zIndex={'1000'}>
+      <HStack className="navbar-links" zIndex={"1000"}>
         <Menu>
           <Box color={txt_500} className="navbar-icon">
             <MenuButton
