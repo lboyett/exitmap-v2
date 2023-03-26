@@ -79,21 +79,25 @@ router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0
         res.status(500).send(err.message);
     }
 }));
+router.get("/exits/by-user/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_id = req.params.id;
+    res.send(user_id);
+}));
 //================== USERS AND AUTHENTICATION ==========================
 router.post("/login", passport_1.default.authenticate("local", {
     successRedirect: "/success",
     failureRedirect: "/failure",
 }));
-router.post('/logout', function (req, res, next) {
+router.post("/logout", function (req, res, next) {
     req.logout(function (err) {
         if (err) {
             return next(err);
         }
-        res.redirect('/');
+        res.redirect("/");
     });
 });
 router.get("/success", (req, res) => {
-    res.json('IT WORKSSSSSS');
+    res.json("IT WORKSSSSSS");
 });
 router.get("/failure", (req, res) => {
     console.log("FAILURE!!!!!!!!!!!!");

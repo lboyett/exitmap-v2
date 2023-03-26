@@ -81,23 +81,32 @@ router.delete("/exits/:id", async (req, res, next) => {
   }
 });
 
+router.get("/exits/by-user/:id", async (req, res, next) => {
+  const user_id = req.params.id;
+  res.send(user_id);
+});
+
 //================== USERS AND AUTHENTICATION ==========================
 
-router.post("/login", passport.authenticate("local", {
+router.post(
+  "/login",
+  passport.authenticate("local", {
     successRedirect: "/success",
     failureRedirect: "/failure",
   })
 );
 
-router.post('/logout', function(req, res, next) {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/');
+router.post("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
   });
 });
 
 router.get("/success", (req, res) => {
-  res.json('IT WORKSSSSSS');
+  res.json("IT WORKSSSSSS");
 });
 
 router.get("/failure", (req, res) => {

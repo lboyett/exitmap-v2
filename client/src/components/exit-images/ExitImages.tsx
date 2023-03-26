@@ -1,4 +1,4 @@
-import { Image, Flex } from "@chakra-ui/react";
+import { Image, Flex, Box } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import "./exit-images.css";
 
@@ -43,7 +43,7 @@ function ExitImages(props: ExitImagesPropTypes) {
     return <></>;
   } else {
     return (
-      <div className={`exit-images-container-${props.class}`}>
+      <Box className={`exit-images-container-${props.class}`}>
         <Swiper
           effect={"slide"}
           grabCursor={true}
@@ -60,7 +60,7 @@ function ExitImages(props: ExitImagesPropTypes) {
             );
           })}
         </Swiper>
-      </div>
+      </Box>
     );
   }
 }

@@ -30,6 +30,8 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import avatar from "../../assets/avatar.jpeg";
+import axios from "axios";
+import Exit from "../../type-definitions/exit";
 
 type CurrentPage = "home" | "exits" | "submit";
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -45,9 +47,19 @@ export default function NavBar(props: NavBarProps) {
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
+  const [userExits, setUserExits] = useState<Exit[]>();
 
   useEffect(() => {
-    (async () => {})();
+    (async () => {
+      try {
+        const user_id = 1; //USERID
+        const url = `http://localhost:8000/exits/by-user/${user_id}`;
+        const data = (await axios.get(url)) as Exit[];
+        setUserExits(data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }, []);
 
   return (

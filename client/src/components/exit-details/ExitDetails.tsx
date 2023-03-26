@@ -217,15 +217,32 @@ function ExitDetails(props: any) {
                 </Flex>
               </Box>
               <Box className="exit-details-right">
-                <Flex className="exit-legality" color={returnLegalColor()}>
+                <Flex
+                  className="exit-legality"
+                  color={returnLegalColor()}
+                  mb="0.5rem"
+                >
                   <Box color={out_500}>{returnLegalIcon()}</Box>
-                  <Text className="legal-status">{returnLegalStatus()}</Text>
+                  <Text
+                    className="legal-status"
+                    bg={lightMode ? out_500 : ""}
+                    p="0 0.5rem"
+                    borderRadius="5px"
+                  >
+                    {returnLegalStatus()}
+                  </Text>
                 </Flex>
                 <Flex className="exit-legality" color={returnBFColor()}>
                   <Box color={out_500}>
                     <GiHandcuffs />
                   </Box>
-                  <Box bg={out_500}>{returnBF()}</Box>
+                  <Box
+                    bg={lightMode ? out_500 : ""}
+                    p="0 0.5rem"
+                    borderRadius="5px"
+                  >
+                    {returnBF()}
+                  </Box>
                 </Flex>
               </Box>
             </Flex>
