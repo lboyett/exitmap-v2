@@ -12,7 +12,6 @@ import path from "path";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import crypto from "crypto";
-import { QueryResult } from "pg";
 
 const app = express();
 const port = 8000;

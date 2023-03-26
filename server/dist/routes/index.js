@@ -20,12 +20,28 @@ const client_s3_2 = require("@aws-sdk/client-s3");
 const uniqid_1 = __importDefault(require("uniqid"));
 const path_1 = __importDefault(require("path"));
 const passport_1 = __importDefault(require("passport"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const s3_request_presigner_1 = require("@aws-sdk/s3-request-presigner");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
 const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
+function authenticateToken(req, res, next) {
+    const token = req.body.token;
+    if (token == null)
+        return res.sendStatus(401);
+    jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
+        if (err) {
+            console.log('THERE IS AN ERROR AUTHORIZING THE TOKEN!!!!!!!');
+            return res.sendStatus(403);
+        }
+        console.log('JWT IS AUTHORIZED!!!!!!!!!!');
+        next();
+    });
+}
 // =========================== Exits ===========================
 router.get("/exits/reviewed", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -80,10 +96,35 @@ router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0
     }
 }));
 //================== USERS AND AUTHENTICATION ==========================
-router.post("/login", passport_1.default.authenticate("local", {
-    successRedirect: "/success",
-    failureRedirect: "/failure",
-}));
+// router.post("/login", passport.authenticate("local", {
+//     successRedirect: "/success",
+//     failureRedirect: "/failure",
+//   })
+// );
+router.post('/login', function (req, res, next) {
+    passport_1.default.authenticate('local', { session: false }, (err, user, info) => {
+        if (err || !user) {
+            return res.status(400).json({
+                message: 'Something is not right',
+                user: user
+            });
+        }
+        req.login(user, { session: false }, (err) => {
+            if (err) {
+                res.send(err);
+            }
+            // generate a signed son web token with the contents of user object and return it in the response
+            const token = jsonwebtoken_1.default.sign({ user: user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 10080 });
+            return res.json({ user, token });
+        });
+    })(req, res);
+});
+router.get("/success", (req, res) => {
+    res.json('IT WORKSSSSSS');
+});
+router.get("/failure", (req, res) => {
+    console.log("FAILURE!!!!!!!!!!!!");
+});
 router.post('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) {
@@ -92,13 +133,7 @@ router.post('/logout', function (req, res, next) {
         res.redirect('/');
     });
 });
-router.get("/success", (req, res) => {
-    res.json('IT WORKSSSSSS');
-});
-router.get("/failure", (req, res) => {
-    console.log("FAILURE!!!!!!!!!!!!");
-});
-router.post("/populate-test-users", (req, res, next) => {
+router.post("/populate-test-users", authenticateToken, (req, res, next) => {
     (0, userController_1.populateTestUsers)();
 });
 router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

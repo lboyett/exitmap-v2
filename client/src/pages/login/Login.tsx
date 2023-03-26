@@ -36,7 +36,8 @@ function Login() {
         username: inputs.email.value,
         password: inputs.password.value
        })
-       console.log(loginRes)
+       setUserContext(loginRes.data.token)
+       localStorage.setItem('token', loginRes.data.token)
 		} catch (err) {
 			console.log('THERE IS AN ERROR')
 		}
@@ -53,6 +54,7 @@ function Login() {
       last_name: 'j',
       email: 'j@j.j',
       password: 'j',
+      token: localStorage.getItem('token')
     })
   }
 
