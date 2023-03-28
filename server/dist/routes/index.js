@@ -105,7 +105,7 @@ router.get("/exits/by-user/:id", (req, res, next) => __awaiter(void 0, void 0, v
 //     failureRedirect: "/failure",
 //   })
 // );
-router.post("/login", function (req, res, next) {
+router.post("/login", (req, res, next) => {
     passport_1.default.authenticate("local", { session: false }, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({

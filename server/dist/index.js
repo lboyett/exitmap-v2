@@ -35,12 +35,12 @@ app.use("/utilities", utilities_1.default);
 passport_1.default.use(new passport_local_1.Strategy(function verify(username, password, cb) {
     pool_config_1.default.query("SELECT * FROM users WHERE email = $1", [username], function (err, user) {
         if (err) {
-            console.log("MOTHERFUCKING BITCH!!!!!!!!!!!!!!!");
             return cb(err);
         }
-        if (!user || !user.rows[0]) { // For some reason, passport will continue with authentication with an undefined user, so I had to add in the second guard clause of !user.rows[0]
+        if (!user || !user.rows[0]) {
+            // For some reason, passport will continue with authentication with an undefined user, so I had to add in the second guard clause of !user.rows[0]
             return cb(null, false, {
-                message: "Incorrect username or password.",
+                message: "Incorrect email or password.",
             });
         }
         crypto_1.default.pbkdf2(password, user.rows[0].salt, 310000, 32, "sha256", function (err, hashedPassword) {

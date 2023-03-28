@@ -1,11 +1,21 @@
-import './login.css';
-import axios from 'axios';
-import { useContext } from 'react';
-import { ExitDataContext } from '../../context/ExitDataContext';
-import { Heading, FormControl, FormLabel, Input, Flex, Button, Text, useColorModeValue, useColorMode  } from '@chakra-ui/react';
-import { EventType } from '@testing-library/react';
-import { useNavigate } from 'react-router';
-import { UserContext } from '../../context/UserContext';
+import "./login.css";
+import axios from "axios";
+import { useContext } from "react";
+import { ExitDataContext } from "../../context/ExitDataContext";
+import {
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Flex,
+  Button,
+  Text,
+  useColorModeValue,
+  useColorMode,
+} from "@chakra-ui/react";
+import { EventType } from "@testing-library/react";
+import { useNavigate } from "react-router";
+import { UserContext } from "../../context/UserContext";
 
 interface FormInputs extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -13,53 +23,56 @@ interface FormInputs extends HTMLFormControlsCollection {
 }
 
 function Login() {
-	const navigate = useNavigate();
-  const [userContext, setUserContext] = useContext(UserContext)
-	const { colorMode, toggleColorMode } = useColorMode();
-	const lightMode = useColorModeValue(true, false);
+  const navigate = useNavigate();
+  const [userContext, setUserContext] = useContext(UserContext);
+  const { colorMode, toggleColorMode } = useColorMode();
+  const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
-	const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
+  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const out_500 = useColorModeValue("out_dark.500", "out_light.500");
 
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     const url = "http://localhost:8000/login";
-		e.preventDefault();
-		const target = e.target as HTMLFormElement; 
+    e.preventDefault();
+    const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     const headers = {
       email: inputs.email.value,
       password: inputs.password.value,
     };
-		try {
-			const loginRes = await axios.post(url, { 
+    try {
+      const loginRes = await axios.post(url, {
         username: inputs.email.value,
-        password: inputs.password.value
-       })
-       setUserContext(loginRes.data.token)
-       localStorage.setItem('token', loginRes.data.token)
-		} catch (err) {
-			console.log('THERE IS AN ERROR')
-		}
-	}
+        password: inputs.password.value,
+      });
+      setUserContext(loginRes);
+      localStorage.setItem("token", loginRes.data.token);
+    } catch (err) {
+      console.log("THERE IS AN ERROR");
+    }
+  }
 
-	function navigateToSignup() {
-    navigate('/signup')
+  function navigateToSignup() {
+    navigate("/signup");
   }
 
   async function populateUser() {
-    const userRes = await axios.post('http://localhost:8000/populate-test-users', {
-      username: 'j',
-      first_name: 'j',
-      last_name: 'j',
-      email: 'j@j.j',
-      password: 'j',
-      token: localStorage.getItem('token')
-    })
+    const userRes = await axios.post(
+      "http://localhost:8000/populate-test-users",
+      {
+        username: "j",
+        first_name: "j",
+        last_name: "j",
+        email: "j@j.j",
+        password: "j",
+        token: localStorage.getItem("token"),
+      }
+    );
   }
 
-	return ( 
-	<div className="login-page">
+  return (
+    <div className="login-page">
       <div className={`login-box ${inputColorMode}`}>
         <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
           <Heading
@@ -86,12 +99,20 @@ function Login() {
             <Button type="submit" bg={txt_500} color={out_500}>
               Sign In
             </Button>
-            <Text onClick={navigateToSignup} className="already-registered">Need an account?</Text>
+            <Text onClick={navigateToSignup} className="already-registered">
+              Need an account?
+            </Text>
           </Flex>
         </form>
-        <button style={{marginTop: '12px', background: 'blue'}} onClick={populateUser}>Click this to populate the DB with a proper user</button>
+        <button
+          style={{ marginTop: "12px", background: "blue" }}
+          onClick={populateUser}
+        >
+          Click this to populate the DB with a proper user
+        </button>
       </div>
-    </div> );
+    </div>
+  );
 }
 
 export default Login;

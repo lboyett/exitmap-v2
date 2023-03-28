@@ -112,7 +112,7 @@ router.get("/exits/by-user/:id", async (req, res, next) => {
 //   })
 // );
 
-router.post("/login", function (req, res, next) {
+router.post("/login", (req, res, next) => {
   passport.authenticate(
     "local",
     { session: false },

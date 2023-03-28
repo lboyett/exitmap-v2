@@ -42,12 +42,12 @@ passport.use(
       [username],
       function (err, user) {
         if (err) {
-          console.log("MOTHERFUCKING BITCH!!!!!!!!!!!!!!!")
           return cb(err);
         }
-        if (!user || !user.rows[0]) { // For some reason, passport will continue with authentication with an undefined user, so I had to add in the second guard clause of !user.rows[0]
+        if (!user || !user.rows[0]) {
+          // For some reason, passport will continue with authentication with an undefined user, so I had to add in the second guard clause of !user.rows[0]
           return cb(null, false, {
-            message: "Incorrect username or password.",
+            message: "Incorrect email or password.",
           });
         }
 
