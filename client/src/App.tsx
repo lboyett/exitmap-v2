@@ -9,7 +9,9 @@ import Exit from "./pages/exit/Exit";
 import { Routes, Route } from "react-router-dom";
 import "./app.css";
 import { ExitDataContext } from "./context/ExitDataContext";
-import { useState, useMemo, useEffect } from "react";
+import { UserContext } from "./context/UserContext";
+import getCurrentUser from "./utils/getCurrentUser";
+import { useState, useMemo, useEffect, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 import {
   Modal,
@@ -26,6 +28,7 @@ function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalErrorMessage, setModalErrorMessage] = useState("");
+  const [user, setUser] = useContext(UserContext);
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
@@ -47,6 +50,10 @@ function App() {
     () => ({ exitDataContext, setExitDataContext }),
     [exitDataContext, setExitDataContext]
   );
+
+  useEffect(() => {
+    (async () => setUser(await getCurrentUser()))();
+  }, []);
 
   return (
     <div

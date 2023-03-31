@@ -1,5 +1,6 @@
 import "./navbar.css";
 import {
+  Button,
   Box,
   Flex,
   Heading,
@@ -24,7 +25,7 @@ import {
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import avatar from "../../assets/avatar.jpeg";
 import axios from "axios";
 import Exit from "../../type-definitions/exit";
+import { UserContext } from "../../context/UserContext";
 
 type CurrentPage = "home" | "exits" | "submit";
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -48,6 +50,7 @@ export default function NavBar(props: NavBarProps) {
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
   const [userExits, setUserExits] = useState<Exit[]>();
+  const user = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
@@ -73,6 +76,7 @@ export default function NavBar(props: NavBarProps) {
       >
         ExitMap
       </Heading>
+      <Button onClick={() => console.log(user)}>User</Button>
       <HStack className="navbar-links" zIndex={"1000"}>
         <Menu>
           <Box color={txt_500} className="navbar-icon">

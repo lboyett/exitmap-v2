@@ -27,6 +27,7 @@ const exitController_1 = require("../controllers/exitController");
 const imageController_1 = require("../controllers/imageController");
 const commentController_1 = require("../controllers/commentController");
 const userController_1 = require("../controllers/userController");
+const authorizeUser_1 = __importDefault(require("../utils/authorizeUser"));
 const router = express_1.default.Router();
 function authenticateToken(req, res, next) {
     const token = req.signedCookies.token
@@ -43,6 +44,9 @@ function authenticateToken(req, res, next) {
         next();
     });
 }
+router.get("/test-authorization", authorizeUser_1.default, (req, res) => {
+    res.send("ok");
+});
 // =========================== Exits ===========================
 router.get("/exits/reviewed", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -112,9 +116,6 @@ router.post("/logout", function (req, res, next) {
 router.post("/populate-test-users", authenticateToken, (req, res, next) => {
     (0, userController_1.populateTestUsers)();
 });
-router.get("/test-authentication", authenticateToken, (req, res, next) => {
-    res.status(200).send("authentication success");
-});
 router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user_data = req.body.headers;
     try {
@@ -123,6 +124,15 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     }
     catch (err) {
         res.send(err);
+    }
+}));
+router.get("/users/current", authorizeUser_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield (0, userController_1.getUserById)(res.locals.toString());
+        res.status(200).send(user);
+    }
+    catch (err) {
+        res.status(500).send("internal server error");
     }
 }));
 //=========================== IMAGES ===========================
@@ -181,7 +191,6 @@ router.get("/signed-url", (req, res, next) => __awaiter(void 0, void 0, void 0, 
 }));
 router.post("/images", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { submitted_by, exit, url, key } = req.body;
-    console.log(req.body);
     try {
         const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url, key));
         res.status(200).send(response.rows[0]);

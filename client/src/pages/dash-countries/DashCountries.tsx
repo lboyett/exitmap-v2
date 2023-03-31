@@ -6,17 +6,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import "./dash-countries.css";
-import { countriesList } from "../../data/countries-data";
 import { useNavigate } from "react-router-dom";
 import CountryCard from "../../components/country-card/CountryCard";
 import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
 import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
-import { useGetCountriesFromExit } from "../../hooks/useGetCountriesFromExits";
 import { ExitDataContext } from "../../context/ExitDataContext";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
 import Country from "../../type-definitions/country-type";
-import { countriesCodesJson } from "../../data/countries-with-codes";
-import axios from "axios";
 
 function DashCountries() {
   const navigate = useNavigate();
@@ -53,9 +49,9 @@ function DashCountries() {
   return (
     <div className="dash-countries">
       <div className="countries-page-nav-bar">
-      <NavBar currentPage="exits"/>
+        <NavBar currentPage="exits" />
       </div>
-      <Box className="content" paddingTop={'110px'}>
+      <Box className="content" paddingTop={"110px"}>
         <UnorderedList
           className="letter-bar"
           color={out_500}

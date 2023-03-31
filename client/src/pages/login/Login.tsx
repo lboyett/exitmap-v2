@@ -38,7 +38,7 @@ function Login() {
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     try {
-      const loginRes = await axios.post(
+      const { data } = await axios.post(
         url,
         {
           email: inputs.email.value,
@@ -46,9 +46,7 @@ function Login() {
         },
         { withCredentials: true }
       );
-      console.log(loginRes);
-      setUserContext(loginRes);
-      localStorage.setItem("token", loginRes.data.token);
+      setUserContext(data);
     } catch (err: any) {
       console.log(err);
       if (err.response && err.response.data) console.log(err.response.data);
@@ -89,12 +87,22 @@ function Login() {
 
           <FormControl>
             <FormLabel>Email</FormLabel>
-            <Input type="email" className={inputColorMode} name="email" />
+            <Input
+              type="email"
+              className={inputColorMode}
+              name="email"
+              required
+            />
           </FormControl>
 
           <FormControl>
             <FormLabel>Password</FormLabel>
-            <Input type="password" className={inputColorMode} name="password" />
+            <Input
+              type="password"
+              className={inputColorMode}
+              name="password"
+              required
+            />
           </FormControl>
 
           <Flex className="register-user-button-container">
@@ -109,7 +117,7 @@ function Login() {
         <Button
           onClick={async () => {
             try {
-              await axios.get("http://localhost:8000/login/test-redis", {
+              await axios.get("http://localhost:8000/test-authorization", {
                 withCredentials: true,
               });
             } catch (err) {

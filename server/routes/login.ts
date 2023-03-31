@@ -2,20 +2,19 @@ import express from "express";
 import pool from "../pool-config";
 import crypto from "crypto";
 import uniqid from "uniqid";
-import * as Redis from "redis";
+import redisClient from "../redis-config";
+import { getUserByEmail } from "../controllers/userController";
 
 const router = express.Router();
-const redisClient = Redis.createClient();
-redisClient.connect();
-redisClient.on("connect", () => [
-  console.log("\x1b[41m Redis connected\x1b[0m"),
-]);
 
 router.post("/", async (req, res, next) => {
   const { email, password } = req.body;
   try {
+    if (!email) throw { status: 400, message: "Must input email" };
     const user = (await getUserByEmail(email)) as any;
     await validatePassword(password, user.hashed_password, user.salt);
+    delete user.hashed_password;
+    delete user.salt;
     const session_id = uniqid();
     await storeSessionInRedis(session_id, user._id);
     res
@@ -29,7 +28,7 @@ router.post("/", async (req, res, next) => {
         maxAge: 10000000,
         signed: true,
       })
-      .send("ok");
+      .send(user);
   } catch (err: any) {
     if (err.status) res.status(err.status).send(err.message);
     else res.send(err);
@@ -52,32 +51,6 @@ async function storeSessionInRedis(session_id: string, user_id: string) {
   });
 }
 
-router.get("/test-redis", async (req, res) => {
-  try {
-    const session_id = req.signedCookies.token;
-    const response = await redisClient.get(session_id.toString());
-    console.log(response);
-    res.send(response);
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-async function getUserByEmail(email: string) {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email],
-      (err, results) => {
-        if (err) reject({ status: 500, message: "Internal server error" });
-        else if (!results.rows[0])
-          reject({ status: 401, message: "Email not found" });
-        else resolve(results.rows[0]);
-      }
-    );
-  });
-}
-
 async function validatePassword(
   password: string,
   storedHash: Buffer,
@@ -86,6 +59,10 @@ async function validatePassword(
   return new Promise((resolve, reject) => {
     crypto.pbkdf2(password, salt, 310000, 32, "sha256", (err, derivedKey) => {
       if (err) reject(err);
+      if (storedHash.length !== derivedKey.length) {
+        reject({ status: 401, message: "Incorrect password" });
+        return;
+      }
       if (!crypto.timingSafeEqual(storedHash, derivedKey))
         reject({ status: 401, message: "Incorrect password" });
       else resolve(true);

@@ -10,7 +10,6 @@ import passport from "passport";
 import jwt from "jsonwebtoken";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import dotenv from "dotenv";
-
 dotenv.config();
 
 import {
@@ -29,7 +28,9 @@ import {
   addUser,
   populateTestUsers,
   UserData as UserDataType,
+  getUserById,
 } from "../controllers/userController";
+import authorizeUser from "../utils/authorizeUser";
 const router = express.Router();
 
 function authenticateToken(req: Request, res: Response, next: NextFunction) {
@@ -46,6 +47,10 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
     next();
   });
 }
+
+router.get("/test-authorization", authorizeUser, (req, res) => {
+  res.send("ok");
+});
 
 // =========================== Exits ===========================
 
@@ -120,10 +125,6 @@ router.post("/populate-test-users", authenticateToken, (req, res, next) => {
   populateTestUsers();
 });
 
-router.get("/test-authentication", authenticateToken, (req, res, next) => {
-  res.status(200).send("authentication success");
-});
-
 router.post("/users", async (req, res, next) => {
   const user_data = req.body.headers;
   try {
@@ -131,6 +132,15 @@ router.post("/users", async (req, res, next) => {
     res.send("OK");
   } catch (err) {
     res.send(err);
+  }
+});
+
+router.get("/users/current", authorizeUser, async (req, res) => {
+  try {
+    const user = await getUserById(res.locals.toString());
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send("internal server error");
   }
 });
 
@@ -193,7 +203,6 @@ router.get("/signed-url", async (req, res, next) => {
 
 router.post("/images", async (req, res, next) => {
   const { submitted_by, exit, url, key } = req.body;
-  console.log(req.body);
   try {
     const response = (await addImage(
       submitted_by,
