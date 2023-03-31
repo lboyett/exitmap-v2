@@ -19,7 +19,6 @@ const client_s3_1 = require("@aws-sdk/client-s3");
 const client_s3_2 = require("@aws-sdk/client-s3");
 const uniqid_1 = __importDefault(require("uniqid"));
 const path_1 = __importDefault(require("path"));
-const passport_1 = __importDefault(require("passport"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const s3_request_presigner_1 = require("@aws-sdk/s3-request-presigner");
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -30,15 +29,17 @@ const commentController_1 = require("../controllers/commentController");
 const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 function authenticateToken(req, res, next) {
-    const token = req.body.token;
+    const token = req.signedCookies.token
+        ? req.signedCookies.token
+        : req.cookies.token;
     if (token == null)
         return res.sendStatus(401);
     jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
         if (err) {
-            console.log("THERE IS AN ERROR AUTHORIZING THE TOKEN!!!!!!!");
-            return res.sendStatus(403);
+            console.log("theres an error");
+            console.log(err);
+            return res.status(403).send("authentication failure");
         }
-        console.log("JWT IS AUTHORIZED!!!!!!!!!!");
         next();
     });
 }
@@ -100,35 +101,6 @@ router.get("/exits/by-user/:id", (req, res, next) => __awaiter(void 0, void 0, v
     res.send(user_id);
 }));
 //================== USERS AND AUTHENTICATION ==========================
-// router.post("/login", passport.authenticate("local", {
-//     successRedirect: "/success",
-//     failureRedirect: "/failure",
-//   })
-// );
-router.post("/login", (req, res, next) => {
-    passport_1.default.authenticate("local", { session: false }, (err, user, info) => {
-        if (err || !user) {
-            return res.status(400).json({
-                message: "Something is not right",
-                user: user,
-            });
-        }
-        req.login(user, { session: false }, (err) => {
-            if (err) {
-                res.send(err);
-            }
-            // generate a signed son web token with the contents of user object and return it in the response
-            const token = jsonwebtoken_1.default.sign({ user: user }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 10080 });
-            return res.json({ user, token });
-        });
-    })(req, res);
-});
-router.get("/success", (req, res) => {
-    res.json("IT WORKSSSSSS");
-});
-router.get("/failure", (req, res) => {
-    console.log("FAILURE!!!!!!!!!!!!");
-});
 router.post("/logout", function (req, res, next) {
     req.logout(function (err) {
         if (err) {
@@ -139,6 +111,9 @@ router.post("/logout", function (req, res, next) {
 });
 router.post("/populate-test-users", authenticateToken, (req, res, next) => {
     (0, userController_1.populateTestUsers)();
+});
+router.get("/test-authentication", authenticateToken, (req, res, next) => {
+    res.status(200).send("authentication success");
 });
 router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user_data = req.body.headers;

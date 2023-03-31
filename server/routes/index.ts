@@ -33,15 +33,16 @@ import {
 const router = express.Router();
 
 function authenticateToken(req: Request, res: Response, next: NextFunction) {
-  const token = req.body.token;
+  const token = req.signedCookies.token
+    ? req.signedCookies.token
+    : req.cookies.token;
   if (token == null) return res.sendStatus(401);
-
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err: any) => {
     if (err) {
-      console.log("THERE IS AN ERROR AUTHORIZING THE TOKEN!!!!!!!");
-      return res.sendStatus(403);
+      console.log("theres an error");
+      console.log(err);
+      return res.status(403).send("authentication failure");
     }
-    console.log("JWT IS AUTHORIZED!!!!!!!!!!");
     next();
   });
 }
@@ -106,50 +107,6 @@ router.get("/exits/by-user/:id", async (req, res, next) => {
 
 //================== USERS AND AUTHENTICATION ==========================
 
-// router.post("/login", passport.authenticate("local", {
-//     successRedirect: "/success",
-//     failureRedirect: "/failure",
-//   })
-// );
-
-router.post("/login", (req, res, next) => {
-  passport.authenticate(
-    "local",
-    { session: false },
-    (err: any, user: any, info: any) => {
-      if (err || !user) {
-        return res.status(400).json({
-          message: "Something is not right",
-          user: user,
-        });
-      }
-
-      req.login(user, { session: false }, (err) => {
-        if (err) {
-          res.send(err);
-        }
-
-        // generate a signed son web token with the contents of user object and return it in the response
-
-        const token = jwt.sign(
-          { user: user },
-          process.env.ACCESS_TOKEN_SECRET as string,
-          { expiresIn: 10080 }
-        );
-        return res.json({ user, token });
-      });
-    }
-  )(req, res);
-});
-
-router.get("/success", (req, res) => {
-  res.json("IT WORKSSSSSS");
-});
-
-router.get("/failure", (req, res) => {
-  console.log("FAILURE!!!!!!!!!!!!");
-});
-
 router.post("/logout", function (req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -161,6 +118,10 @@ router.post("/logout", function (req, res, next) {
 
 router.post("/populate-test-users", authenticateToken, (req, res, next) => {
   populateTestUsers();
+});
+
+router.get("/test-authentication", authenticateToken, (req, res, next) => {
+  res.status(200).send("authentication success");
 });
 
 router.post("/users", async (req, res, next) => {

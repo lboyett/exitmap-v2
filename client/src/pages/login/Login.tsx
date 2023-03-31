@@ -37,19 +37,21 @@ function Login() {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
-    const headers = {
-      email: inputs.email.value,
-      password: inputs.password.value,
-    };
     try {
-      const loginRes = await axios.post(url, {
-        username: inputs.email.value,
-        password: inputs.password.value,
-      });
+      const loginRes = await axios.post(
+        url,
+        {
+          email: inputs.email.value,
+          password: inputs.password.value,
+        },
+        { withCredentials: true }
+      );
+      console.log(loginRes);
       setUserContext(loginRes);
       localStorage.setItem("token", loginRes.data.token);
-    } catch (err) {
-      console.log("THERE IS AN ERROR");
+    } catch (err: any) {
+      console.log(err);
+      if (err.response && err.response.data) console.log(err.response.data);
     }
   }
 
@@ -104,12 +106,19 @@ function Login() {
             </Text>
           </Flex>
         </form>
-        <button
-          style={{ marginTop: "12px", background: "blue" }}
-          onClick={populateUser}
+        <Button
+          onClick={async () => {
+            try {
+              await axios.get("http://localhost:8000/login/test-redis", {
+                withCredentials: true,
+              });
+            } catch (err) {
+              console.log(err);
+            }
+          }}
         >
-          Click this to populate the DB with a proper user
-        </button>
+          Make a get request
+        </Button>
       </div>
     </div>
   );

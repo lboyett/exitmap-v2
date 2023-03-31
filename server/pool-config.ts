@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import * as pg from "pg";
 const Pool = pg.Pool;
-import crypto from "crypto";
 
 const pool = new Pool({
   user: "postgres",
