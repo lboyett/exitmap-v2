@@ -23,12 +23,14 @@ import {
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalErrorMessage, setModalErrorMessage] = useState("");
   const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate();
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
@@ -52,7 +54,14 @@ function App() {
   );
 
   useEffect(() => {
-    (async () => setUser(await getCurrentUser()))();
+    (async () => {
+      try {
+        const user = await getCurrentUser();
+        setUser(user);
+      } catch (err) {
+        navigate("/login");
+      }
+    })();
   }, []);
 
   return (
