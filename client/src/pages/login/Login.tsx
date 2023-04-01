@@ -1,6 +1,6 @@
 import "./login.css";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ExitDataContext } from "../../context/ExitDataContext";
 import {
   Heading,
@@ -12,6 +12,7 @@ import {
   Text,
   useColorModeValue,
   useColorMode,
+  Spinner,
 } from "@chakra-ui/react";
 import { EventType } from "@testing-library/react";
 import { useNavigate } from "react-router";
@@ -25,6 +26,7 @@ interface FormInputs extends HTMLFormControlsCollection {
 function Login() {
   const navigate = useNavigate();
   const [userContext, setUserContext] = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -33,6 +35,7 @@ function Login() {
   const out_500 = useColorModeValue("out_dark.500", "out_light.500");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    setLoading(true);
     const url = "http://localhost:8000/login";
     e.preventDefault();
     const target = e.target as HTMLFormElement;
@@ -47,7 +50,10 @@ function Login() {
         { withCredentials: true }
       );
       setUserContext(data);
+      navigate("/home");
+      setLoading(false);
     } catch (err: any) {
+      setLoading(false);
       console.log(err);
       if (err.response && err.response.data) console.log(err.response.data);
     }
@@ -106,27 +112,20 @@ function Login() {
           </FormControl>
 
           <Flex className="register-user-button-container">
-            <Button type="submit" bg={txt_500} color={out_500}>
-              Sign In
-            </Button>
-            <Text onClick={navigateToSignup} className="already-registered">
-              Need an account?
-            </Text>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                <Button type="submit" bg={txt_500} color={out_500}>
+                  Sign In
+                </Button>
+                <Text onClick={navigateToSignup} className="already-registered">
+                  Need an account?
+                </Text>
+              </>
+            )}
           </Flex>
         </form>
-        <Button
-          onClick={async () => {
-            try {
-              await axios.get("http://localhost:8000/test-authorization", {
-                withCredentials: true,
-              });
-            } catch (err) {
-              console.log(err);
-            }
-          }}
-        >
-          Make a get request
-        </Button>
       </div>
     </div>
   );
