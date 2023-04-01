@@ -76,7 +76,6 @@ export default function NavBar(props: NavBarProps) {
       >
         ExitMap
       </Heading>
-      <Button onClick={() => console.log(user)}>User</Button>
       <HStack className="navbar-links" zIndex={"1000"}>
         <Menu>
           <Box color={txt_500} className="navbar-icon">
@@ -174,8 +173,9 @@ export default function NavBar(props: NavBarProps) {
         color={txt_500}
         onClick={onOpen}
       >
-        splitseam
+        {user[0].username}
       </Heading>
+      <Button onClick={() => console.log(user[0])}>User</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent className="modal" bg={bg_500}>
