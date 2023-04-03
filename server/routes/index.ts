@@ -17,13 +17,18 @@ import {
   getReviewedExits,
   addExit,
   deleteExit,
+  getExitsByUser,
 } from "../controllers/exitController";
 import {
   getExitImages,
   addImage,
   getMainImageData,
 } from "../controllers/imageController";
-import { getExitComments, addComment } from "../controllers/commentController";
+import {
+  getExitComments,
+  addComment,
+  getCommentsByUser,
+} from "../controllers/commentController";
 import {
   addUser,
   populateTestUsers,
@@ -105,9 +110,14 @@ router.delete("/exits/:id", async (req, res, next) => {
   }
 });
 
-router.get("/exits/by-user/:id", async (req, res, next) => {
-  const user_id = req.params.id;
-  res.send(user_id);
+router.get("/exits/by-user-id/:id", async (req, res, next) => {
+  const user_id = req.params.id as string;
+  try {
+    const exits = (await getExitsByUser(user_id)) as any[];
+    res.send(exits);
+  } catch (err: any) {
+    res.status(500).send(err.message);
+  }
 });
 
 //================== USERS AND AUTHENTICATION ==========================
@@ -238,6 +248,16 @@ router.post("/comments", async (req, res, next) => {
     res.status(200).send(response);
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+
+router.get("/comments/by-user-id/:id", async (req, res, next) => {
+  const user_id = req.params.id as string;
+  try {
+    const comments = (await getCommentsByUser(user_id)) as any[];
+    res.send(comments);
+  } catch (err: any) {
+    res.status(500).send(err.message);
   }
 });
 

@@ -1,29 +1,27 @@
 import pool from "../pool-config";
-
-// i don't think these should be input elements
 interface ExitData {
-  name: HTMLInputElement;
-  object_type: HTMLInputElement;
-  exit_type: HTMLInputElement;
-  exp_req: HTMLInputElement;
-  legality: HTMLInputElement;
-  bust_factor: HTMLInputElement;
-  height_impact: HTMLInputElement;
-  height_landing: HTMLInputElement;
-  lat: HTMLInputElement;
-  lng: HTMLInputElement;
-  city: HTMLInputElement;
-  region: HTMLInputElement;
-  country_code: HTMLInputElement;
-  country_name: HTMLInputElement;
-  hiking_time_hrs: HTMLInputElement;
-  hiking_time_mins: HTMLInputElement;
-  approach_diff: HTMLInputElement;
-  description: HTMLInputElement;
-  access_approach: HTMLInputElement;
-  landing_area: HTMLInputElement;
-  submitted_by: HTMLInputElement;
-} // FixThis
+  name: string;
+  object_type: string;
+  exit_type: string;
+  exp_req: string;
+  legality: string;
+  bust_factor: string;
+  height_impact: number;
+  height_landing: number;
+  lat: number;
+  lng: number;
+  city: string;
+  region: string;
+  country_code: string;
+  country_name: string;
+  hiking_time_hrs: number | undefined;
+  hiking_time_mins: number | undefined;
+  approach_diff: number;
+  description: string;
+  access_approach: string;
+  landing_area: string;
+  submitted_by: number;
+}
 
 export async function getExit(id: string) {
   return new Promise((resolve, reject) => {
@@ -142,7 +140,25 @@ export async function deleteExit(id: number) {
         console.log(err);
         reject(err);
       }
-      resolve(results.rowCount);
+      if (results && results.rowCount) resolve(results.rowCount);
+      else reject("Error deleting exit");
     });
+  });
+}
+
+export async function getExitsByUser(id: string) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM exits WHERE submitted_by = $1 AND is_reviewed = true AND is_deleted = false",
+      [id],
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        }
+        if (results && results.rows) resolve(results.rows);
+        else reject("Error getting user exits");
+      }
+    );
   });
 }

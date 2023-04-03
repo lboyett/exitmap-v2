@@ -7,11 +7,6 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import flash from "connect-flash";
 
-// Authentication dependencies
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import crypto from "crypto";
-
 import indexRouter from "./routes/index";
 import utilitiesRouter from "./routes/utilities";
 import loginRouter from "./routes/login";

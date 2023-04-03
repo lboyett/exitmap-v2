@@ -100,9 +100,15 @@ router.delete("/exits/:id", (req, res, next) => __awaiter(void 0, void 0, void 0
         res.status(500).send(err.message);
     }
 }));
-router.get("/exits/by-user/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/exits/by-user-id/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user_id = req.params.id;
-    res.send(user_id);
+    try {
+        const exits = (yield (0, exitController_1.getExitsByUser)(user_id));
+        res.send(exits);
+    }
+    catch (err) {
+        res.status(500).send(err.message);
+    }
 }));
 //================== USERS AND AUTHENTICATION ==========================
 router.post("/logout", function (req, res, next) {
@@ -218,6 +224,16 @@ router.post("/comments", (req, res, next) => __awaiter(void 0, void 0, void 0, f
     }
     catch (err) {
         res.status(500).send(err);
+    }
+}));
+router.get("/comments/by-user-id/:id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_id = req.params.id;
+    try {
+        const comments = (yield (0, commentController_1.getCommentsByUser)(user_id));
+        res.send(comments);
+    }
+    catch (err) {
+        res.status(500).send(err.message);
     }
 }));
 exports.default = router;

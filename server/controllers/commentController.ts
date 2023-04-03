@@ -33,3 +33,20 @@ export async function addComment(
     );
   });
 }
+
+export async function getCommentsByUser(id: string) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM comments WHERE author = $1 AND is_deleted = false",
+      [id],
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        }
+        if (results && results.rows) resolve(results.rows);
+        else reject("Error getting user comments");
+      }
+    );
+  });
+}

@@ -31,9 +31,10 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import avatar from "../../assets/avatar.jpeg";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Exit from "../../type-definitions/exit";
 import { UserContext } from "../../context/UserContext";
+import format from "date-fns/format";
 
 type CurrentPage = "home" | "exits" | "submit";
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -49,21 +50,33 @@ export default function NavBar(props: NavBarProps) {
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
-  const [userExits, setUserExits] = useState<Exit[]>();
+  const [userExits, setUserExits] = useState<Exit[]>([]);
+  const [userComments, setUserComments] = useState<[]>([]);
   const user = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
       try {
-        const user_id = 1; //USERID
-        const url = `http://localhost:8000/exits/by-user/${user_id}`;
-        const data = (await axios.get(url)) as Exit[];
-        setUserExits(data);
+        await getUserExits(user[0]._id);
+        await getUserComments(user[0]._id);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, []);
+  }, [user]);
+
+  async function getUserExits(id: number) {
+    if (!id) return;
+    const url = `http://localhost:8000/exits/by-user-id/${id}`;
+    const { data } = (await axios.get(url)) as AxiosResponse;
+    setUserExits(data);
+  }
+  async function getUserComments(id: number) {
+    if (!id) return;
+    const url = `http://localhost:8000/comments/by-user-id/${id}`;
+    const { data } = (await axios.get(url)) as AxiosResponse;
+    setUserComments(data);
+  }
 
   return (
     <Flex className="navbar" bg={bg_500}>
@@ -186,8 +199,14 @@ export default function NavBar(props: NavBarProps) {
           <ModalCloseButton />
           <ModalBody>
             <List>
-              <ListItem>Submitted exits:</ListItem>
-              <ListItem>Comments:</ListItem>
+              <ListItem>Submitted exits: {userExits.length}</ListItem>
+              <ListItem>Comments: {userComments.length}</ListItem>
+              <ListItem>
+                User Since:{" "}
+                {user && user[0].created_at
+                  ? format(new Date(user[0].created_at), "d MMMM yyyy")
+                  : null}
+              </ListItem>
               <ListItem>Settings</ListItem>
               <ListItem>Change Password</ListItem>
             </List>

@@ -9,13 +9,7 @@ import {
   FormErrorMessage,
   Flex,
 } from "@chakra-ui/react";
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  SyntheticEvent,
-  DragEvent as DE,
-} from "react";
+import React, { useRef, useState, useEffect, DragEvent as DE } from "react";
 import "./file-input.css";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
@@ -69,29 +63,6 @@ export default function FileInput({
       setFileName("");
       setFormData(undefined);
     }
-    // try {
-    //   if (validateFileSize(file)) {
-
-    //   }
-    //   setFileInvalid(false);
-    //   setFileName(file.name);
-    //   const formData = new FormData();
-    //   formData.append("image", file);
-    //   setFormData(formData);
-    //   return;
-    // } catch (err: any) {
-    //   setFileInvalid(true);
-    //   if (err.response.status === 415) {
-    //     setErrorMessage(
-    //       `Please chooose a valid file type (jpeg, png, webp, avif, svg)`
-    //     );
-    //   } else if (err.response.status === 413) {
-    //     setErrorMessage(`Please chooose a file less than 10 MB`);
-    //   }
-    //   setFileName("");
-    //   setFormData(undefined);
-    //   return;
-    // }
   }
 
   useEffect(() => {
@@ -113,7 +84,7 @@ export default function FileInput({
   }
 
   function validateFileSize(file: File) {
-    if (file.size > 1024 * 1024) return false;
+    if (file.size > 1024 * 1024 * 10) return false;
     return true;
   }
 

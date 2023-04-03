@@ -25,7 +25,7 @@ router.post("/", async (req, res, next) => {
         httpOnly: true,
         sameSite: "none", //FixThis
         secure: true,
-        maxAge: 1000 * 60 * 2,
+        // maxAge: 1000 * 60 * 60 * 2, //FixThis
         signed: true,
       })
       .send(user);

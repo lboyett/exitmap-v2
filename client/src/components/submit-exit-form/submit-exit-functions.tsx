@@ -51,7 +51,8 @@ export function compileExitData(
   e: React.FormEvent<HTMLFormElement>,
   country_code: string | null,
   country_name: string | null,
-  units: string
+  units: string,
+  user_id: number
 ) {
   const target = e.target as HTMLFormElement;
   const inputs = target.elements as FormInputs;
@@ -87,7 +88,7 @@ export function compileExitData(
     description: inputs.description.value,
     access_approach: inputs.access_approach.value,
     landing_area: inputs.landing_area.value,
-    submitted_by: 1, //USERID
+    submitted_by: user_id,
   };
   return exit_data;
 }
@@ -102,11 +103,12 @@ export async function submitExitDataWithoutImage(exit_data: any) {
 }
 export async function submitExitDataWithImage(
   exit_data: any, //FixThis
-  formData: FormData
+  formData: FormData,
+  user_id: number
 ) {
   try {
     const exit_id = await postExit(exit_data);
-    await postImage(formData, exit_id);
+    await postImage(formData, exit_id, user_id);
   } catch (err) {
     throw err;
   }
@@ -133,7 +135,7 @@ async function getSignedUrl() {
   }
 }
 
-async function postImage(formData: FormData, exit_id: any) {
+async function postImage(formData: FormData, exit_id: any, user_id: number) {
   const exitUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
   try {
@@ -145,7 +147,7 @@ async function postImage(formData: FormData, exit_id: any) {
       },
     });
     await axios.post(imageUrl, {
-      submitted_by: 1, //USERID
+      submitted_by: user_id,
       exit: exit_id,
       url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
       key: key,

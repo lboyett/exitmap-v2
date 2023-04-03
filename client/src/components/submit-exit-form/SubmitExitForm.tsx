@@ -15,7 +15,7 @@ import {
   useColorModeValue,
   Spinner,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import "./submit-exit-form.css";
 import FileInput from "./file-input/FileInput";
@@ -28,6 +28,7 @@ import {
   submitExitDataWithoutImage,
   submitExitDataWithImage,
 } from "./submit-exit-functions";
+import { UserContext } from "../../context/UserContext";
 
 interface Coordinate {
   lat: number;
@@ -66,6 +67,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       _checked: { bgColor: txt_500, border: "none" },
     },
   };
+  const user = useContext(UserContext);
 
   useEffect(() => {
     if (!props.latLng) return;
@@ -97,7 +99,13 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     if (getCountryName(country_code, countriesCodesJson)) {
       country_name = getCountryName(country_code, countriesCodesJson);
     }
-    const exit_data = compileExitData(e, country_code, country_name, units);
+    const exit_data = compileExitData(
+      e,
+      country_code,
+      country_name,
+      units,
+      user[0]._id
+    );
     setSubmitting(true);
     try {
       if (!formData) {
@@ -105,7 +113,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
         if (res.code === "ERR_NETWORK") throw new Error("Server issue");
         props.onSuccess();
       } else {
-        await submitExitDataWithImage(exit_data, formData);
+        await submitExitDataWithImage(exit_data, formData, user[0]._id);
         props.onSuccess();
       }
     } catch (err) {
@@ -388,26 +396,15 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       </Flex>
       <FormControl>
         <FormLabel>Description</FormLabel>
-        <Textarea
-          className={inputColorMode}
-          name="description"
-          required
-        />
+        <Textarea className={inputColorMode} name="description" required />
       </FormControl>
       <FormControl>
         <FormLabel>Access and Approach</FormLabel>
-        <Textarea
-          className={inputColorMode}
-          name="access_approach"
-          required
-        />
+        <Textarea className={inputColorMode} name="access_approach" required />
       </FormControl>
       <FormControl>
         <FormLabel>Landing Area</FormLabel>
-        <Textarea
-          className={inputColorMode}
-          name="landing_area"
-        />
+        <Textarea className={inputColorMode} name="landing_area" />
       </FormControl>
       <Flex className="submit-div">
         <Button type="submit">Submit Exit</Button>

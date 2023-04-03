@@ -14,13 +14,7 @@ import "./exit-comments.css";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
-import {
-  format,
-  formatDistance,
-  endOfDay,
-  endOfSecond,
-  startOfSecond,
-} from "date-fns";
+import { formatDistance, startOfSecond } from "date-fns";
 import { UserContext } from "../../context/UserContext";
 
 export interface commentsTypes {
@@ -76,7 +70,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
       await axios.post(url, {
         comment: inputs.new_comment.value,
         exit_id: props.exit_id,
-        author_id: user[0]._id, //USERID FixThis
+        author_id: user[0]._id,
       });
       setSubmitting(false);
       props.getExit();
