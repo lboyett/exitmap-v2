@@ -175,7 +175,7 @@ export default function NavBar(props: NavBarProps) {
       >
         {user[0].username}
       </Heading>
-      <Button onClick={() => console.log(user[0])}>User</Button>
+      {/* <Button onClick={() => console.log(user[0])}>User</Button> */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent className="modal" bg={bg_500}>

@@ -11,10 +11,17 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import "./exit-comments.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
-import { format, formatDistance, endOfDay, endOfSecond, startOfSecond } from "date-fns";
+import {
+  format,
+  formatDistance,
+  endOfDay,
+  endOfSecond,
+  startOfSecond,
+} from "date-fns";
+import { UserContext } from "../../context/UserContext";
 
 export interface commentsTypes {
   author: number;
@@ -42,6 +49,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [numComments, setNumComments] = useState(3);
+  const user = useContext(UserContext);
   const comments = props.comments;
 
   const lightMode = useColorModeValue(true, false);
@@ -65,10 +73,10 @@ function ExitComments(props: ExitCommentsPropTypes) {
     const inputs = target.elements as FormInputs;
     const url = "http://localhost:8000/comments";
     try {
-      const response = await axios.post(url, {
+      await axios.post(url, {
         comment: inputs.new_comment.value,
         exit_id: props.exit_id,
-        author_id: 1, //USERID FixThis
+        author_id: user[0]._id, //USERID FixThis
       });
       setSubmitting(false);
       props.getExit();
@@ -100,7 +108,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
           />
           <Flex className={`comment-button-container  ${addCommentButton}`}>
             {submitting ? <Spinner /> : null}
-            {errorMessage ? errorMessage : null}
+            <Text color="red">{errorMessage ? errorMessage : null}</Text>
             <Text onClick={showAddCommentButton} cursor="pointer">
               Cancel
             </Text>

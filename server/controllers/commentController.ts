@@ -26,7 +26,9 @@ export async function addComment(
       [comment, author_id, exit_id],
       (err, results) => {
         if (err) reject(err);
-        resolve(results.rows[0]);
+        console.log(author_id);
+        if (results && results.rows) resolve(results.rows[0]);
+        else reject("Not successful");
       }
     );
   });

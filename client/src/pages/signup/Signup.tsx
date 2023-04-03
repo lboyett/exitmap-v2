@@ -69,7 +69,7 @@ function Signup() {
     try {
       const userRes = await axios.post(url, { headers });
       // navigate('/home')
-      console.log(userRes.data)
+      console.log(userRes.data);
     } catch (err: any) {
       console.log(err.response.data.constraint);
       handleError(err.response.data.constraint);
@@ -100,7 +100,7 @@ function Signup() {
   }
 
   function navigateToLogin() {
-    navigate('/login')
+    navigate("/login");
   }
 
   return (
@@ -152,7 +152,9 @@ function Signup() {
             <Button type="submit" bg={txt_500} color={out_500}>
               SUBMIT
             </Button>
-            <Text onClick={navigateToLogin} className="already-registered">Already registered?</Text>
+            <Text onClick={navigateToLogin} className="already-registered">
+              Already registered?
+            </Text>
           </Flex>
         </form>
       </div>
