@@ -180,7 +180,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
                     <Text fontWeight={"200"} fontSize="0.8rem">
                       {formatDistance(
                         new Date(comment.comment_created_at),
-                        startOfSecond(new Date()),
+                        startOfSecond(Date.now()),
                         { addSuffix: true }
                       )}
                     </Text>

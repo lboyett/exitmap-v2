@@ -223,6 +223,12 @@ export default function NavBar(props: NavBarProps) {
                   : null}
               </ListItem>
               <ListItem>Change Password</ListItem>
+              <ListItem
+                className="contact"
+                onClick={() => navigate("/contact-us")}
+              >
+                Contact Us
+              </ListItem>
               <Flex>
                 <ListItem
                   className="logout"

@@ -6,6 +6,7 @@ import DashSubmit from "./pages/dash-submit/DashSubmit";
 import DashCountries from "./pages/dash-countries/DashCountries";
 import Country from "./pages/country/Country";
 import Exit from "./pages/exit/Exit";
+import ContactUs from "./pages/contact-us/ContactUs";
 import { Routes, Route } from "react-router-dom";
 import "./app.css";
 import { ExitDataContext } from "./context/ExitDataContext";
@@ -85,6 +86,7 @@ function App() {
           <Route path="countries" element={<DashCountries />} />
           <Route path="countries/:country_code" element={<Country />} />
           <Route path="countries/:country_code/:exit_id" element={<Exit />} />
+          <Route path="contact-us" element={<ContactUs />} />
         </Routes>
       </ExitDataContext.Provider>
       <Modal isOpen={isOpen} onClose={onClose}>

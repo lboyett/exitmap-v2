@@ -1,4 +1,3 @@
-import React from "react";
 import NavBar from "../../components/navbar/NavBar";
 import Map from "../../components/map/Map";
 import "./dash-home.css";

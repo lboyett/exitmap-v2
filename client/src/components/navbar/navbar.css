@@ -104,7 +104,16 @@ h3 {
   align-items: center;
 }
 
+.modal li {
+  margin: 0.5rem 0;
+}
+
 .logout {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.contact:hover {
   cursor: pointer;
   text-decoration: underline;
 }
