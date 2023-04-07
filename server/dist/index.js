@@ -14,6 +14,7 @@ const connect_flash_1 = __importDefault(require("connect-flash"));
 const index_1 = __importDefault(require("./routes/index"));
 const utilities_1 = __importDefault(require("./routes/utilities"));
 const login_1 = __importDefault(require("./routes/login"));
+const logout_1 = __importDefault(require("./routes/logout"));
 const app = (0, express_1.default)();
 const port = 8000;
 const corsOptions = {
@@ -33,6 +34,7 @@ app.use((0, express_session_1.default)({
 }));
 app.use((0, connect_flash_1.default)());
 app.use("/login", login_1.default);
+app.use("/logout", logout_1.default);
 app.use("/", index_1.default);
 app.use("/utilities", utilities_1.default);
 app.use((req, res) => {

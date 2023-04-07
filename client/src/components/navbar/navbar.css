@@ -33,11 +33,13 @@ h3 {
 }
 
 .avatar {
-  height: clamp(3rem, 6vw, 65%);
-  aspect-ratio: 1/1;
+  width: clamp(3rem, 5vw, 65%) !important;
+  height: auto !important;
+  aspect-ratio: 1/1 !important;
   border-radius: 50%;
   margin-right: 1rem;
 }
+
 .avatar:hover {
   cursor: pointer;
 }
@@ -92,11 +94,17 @@ h3 {
   }
 }
 
-.modal img {
-  max-width: 30%;
+#modal-avatar {
+  min-width: 30%;
+  aspect-ratio: 1/1 !important;
 }
 
 .modal-header {
   display: flex;
   align-items: center;
+}
+
+.logout {
+  cursor: pointer;
+  text-decoration: underline;
 }

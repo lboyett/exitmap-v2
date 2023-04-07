@@ -155,8 +155,8 @@ function Exit() {
                       <ModalBody>
                         <form
                           onSubmit={(e) => {
+                            e.preventDefault();
                             if (!formData) {
-                              e.preventDefault();
                               setNoImage(true);
                               return;
                             }

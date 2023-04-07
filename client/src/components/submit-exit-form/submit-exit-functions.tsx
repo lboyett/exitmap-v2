@@ -124,7 +124,7 @@ async function postExit(exit_data: any) {
   }
 }
 
-async function getSignedUrl() {
+export async function getSignedUrl() {
   const url = "http://localhost:8000/signed-url";
   try {
     const { data } = await axios.get(url);
@@ -135,7 +135,11 @@ async function getSignedUrl() {
   }
 }
 
-async function postImage(formData: FormData, exit_id: any, user_id: number) {
+export async function postImage(
+  formData: FormData,
+  exit_id: any,
+  user_id: number
+) {
   const exitUrl = "http://localhost:8000/exits";
   const imageUrl = "http://localhost:8000/images";
   try {

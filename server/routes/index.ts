@@ -34,6 +34,7 @@ import {
   populateTestUsers,
   UserData as UserDataType,
   getUserById,
+  putUserAvatar,
 } from "../controllers/userController";
 import authorizeUser from "../utils/authorizeUser";
 const router = express.Router();
@@ -145,12 +146,35 @@ router.post("/users", async (req, res, next) => {
   }
 });
 
-router.get("/users/current", authorizeUser, async (req, res) => {
+router.get("/current-user", authorizeUser, async (req, res) => {
   try {
     const user = await getUserById(res.locals.toString());
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send("internal server error");
+  }
+});
+
+router.get("/users/:user_id", async (req, res) => {
+  const id = req.params.user_id;
+  console.log("ran");
+  try {
+    const user = await getUserById(id);
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send("internal server error");
+  }
+});
+
+router.put("/images/avatars/:user_id", async (req, res) => {
+  const user_id = req.params.user_id;
+  const { key } = req.body;
+  try {
+    await putUserAvatar(user_id, key);
+    res.status(200).send("ok");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal server error");
   }
 });
 

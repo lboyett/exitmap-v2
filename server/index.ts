@@ -10,6 +10,7 @@ import flash from "connect-flash";
 import indexRouter from "./routes/index";
 import utilitiesRouter from "./routes/utilities";
 import loginRouter from "./routes/login";
+import logoutRouter from "./routes/logout";
 
 const app = express();
 const port = 8000;
@@ -34,6 +35,7 @@ app.use(
 app.use(flash());
 
 app.use("/login", loginRouter);
+app.use("/logout", logoutRouter);
 app.use("/", indexRouter);
 app.use("/utilities", utilitiesRouter);
 

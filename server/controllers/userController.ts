@@ -126,3 +126,18 @@ export async function getUserById(id: string) {
     });
   });
 }
+
+export async function putUserAvatar(user_id: string, key: string) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "UPDATE users SET avatar_key = $1 WHERE _id = $2 RETURNING *",
+      [key, user_id],
+      (err, results) => {
+        if (err) reject({ status: 500, message: "Internal server error" });
+        else if (!results.rows[0])
+          reject({ status: 500, message: "Internal server error" });
+        else resolve(results.rows[0]);
+      }
+    );
+  });
+}

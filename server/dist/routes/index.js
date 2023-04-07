@@ -132,13 +132,36 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.send(err);
     }
 }));
-router.get("/users/current", authorizeUser_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/current-user", authorizeUser_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield (0, userController_1.getUserById)(res.locals.toString());
         res.status(200).send(user);
     }
     catch (err) {
         res.status(500).send("internal server error");
+    }
+}));
+router.get("/users/:user_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.user_id;
+    console.log("ran");
+    try {
+        const user = yield (0, userController_1.getUserById)(id);
+        res.status(200).send(user);
+    }
+    catch (err) {
+        res.status(500).send("internal server error");
+    }
+}));
+router.put("/images/avatars/:user_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_id = req.params.user_id;
+    const { key } = req.body;
+    try {
+        yield (0, userController_1.putUserAvatar)(user_id, key);
+        res.status(200).send("ok");
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send("Internal server error");
     }
 }));
 //=========================== IMAGES ===========================

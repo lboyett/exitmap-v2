@@ -1,5 +1,4 @@
 import express from "express";
-import pool from "../pool-config";
 import crypto from "crypto";
 import uniqid from "uniqid";
 import redisClient from "../redis-config";
@@ -40,7 +39,7 @@ async function storeSessionInRedis(session_id: string, user_id: string) {
     try {
       const response = await redisClient.setEx(
         session_id.toString(),
-        120,
+        60 * 60,
         user_id.toString()
       );
       resolve("added");

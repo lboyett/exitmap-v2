@@ -16,6 +16,7 @@ import axios from "axios";
 import { BiCommentAdd } from "react-icons/bi";
 import { formatDistance, startOfSecond } from "date-fns";
 import { UserContext } from "../../context/UserContext";
+import AvatarComp from "../avatar/AvatarComp";
 
 export interface commentsTypes {
   author: number;
@@ -140,7 +141,10 @@ function ExitComments(props: ExitCommentsPropTypes) {
           .map((comment: any, i: number) => {
             return (
               <Flex className="comment" key={i}>
-                <Image src={avatar} className="avatar-comments" />
+                <AvatarComp
+                  userId={comment.author}
+                  className="avatar-comments"
+                />
                 <Box>
                   <Flex alignItems={"center"}>
                     <Text className="comment-username">

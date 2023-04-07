@@ -1,0 +1,17 @@
+.update-avatar-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #000000ac;
+  outline: 1px solid rgb(73, 73, 73);
+  border-radius: 50%;
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}

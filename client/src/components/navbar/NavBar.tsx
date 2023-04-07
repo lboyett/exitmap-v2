@@ -1,6 +1,5 @@
 import "./navbar.css";
 import {
-  Button,
   Box,
   Flex,
   Heading,
@@ -12,7 +11,6 @@ import {
   MenuItem,
   IconButton,
   Text,
-  Image,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -30,11 +28,11 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import avatar from "../../assets/avatar.jpeg";
 import axios, { AxiosResponse } from "axios";
 import Exit from "../../type-definitions/exit";
 import { UserContext } from "../../context/UserContext";
 import format from "date-fns/format";
+import AvatarComp from "../avatar/AvatarComp";
 
 type CurrentPage = "home" | "exits" | "submit";
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -49,10 +47,12 @@ export default function NavBar(props: NavBarProps) {
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const out_500 = useColorModeValue("out_light.500", "out_dark.500");
   const lightMode = useColorModeValue(true, false);
   const [userExits, setUserExits] = useState<Exit[]>([]);
   const [userComments, setUserComments] = useState<[]>([]);
   const user = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -78,6 +78,16 @@ export default function NavBar(props: NavBarProps) {
     setUserComments(data);
   }
 
+  async function logoutUser() {
+    setErrorMessage("");
+    const url = `http://localhost:8000/logout`;
+    try {
+      await axios.get(url, { withCredentials: true });
+      navigate("/login");
+    } catch (err: any) {
+      setErrorMessage("There is an error. Please contact us or try again.");
+    }
+  }
   return (
     <Flex className="navbar" bg={bg_500}>
       <Heading
@@ -179,22 +189,21 @@ export default function NavBar(props: NavBarProps) {
       >
         {lightMode ? <SunIcon boxSize={5} /> : <MoonIcon boxSize={5} />}
       </Box>
-      <Image className="avatar" src={avatar} onClick={onOpen} />
+      <AvatarComp onClick={onOpen} />
       <Heading
         as="h3"
         className="name-placeholder"
         color={txt_500}
-        onClick={onOpen}
+        onClick={() => onOpen()}
       >
         {user[0].username}
       </Heading>
-      {/* <Button onClick={() => console.log(user[0])}>User</Button> */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent className="modal" bg={bg_500}>
           <ModalHeader className="modal-header">
-            <Image className="avatar" src={avatar} />
-            <Text>splitseam</Text>
+            <AvatarComp id="modal-avatar" modal={true} />
+            <Text>{user[0].username}</Text>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -209,6 +218,21 @@ export default function NavBar(props: NavBarProps) {
               </ListItem>
               <ListItem>Settings</ListItem>
               <ListItem>Change Password</ListItem>
+              <Flex>
+                <ListItem
+                  className="logout"
+                  onClick={() => {
+                    logoutUser();
+                  }}
+                >
+                  Logout
+                </ListItem>
+                {errorMessage ? (
+                  <Text color="red" ml="1rem">
+                    {errorMessage}
+                  </Text>
+                ) : null}
+              </Flex>
             </List>
           </ModalBody>
         </ModalContent>
