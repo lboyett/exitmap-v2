@@ -59,7 +59,6 @@ function App() {
         const user = await getCurrentUser();
         setUser(user);
       } catch (err) {
-        console.log(err);
         navigate("/login");
       }
     })();

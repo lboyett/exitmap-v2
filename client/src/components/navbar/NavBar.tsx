@@ -85,6 +85,7 @@ export default function NavBar(props: NavBarProps) {
     try {
       await axios.get(url, { withCredentials: true });
       navigate("/login");
+      window.location.reload();
     } catch (err: any) {
       setErrorMessage("There is an error. Please contact us or try again.");
     }
