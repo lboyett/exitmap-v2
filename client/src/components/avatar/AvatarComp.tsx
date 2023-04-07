@@ -80,7 +80,11 @@ export default function AvatarComp(props: AvatarCompProps) {
       setName(`${user.first_name} ${user.last_name}`);
       setIsAdmin(user.is_admin);
     }
-  }, [user]);
+  }, [user, props.userId]);
+
+  useEffect(() => {
+    if (props.userId && avatarUrl) console.log(props.userId + ";" + avatarUrl);
+  }, [avatarUrl]);
 
   async function updateUserByUserId(user_id: string) {
     const userUrl = `http://localhost:8000/users/${user_id}`;
