@@ -129,7 +129,7 @@ router.post("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.send("OK");
     }
     catch (err) {
-        res.send(err);
+        res.status(400).send(err);
     }
 }));
 router.get("/current-user", authorizeUser_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -257,6 +257,16 @@ router.get("/comments/by-user-id/:id", (req, res, next) => __awaiter(void 0, voi
     }
     catch (err) {
         res.status(500).send(err.message);
+    }
+}));
+router.delete("/comments/:comment_id", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const comment_id = req.params.comment_id;
+    try {
+        const response = yield (0, commentController_1.deleteComment)(comment_id);
+        res.status(200).send(response);
+    }
+    catch (err) {
+        res.status(500).send("Internal server error");
     }
 }));
 exports.default = router;

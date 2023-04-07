@@ -39,6 +39,17 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
+        const user = await getCurrentUser();
+        setUser(user);
+      } catch (err) {
+        navigate("/login");
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
         const { data } = (await axios.get(url)) as AxiosResponse;
         setExitDataContext(data);
       } catch (err: any) {
@@ -52,17 +63,6 @@ function App() {
     () => ({ exitDataContext, setExitDataContext }),
     [exitDataContext, setExitDataContext]
   );
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const user = await getCurrentUser();
-        setUser(user);
-      } catch (err) {
-        navigate("/login");
-      }
-    })();
-  }, []);
 
   return (
     <div

@@ -28,6 +28,7 @@ import {
   getExitComments,
   addComment,
   getCommentsByUser,
+  deleteComment,
 } from "../controllers/commentController";
 import {
   addUser,
@@ -142,7 +143,7 @@ router.post("/users", async (req, res, next) => {
     const response = await addUser(user_data);
     res.send("OK");
   } catch (err) {
-    res.send(err);
+    res.status(400).send(err);
   }
 });
 
@@ -282,6 +283,16 @@ router.get("/comments/by-user-id/:id", async (req, res, next) => {
     res.send(comments);
   } catch (err: any) {
     res.status(500).send(err.message);
+  }
+});
+
+router.delete("/comments/:comment_id", async (req, res, next) => {
+  const comment_id = req.params.comment_id;
+  try {
+    const response = await deleteComment(comment_id);
+    res.status(200).send(response);
+  } catch (err) {
+    res.status(500).send("Internal server error");
   }
 });
 

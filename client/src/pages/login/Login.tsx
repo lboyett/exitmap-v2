@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   useColorMode,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { EventType } from "@testing-library/react";
 import { useNavigate } from "react-router";
@@ -30,8 +31,8 @@ function Login() {
   const { colorMode, toggleColorMode } = useColorMode();
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
-  const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
+  const toast = useToast();
   const out_500 = useColorModeValue("out_dark.500", "out_light.500");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -51,11 +52,34 @@ function Login() {
       );
       setUserContext(data);
       navigate("/home");
-      setLoading(false);
     } catch (err: any) {
+      if (err.response && err.response.status === 404) {
+        toast({
+          title: "Error",
+          description: "Email not found",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else if (err.response && err.response.status === 401) {
+        toast({
+          title: "Error",
+          description: "Incorrect password",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Error logging in.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } finally {
       setLoading(false);
-      console.log(err);
-      if (err.response && err.response.data) console.log(err.response.data);
     }
   }
 

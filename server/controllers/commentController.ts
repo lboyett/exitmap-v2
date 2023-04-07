@@ -3,7 +3,7 @@ import pool from "../pool-config";
 export async function getExitComments(exit_id: string) {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT comments.created_at AS comment_created_at, * FROM comments JOIN users ON comments.author = users._id WHERE exit = $1 ",
+      "SELECT comments.created_at AS comment_created_at, comments._id AS comment_id, * FROM comments JOIN users ON comments.author = users._id WHERE exit = $1 AND comments.is_deleted = false",
       [exit_id],
       (err, results) => {
         if (err) {
@@ -46,6 +46,23 @@ export async function getCommentsByUser(id: string) {
         }
         if (results && results.rows) resolve(results.rows);
         else reject("Error getting user comments");
+      }
+    );
+  });
+}
+
+export async function deleteComment(id: string | number) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "UPDATE comments SET is_deleted = true WHERE _id = $1",
+      [id],
+      (err, results) => {
+        if (err) {
+          reject(err);
+          console.log(err);
+        }
+        if (results && results.rows) resolve(results.rows);
+        else reject("Error deleting comment");
       }
     );
   });

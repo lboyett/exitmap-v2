@@ -10,6 +10,7 @@ import {
   Heading,
   useColorMode,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
@@ -33,6 +34,7 @@ function Signup() {
   const out_500 = useColorModeValue("out_dark.500", "out_light.500");
   const toast = useToast();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [capState, setCapState] = useState<boolean>(false);
 
@@ -49,6 +51,7 @@ function Signup() {
       });
       return;
     }
+    setLoading(true);
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     const headers = {
@@ -60,11 +63,12 @@ function Signup() {
     };
     try {
       const userRes = await axios.post(url, { headers });
-      // navigate('/home')
-      console.log(userRes.data);
+      navigate("/login");
     } catch (err: any) {
-      console.log(err.response.data.constraint);
+      console.log(err);
       handleError(err.response.data.constraint);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -72,17 +76,20 @@ function Signup() {
     let expression = "There was a problem with your submission!";
     switch (constraint) {
       case "users_username_key":
-        expression = "That username already exists!";
+        expression = "That username already exists.";
         break;
       case "users_email_key":
-        expression = "That email already exists!";
+        expression = "That email already exists in our database.";
+        break;
+      default:
+        expression;
         break;
     }
     toast({
       title: "Wait a minute!",
       description: `${expression}`,
       status: "error",
-      duration: 1500,
+      duration: 5000,
       isClosable: true,
     });
   }
@@ -140,14 +147,20 @@ function Signup() {
             sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA_KEY}
             onChange={validateRecaptcha}
           />
-          <Flex className="register-user-button-container">
-            <Button type="submit" bg={txt_500} color={out_500}>
-              SUBMIT
-            </Button>
-            <Text onClick={navigateToLogin} className="already-registered">
-              Already registered?
-            </Text>
-          </Flex>
+          {loading ? (
+            <Flex justifyContent="center">
+              <Spinner size="lg" />
+            </Flex>
+          ) : (
+            <Flex className="register-user-button-container">
+              <Button type="submit" bg={txt_500} color={out_500}>
+                SUBMIT
+              </Button>
+              <Text onClick={navigateToLogin} className="already-registered">
+                Already registered?
+              </Text>
+            </Flex>
+          )}
         </form>
       </div>
     </div>

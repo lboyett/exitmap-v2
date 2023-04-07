@@ -1,7 +1,6 @@
 import pool from "../pool-config";
 import crypto from "crypto";
 
-// i don't think these should be input elements
 export interface UserData {
   first_name: string;
   last_name: string;
@@ -109,7 +108,7 @@ export async function getUserByEmail(email: string) {
       (err, results) => {
         if (err) reject({ status: 500, message: "Internal server error" });
         else if (!results.rows[0])
-          reject({ status: 401, message: "Email not found" });
+          reject({ status: 404, message: "Email not found" });
         else resolve(results.rows[0]);
       }
     );

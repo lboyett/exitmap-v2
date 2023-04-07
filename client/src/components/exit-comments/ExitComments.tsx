@@ -9,6 +9,8 @@ import {
   Textarea,
   Button,
   Spinner,
+  Spacer,
+  useToast,
 } from "@chakra-ui/react";
 import "./exit-comments.css";
 import { useState, useEffect, useContext } from "react";
@@ -46,6 +48,8 @@ function ExitComments(props: ExitCommentsPropTypes) {
   const [numComments, setNumComments] = useState(3);
   const user = useContext(UserContext);
   const comments = props.comments;
+  const toast = useToast();
+  const [loading, setLoading] = useState(false);
 
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -89,6 +93,25 @@ function ExitComments(props: ExitCommentsPropTypes) {
 
   function showLessComments() {
     setNumComments(3);
+  }
+
+  async function deleteComment(id: number) {
+    setLoading(true);
+    const url = `http://localhost:8000/comments/${id}`;
+    try {
+      await axios.delete(url);
+      props.getExit();
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Please try again or contact us.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (!comments) {
@@ -139,13 +162,17 @@ function ExitComments(props: ExitCommentsPropTypes) {
           )
           .slice(0, numComments)
           .map((comment: any, i: number) => {
+            let isAuthor = false;
+            if (comment.author === user[0]._id) {
+              isAuthor = true;
+            }
             return (
               <Flex className="comment" key={i}>
                 <AvatarComp
                   userId={comment.author}
                   className="avatar-comments"
                 />
-                <Box>
+                <Box flexGrow={1}>
                   <Flex alignItems={"center"}>
                     <Text className="comment-username">
                       {"@" + comment.username}
@@ -158,7 +185,25 @@ function ExitComments(props: ExitCommentsPropTypes) {
                       )}
                     </Text>
                   </Flex>
-                  <Text>{comment.comment}</Text>
+                  <Flex>
+                    <Text p="0">{comment.comment}</Text>
+                    <Spacer />
+                    {isAuthor ? (
+                      loading ? (
+                        <Spinner />
+                      ) : (
+                        <Button
+                          p="0 0.5rem"
+                          height="min-content"
+                          onClick={() => {
+                            deleteComment(comment.comment_id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      )
+                    ) : null}
+                  </Flex>
                 </Box>
               </Flex>
             );
