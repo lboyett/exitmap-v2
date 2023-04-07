@@ -47,6 +47,7 @@ export default function NavBar(props: NavBarProps) {
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
+  const bg_400 = useColorModeValue("bg_light.400", "bg_dark.400");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
   const lightMode = useColorModeValue(true, false);
   const [userExits, setUserExits] = useState<Exit[]>([]);
@@ -89,7 +90,11 @@ export default function NavBar(props: NavBarProps) {
     }
   }
   return (
-    <Flex className="navbar" bg={bg_500}>
+    <Flex
+      className="navbar"
+      bg={lightMode ? bg_400 : bg_500}
+      borderBottom={lightMode ? "1px solid" : "none"}
+    >
       <Heading
         className="logo"
         as="h1"

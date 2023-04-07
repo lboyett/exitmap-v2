@@ -40,6 +40,7 @@ export const theme = extendTheme(
       },
       bg_light: {
         500: "white",
+        400: "#eeeeee",
       },
       txt_light: {
         300: "#525660",

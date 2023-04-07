@@ -45,7 +45,6 @@ function ExitDetails(props: any) {
   const lightMode = useColorModeValue(true, false);
 
   useEffect(() => {
-    console.log(props.exit);
     experienceCounter(props.exit.exp_req);
   }, []);
 
