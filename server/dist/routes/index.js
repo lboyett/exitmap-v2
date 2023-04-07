@@ -219,9 +219,10 @@ router.get("/signed-url", (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 router.post("/images", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { submitted_by, exit, url, key } = req.body;
+    console.log(req.body);
+    const { submitted_by, exit, url, key, is_main } = req.body;
     try {
-        const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url, key));
+        const response = (yield (0, imageController_1.addImage)(submitted_by, exit, url, key, is_main));
         res.status(200).send(response.rows[0]);
     }
     catch (err) {

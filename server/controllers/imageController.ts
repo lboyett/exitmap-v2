@@ -19,12 +19,13 @@ export async function addImage(
   submitted_by: number,
   exit: number,
   url: string,
-  key: string
+  key: string,
+  is_main: boolean
 ) {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO images (submitted_by, exit, url, key, is_main) values ($1,$2,$3,$4,true) RETURNING *",
-      [submitted_by, exit, url, key],
+      "INSERT INTO images (submitted_by, exit, url, key, is_main) values ($1,$2,$3,$4,$5) RETURNING *",
+      [submitted_by, exit, url, key, is_main],
       (err, results) => {
         if (err) reject(err);
         resolve(results);

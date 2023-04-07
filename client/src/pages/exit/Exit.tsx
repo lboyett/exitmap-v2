@@ -1,5 +1,5 @@
 import "./exit.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavBar from "../../components/navbar/NavBar";
 import {
   Box,
@@ -23,6 +23,7 @@ import {
   Text,
   Flex,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 import { exitComments } from "../../data/sample-exit-comments";
 import ExitTitle from "../../components/exit-title/ExitTitle";
@@ -37,6 +38,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import FileInput from "../../components/submit-exit-form/file-input/FileInput";
+import { UserContext } from "../../context/UserContext";
+import { getSignedUrl } from "../../components/submit-exit-form/submit-exit-functions";
+import uniqid from "uniqid";
 
 function Exit() {
   const [exitRes, setExitRes] = useState<exit>();
@@ -48,31 +52,47 @@ function Exit() {
   const [tabsIsLazy, setTabsIsLazy] = useState(true);
   const { height, width } = useWindowDimensions();
   const { exit_id } = useParams();
+  const [user, setUser] = useContext(UserContext);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState("");
 
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
-
   const exitsUrl = "http://localhost:8000/exits";
-  const imageUrl = "http://localhost:8000/images";
-
   useEffect(() => {
     getExit(exitsUrl);
   }, []);
 
   useEffect(() => {
-    setNoImage(false);
+    if (formData) setUploadError("");
   }, [formData]);
 
-  async function submitExitImage(formData: FormData | undefined) {
-    formData?.delete("exit");
-    formData?.delete("submitted_by");
-    if (exitRes) formData?.append("exit", exitRes._id.toString());
-    formData?.append("submitted_by", "1");
+  async function submitExitImage(formData: FormData) {
+    setUploadingImage(true);
+    setUploadError("");
+    const imageUrl = "http://localhost:8000/images";
     try {
-      const res = await axios.post(imageUrl, formData);
+      const { signedUrl, key } = await getSignedUrl();
+      const file = formData.get("image") as File;
+      await axios.put(signedUrl, file, {
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+      await axios.post(imageUrl, {
+        submitted_by: user._id,
+        exit: exit_id,
+        url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
+        key: key,
+        is_main: false,
+      });
+      onClose();
+      getExit(exitsUrl);
     } catch (err: any) {
-      console.log(err);
+      setUploadError("Error uploading image. Please try again or contact us.");
+    } finally {
+      setUploadingImage(false);
     }
   }
 
@@ -102,7 +122,11 @@ function Exit() {
         <Grid className="exit-page">
           <Box className="exit-left">
             <ExitTitle exit={exitRes} />
-            <ExitImages class="mobile" imgArr={exitImages} />
+            <ExitImages
+              class="mobile"
+              imgArr={exitImages}
+              key={`${uniqid()}`}
+            />
             <ExitDetails exit={exitRes} />
             <div className="exit-page-map-mobile">
               {width < 700 ? (
@@ -145,7 +169,7 @@ function Exit() {
                   <Modal
                     isOpen={isOpen}
                     onClose={() => {
-                      setNoImage(false);
+                      setUploadError("");
                       onClose();
                     }}
                   >
@@ -157,7 +181,7 @@ function Exit() {
                           onSubmit={(e) => {
                             e.preventDefault();
                             if (!formData) {
-                              setNoImage(true);
+                              setUploadError("Please select an image");
                               return;
                             }
                             submitExitImage(formData);
@@ -170,10 +194,15 @@ function Exit() {
                             isInvalidFileType={false}
                           />
                           <Flex className="upload-button-container">
-                            <Button type="submit">Upload</Button>
-                            {noImage ? (
+                            {uploadingImage ? (
+                              <Spinner />
+                            ) : (
+                              <Button type="submit">Upload</Button>
+                            )}
+
+                            {uploadError ? (
                               <Text className="image-error-message">
-                                Please upload an image
+                                {uploadError}
                               </Text>
                             ) : null}
                           </Flex>

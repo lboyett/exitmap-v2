@@ -37,7 +37,7 @@ function ExitImages(props: ExitImagesPropTypes) {
       });
       setImgState(imagesArray);
     }
-  }, []);
+  }, [props.imgArr]);
 
   if (!imgState) {
     return <></>;

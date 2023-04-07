@@ -222,7 +222,6 @@ export default function NavBar(props: NavBarProps) {
                   ? format(new Date(user[0].created_at), "d MMMM yyyy")
                   : null}
               </ListItem>
-              <ListItem>Settings</ListItem>
               <ListItem>Change Password</ListItem>
               <Flex>
                 <ListItem

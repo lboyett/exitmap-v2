@@ -237,13 +237,15 @@ router.get("/signed-url", async (req, res, next) => {
 });
 
 router.post("/images", async (req, res, next) => {
-  const { submitted_by, exit, url, key } = req.body;
+  console.log(req.body);
+  const { submitted_by, exit, url, key, is_main } = req.body;
   try {
     const response = (await addImage(
       submitted_by,
       exit,
       url,
-      key
+      key,
+      is_main
     )) as QueryResult;
     res.status(200).send(response.rows[0]);
   } catch (err) {

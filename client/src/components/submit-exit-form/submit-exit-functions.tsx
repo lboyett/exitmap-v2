@@ -130,7 +130,6 @@ export async function getSignedUrl() {
     const { data } = await axios.get(url);
     return data;
   } catch (err) {
-    console.log("this is an error");
     throw err;
   }
 }
@@ -155,6 +154,7 @@ export async function postImage(
       exit: exit_id,
       url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
       key: key,
+      is_main: true,
     });
   } catch (err) {
     console.log(err);
