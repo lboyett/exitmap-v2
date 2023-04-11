@@ -7,7 +7,6 @@
 
 .exit-name {
   font-size: clamp(2.7rem, 5vw, 4rem) !important;
-  white-space: nowrap;
   margin: 0 !important;
 }
 

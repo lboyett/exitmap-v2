@@ -16,6 +16,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useNavigate } from "react-router";
+import Recaptcha from "react-recaptcha";
 
 interface FormInputs extends HTMLFormControlsCollection {
   first_name: HTMLInputElement;
@@ -118,35 +119,65 @@ function Signup() {
 
           <FormControl>
             <FormLabel>First Name</FormLabel>
-            <Input type="text" className={inputColorMode} name="first_name" />
+            <Input
+              type="text"
+              className={inputColorMode}
+              name="first_name"
+              maxLength={20}
+            />
           </FormControl>
 
           <FormControl>
             <FormLabel>Last Name</FormLabel>
-            <Input type="text" className={inputColorMode} name="last_name" />
+            <Input
+              type="text"
+              className={inputColorMode}
+              name="last_name"
+              maxLength={20}
+            />
           </FormControl>
 
           <FormControl>
             <FormLabel>Username</FormLabel>
-            <Input type="text" className={inputColorMode} name="username" />
+            <Input
+              type="text"
+              className={inputColorMode}
+              name="username"
+              maxLength={16}
+            />
           </FormControl>
 
           <FormControl>
             <FormLabel>Email</FormLabel>
-            <Input type="email" className={inputColorMode} name="email" />
+            <Input
+              type="email"
+              className={inputColorMode}
+              name="email"
+              maxLength={100}
+            />
           </FormControl>
 
           <FormControl>
             <FormLabel>Password</FormLabel>
-            <Input type="password" className={inputColorMode} name="password" />
+            <Input
+              type="password"
+              className={inputColorMode}
+              name="password"
+              maxLength={100}
+            />
           </FormControl>
 
           <ReCAPTCHA
             className="recaptcha"
+            sitekey={import.meta.env.VITE_SITE}
             theme="dark"
-            sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA_KEY}
+            size="normal"
             onChange={validateRecaptcha}
           />
+          {/* <Recaptcha
+            sitekey={import.meta.env.VITE_SITE}
+            onloadCallback={() => console.log("loaded")}
+          /> */}
           {loading ? (
             <Flex justifyContent="center">
               <Spinner size="lg" />
@@ -162,6 +193,7 @@ function Signup() {
             </Flex>
           )}
         </form>
+        <Button onClick={() => setLoading(!loading)}>Update state</Button>
       </div>
     </div>
   );

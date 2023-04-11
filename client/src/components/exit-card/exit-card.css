@@ -26,9 +26,8 @@
 }
 
 .exit-card h4 {
-  font-size: clamp(1.8rem, 3vw, 2.5rem) !important;
+  font-size: clamp(1.3rem, 3vw, 2.5rem) !important;
   font-weight: 400 !important;
-  white-space: nowrap;
   max-width: 300px;
 }
 
@@ -82,10 +81,7 @@
 }
 
 @media only screen and (max-width: 415px) {
-  .country > ul{
+  .country > ul {
     margin-left: 0.5rem !important;
   }
 }
-
-
-

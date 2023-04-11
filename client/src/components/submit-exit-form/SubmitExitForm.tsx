@@ -161,6 +161,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
           type="text"
           className={inputColorMode}
           name="exit_name"
+          maxLength={33}
           required
         />
       </FormControl>
@@ -267,6 +268,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
               type="number"
               className={inputColorMode}
               name="height_impact"
+              maxLength={5}
               required
             />
           </Flex>
@@ -278,6 +280,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
               type="number"
               className={inputColorMode}
               name="height_landing"
+              maxLength={5}
               required
             />
           </Flex>
@@ -341,7 +344,14 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       <Flex className="input-group">
         <FormControl>
           <FormLabel>City</FormLabel>
-          <Input type="text" className={inputColorMode} name="city" required />
+
+          <Input
+            type="text"
+            className={inputColorMode}
+            name="city"
+            maxLength={33}
+            required
+          />
         </FormControl>
         <FormControl>
           <FormLabel>Region / State</FormLabel>
@@ -349,6 +359,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
             type="text"
             className={inputColorMode}
             name="region"
+            maxLength={33}
             required
           />
         </FormControl>
@@ -363,6 +374,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
                 className={inputColorMode}
                 name="hiking_time_hrs"
                 min={0}
+                maxLength={3}
                 pattern="\d*"
               />
               <Box>hrs</Box>
@@ -373,6 +385,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
                 className={inputColorMode}
                 name="hiking_time_mins"
                 min={0}
+                maxLength={2}
                 pattern="\d*"
               />
               <Box>mins</Box>
@@ -396,15 +409,29 @@ export default function SubmitExitForm(props: SubmitFormProps) {
       </Flex>
       <FormControl>
         <FormLabel>Description</FormLabel>
-        <Textarea className={inputColorMode} name="description" required />
+        <Textarea
+          className={inputColorMode}
+          name="description"
+          maxLength={4000}
+          required
+        />
       </FormControl>
       <FormControl>
         <FormLabel>Access and Approach</FormLabel>
-        <Textarea className={inputColorMode} name="access_approach" required />
+        <Textarea
+          className={inputColorMode}
+          name="access_approach"
+          maxLength={4000}
+          required
+        />
       </FormControl>
       <FormControl>
         <FormLabel>Landing Area</FormLabel>
-        <Textarea className={inputColorMode} name="landing_area" />
+        <Textarea
+          className={inputColorMode}
+          maxLength={4000}
+          name="landing_area"
+        />
       </FormControl>
       <Flex className="submit-div">
         <Button type="submit">Submit Exit</Button>
