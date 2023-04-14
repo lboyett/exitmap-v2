@@ -1,16 +1,16 @@
 import pool from "../pool-config";
 import crypto from "crypto";
 
-export interface UserData {
+export interface UserData extends Object {
   first_name: string;
   last_name: string;
   username: string;
   email: string;
-  hashed_password: Buffer;
-  salt: Buffer;
+  hashed_password?: Buffer;
+  salt?: Buffer;
   is_approved: boolean;
   is_admin: boolean;
-  is_deleted: boolean;
+  is_deleted?: boolean;
   password: string;
 }
 
@@ -138,5 +138,15 @@ export async function putUserAvatar(user_id: string, key: string) {
         else resolve(results.rows[0]);
       }
     );
+  });
+}
+
+export async function changeUserPassword(
+  user_id: string,
+  old_password: string,
+  new_password: string
+) {
+  return new Promise((resolve, reject) => {
+    resolve("works");
   });
 }

@@ -7,7 +7,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
@@ -24,6 +23,7 @@ import "./avatar-comp.css";
 import FileInput from "../submit-exit-form/file-input/FileInput";
 import axios from "axios";
 import { getSignedUrl } from "../submit-exit-form/submit-exit-functions";
+import imageCompression from "browser-image-compression";
 
 interface AvatarCompProps extends AvatarProps {
   modal?: boolean | undefined;
@@ -49,10 +49,11 @@ export default function AvatarComp(props: AvatarCompProps) {
     const avatarUrl = `http://localhost:8000/images/avatars/${user_id}`;
     const file = formData.get("image") as File;
     try {
+      const compressedFile = (await compressImage(file)) as File;
       const { signedUrl, key } = await getSignedUrl();
-      await axios.put(signedUrl, file, {
+      await axios.put(signedUrl, compressedFile, {
         headers: {
-          "Content-Type": file.type,
+          "Content-Type": compressedFile.type,
         },
       });
       await axios.put(avatarUrl, {
@@ -92,6 +93,24 @@ export default function AvatarComp(props: AvatarCompProps) {
       setName(`${data.username}`);
       setIsAdmin(data.is_admin);
     } catch (err) {} //FixThis
+  }
+
+  async function compressImage(file: File) {
+    return new Promise(async (resolve, reject) => {
+      const mimeTypes = ["image/jpeg", "image/png", "image/webp"];
+      if (!mimeTypes.includes(file.type)) {
+        resolve(file);
+      }
+      const options = {
+        maxWidthOrHeight: 200,
+      };
+      try {
+        const compressedFile = await imageCompression(file, options);
+        resolve(compressedFile);
+      } catch (err) {
+        reject(err);
+      }
+    });
   }
 
   return (

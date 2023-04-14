@@ -72,18 +72,19 @@ function ExitComments(props: ExitCommentsPropTypes) {
     const inputs = target.elements as FormInputs;
     const url = "http://localhost:8000/comments";
     try {
+      if (!inputs.new_comment.value) throw Error("Please type a comment.");
       await axios.post(url, {
         comment: inputs.new_comment.value,
         exit_id: props.exit_id,
         author_id: user[0]._id,
       });
-      setSubmitting(false);
       props.getExit();
       showAddCommentButton();
       inputs.new_comment.value = "";
     } catch (err: any) {
-      setSubmitting(false);
       setErrorMessage(err.message);
+    } finally {
+      setSubmitting(false);
     }
   }
 

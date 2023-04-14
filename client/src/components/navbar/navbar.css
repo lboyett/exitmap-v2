@@ -113,7 +113,7 @@ h3 {
   text-decoration: underline;
 }
 
-.contact:hover {
+.modal-link:hover {
   cursor: pointer;
   text-decoration: underline;
 }

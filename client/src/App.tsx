@@ -25,6 +25,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import ChangePassword from "./pages/change-password/ChangePassword";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -87,6 +88,7 @@ function App() {
           <Route path="countries/:country_code" element={<Country />} />
           <Route path="countries/:country_code/:exit_id" element={<Exit />} />
           <Route path="contact-us" element={<ContactUs />} />
+          <Route path="change-password" element={<ChangePassword />} />
         </Routes>
       </ExitDataContext.Provider>
       <Modal isOpen={isOpen} onClose={onClose}>

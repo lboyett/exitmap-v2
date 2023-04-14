@@ -193,7 +193,6 @@ function Signup() {
             </Flex>
           )}
         </form>
-        <Button onClick={() => setLoading(!loading)}>Update state</Button>
       </div>
     </div>
   );

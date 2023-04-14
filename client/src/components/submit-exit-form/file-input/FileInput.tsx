@@ -88,18 +88,6 @@ export default function FileInput({
     return true;
   }
 
-  async function validateFileOnServer(file: File) {
-    const formData = new FormData();
-    formData.append("image", file);
-    const url = "http://localhost:8000/utilities/validate-file";
-    try {
-      const res = await axios.post(url, formData);
-      return res;
-    } catch (err) {
-      return err as AxiosError;
-    }
-  }
-
   return (
     <FormControl isInvalid={fileInvalid ? true : false}>
       <FormLabel>Upload Image</FormLabel>

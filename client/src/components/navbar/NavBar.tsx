@@ -222,10 +222,21 @@ export default function NavBar(props: NavBarProps) {
                   ? format(new Date(user[0].created_at), "d MMMM yyyy")
                   : null}
               </ListItem>
-              <ListItem>Change Password</ListItem>
               <ListItem
-                className="contact"
-                onClick={() => navigate("/contact-us")}
+                className="modal-link"
+                onClick={() => {
+                  onClose();
+                  navigate("/change-password");
+                }}
+              >
+                Change Password
+              </ListItem>
+              <ListItem
+                className="modal-link"
+                onClick={() => {
+                  onClose();
+                  navigate("/contact-us");
+                }}
               >
                 Contact Us
               </ListItem>

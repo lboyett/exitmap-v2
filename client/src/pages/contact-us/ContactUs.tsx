@@ -15,7 +15,7 @@ import "./contact-us.css";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 
-export default function DashHome() {
+export default function ContactUs() {
   const [user, setUser] = useContext(UserContext);
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -34,7 +34,6 @@ export default function DashHome() {
       subject: inputs.subject.value,
       message: inputs.message.value,
     };
-    console.log(data);
     const json = JSON.stringify(data);
     try {
       const res = await axios.post("https://api.web3forms.com/submit", json, {

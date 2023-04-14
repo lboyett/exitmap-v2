@@ -125,7 +125,7 @@ async function postExit(exit_data: any) {
 }
 
 export async function getSignedUrl() {
-  const url = "http://localhost:8000/signed-url";
+  const url = "http://localhost:8000/images/signed-url";
   try {
     const { data } = await axios.get(url);
     return data;
