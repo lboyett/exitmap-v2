@@ -15,8 +15,9 @@ const router = express.Router();
 router.get("/reviewed", async (req, res, next) => {
   try {
     const response = await getReviewedExits();
-    res.send(response);
+    res.status(200).send(response);
   } catch (err) {
+    console.log(err);
     res.status(500).send("error");
   }
 });

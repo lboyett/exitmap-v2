@@ -36,8 +36,6 @@ function App() {
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
-  const url = `http://localhost:8000/exits/reviewed`;
-
   useEffect(() => {
     (async () => {
       try {
@@ -52,9 +50,11 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
+        const url = `http://localhost:8000/exits/reviewed`;
         const { data } = (await axios.get(url)) as AxiosResponse;
         setExitDataContext(data);
       } catch (err: any) {
+        console.log(err);
         onOpen();
         setModalErrorMessage("Please try again or contact us.");
       }

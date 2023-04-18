@@ -9,9 +9,8 @@ import {
   FormErrorMessage,
   Flex,
 } from "@chakra-ui/react";
-import React, { useRef, useState, useEffect, DragEvent as DE } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./file-input.css";
-import axios, { AxiosError, AxiosResponse } from "axios";
 
 interface FileInputProps {
   updateForm: Function;
