@@ -1,0 +1,7 @@
+.admin-list {
+  margin: 1rem;
+}
+
+.admin-list li:hover {
+  cursor: pointer;
+}

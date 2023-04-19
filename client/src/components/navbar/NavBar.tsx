@@ -34,7 +34,7 @@ import { UserContext } from "../../context/UserContext";
 import format from "date-fns/format";
 import AvatarComp from "../avatar/AvatarComp";
 
-type CurrentPage = "home" | "exits" | "submit";
+type CurrentPage = "home" | "exits" | "submit" | "admin";
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
   currentPage?: CurrentPage;
 }
@@ -52,14 +52,14 @@ export default function NavBar(props: NavBarProps) {
   const lightMode = useColorModeValue(true, false);
   const [userExits, setUserExits] = useState<Exit[]>([]);
   const [userComments, setUserComments] = useState<[]>([]);
-  const user = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     (async () => {
       try {
-        await getUserExits(user[0]._id);
-        await getUserComments(user[0]._id);
+        await getUserExits(user._id);
+        await getUserComments(user._id);
       } catch (err) {
         console.log(err);
       }
@@ -146,6 +146,17 @@ export default function NavBar(props: NavBarProps) {
                 SUBMIT EXIT
               </Text>
             </MenuItem>
+            {user.is_admin ? (
+              <MenuItem
+                bg={bg_500}
+                _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
+                onClick={() => navigate("/admin")}
+              >
+                <Text borderBottom={page === "admin" ? "1px solid" : "hidden"}>
+                  ADMIN
+                </Text>
+              </MenuItem>
+            ) : null}
           </MenuList>
         </Menu>
         <Heading
@@ -178,6 +189,18 @@ export default function NavBar(props: NavBarProps) {
         >
           SUBMIT EXIT
         </Heading>
+        {user.is_admin ? (
+          <Heading
+            as="h2"
+            className="navbar-h2"
+            color={txt_500}
+            _hover={{ color: txt_300, textShadow: "0px 0px 3px" }}
+            onClick={() => navigate("/admin")}
+            borderBottom={page === "admin" ? "1px solid" : "hidden"}
+          >
+            ADMIN
+          </Heading>
+        ) : null}
       </HStack>
       <Spacer />
       <Box
@@ -202,14 +225,14 @@ export default function NavBar(props: NavBarProps) {
         color={txt_500}
         onClick={() => onOpen()}
       >
-        {user[0].username}
+        {user.username}
       </Heading>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent className="modal" bg={bg_500}>
           <ModalHeader className="modal-header">
             <AvatarComp id="modal-avatar" modal={true} />
-            <Text>{user[0].username}</Text>
+            <Text>{user.username}</Text>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -218,8 +241,8 @@ export default function NavBar(props: NavBarProps) {
               <ListItem>Comments: {userComments.length}</ListItem>
               <ListItem>
                 User Since:{" "}
-                {user && user[0].created_at
-                  ? format(new Date(user[0].created_at), "d MMMM yyyy")
+                {user && user.created_at
+                  ? format(new Date(user.created_at), "d MMMM yyyy")
                   : null}
               </ListItem>
               <ListItem

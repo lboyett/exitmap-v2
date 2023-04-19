@@ -2,6 +2,8 @@ import express from "express";
 import {
   getExit,
   getReviewedExits,
+  getUnreviewedExits,
+  approveExit,
   addExit,
   deleteExit,
   getExitsByUser,
@@ -15,6 +17,26 @@ const router = express.Router();
 router.get("/reviewed", async (req, res, next) => {
   try {
     const response = await getReviewedExits();
+    res.status(200).send(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("error");
+  }
+});
+
+router.get("/unreviewed", async (req, res, next) => {
+  try {
+    const response = await getUnreviewedExits();
+    res.status(200).send(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("error");
+  }
+});
+
+router.post("/unreviewed/:id", async (req, res, next) => {
+  try {
+    const response = await approveExit(req.params.id);
     res.status(200).send(response);
   } catch (err) {
     console.log(err);

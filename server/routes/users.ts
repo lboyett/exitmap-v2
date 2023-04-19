@@ -4,6 +4,8 @@ import {
   UserData as UserDataType,
   getUserById,
   changeUserPassword,
+  getUnreviewedUsers,
+  approveUser,
 } from "../controllers/userController";
 import authorizeUser from "../utils/authorizeUser";
 
@@ -16,6 +18,30 @@ router.post("/", async (req, res) => {
     res.send("OK");
   } catch (err) {
     res.status(400).send(err);
+  }
+});
+
+router.get("/unreviewed", async (req, res) => {
+  try {
+    const users = (await getUnreviewedUsers()) as UserDataType[];
+    users.forEach((user) => {
+      delete user.hashed_password;
+      delete user.salt;
+    });
+    res.status(200).send(users);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("internal server error");
+  }
+});
+
+router.post("/unreviewed/:id", async (req, res, next) => {
+  try {
+    const response = await approveUser(req.params.id);
+    res.status(200).send(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("error");
   }
 });
 

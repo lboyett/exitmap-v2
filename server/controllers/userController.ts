@@ -54,6 +54,33 @@ export async function addUser({
   });
 }
 
+export async function getUnreviewedUsers() {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM users WHERE is_approved = false",
+      (err, results) => {
+        if (err) reject({ status: 500, message: "Internal server error" });
+        else resolve(results.rows);
+      }
+    );
+  });
+}
+
+export async function approveUser(id: string) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "UPDATE users SET is_approved = true WHERE _id = $1;",
+      [id],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        if (results && results.rows) resolve(results.rows);
+      }
+    );
+  });
+}
+
 export async function populateTestUsers() {
   let salt = crypto.randomBytes(16);
   pool.query(

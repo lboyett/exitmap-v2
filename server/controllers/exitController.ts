@@ -48,6 +48,35 @@ export async function getReviewedExits() {
   });
 }
 
+export async function getUnreviewedExits() {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM exits WHERE is_reviewed = false;",
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(results.rows);
+      }
+    );
+  });
+}
+
+export async function approveExit(id: string) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "UPDATE exits SET is_reviewed = true WHERE _id = $1;",
+      [id],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        if (results && results.rows) resolve(results.rows);
+      }
+    );
+  });
+}
+
 export async function addExit({
   name,
   object_type,

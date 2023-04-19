@@ -26,6 +26,10 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ChangePassword from "./pages/change-password/ChangePassword";
+import AdminPage from "./pages/admin/AdminPage";
+import ReviewExits from "./pages/admin/review-exits/ReviewExits";
+import AdminHome from "./pages/admin/admin-home/AdminHome";
+import ReviewUsers from "./pages/admin/review-users/ReviewUsers";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -89,6 +93,11 @@ function App() {
           <Route path="countries/:country_code/:exit_id" element={<Exit />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="change-password" element={<ChangePassword />} />
+          <Route path="admin" element={<AdminPage />}>
+            <Route path="" element={<AdminHome />} />
+            <Route path="review-exits" element={<ReviewExits />} />
+            <Route path="review-users" element={<ReviewUsers />} />
+          </Route>
         </Routes>
       </ExitDataContext.Provider>
       <Modal isOpen={isOpen} onClose={onClose}>
