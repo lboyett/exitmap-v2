@@ -70,6 +70,7 @@ function Login() {
           isClosable: true,
         });
       } else {
+        console.log(err);
         toast({
           title: "Error",
           description: "Error logging in.",
