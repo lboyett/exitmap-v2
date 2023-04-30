@@ -19,7 +19,6 @@ router.get("/reviewed", async (req, res, next) => {
     const response = await getReviewedExits();
     res.status(200).send(response);
   } catch (err) {
-    console.log(err);
     res.status(500).send("error");
   }
 });
