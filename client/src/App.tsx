@@ -30,6 +30,7 @@ import AdminPage from "./pages/admin/AdminPage";
 import ReviewExits from "./pages/admin/review-exits/ReviewExits";
 import AdminHome from "./pages/admin/admin-home/AdminHome";
 import ReviewUsers from "./pages/admin/review-users/ReviewUsers";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -85,6 +86,7 @@ function App() {
         <Routes>
           <Route path="" element={<Domain />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="login" element={<Login />} />
           <Route path="home" element={<DashHome />} />
           <Route path="submit" element={<DashSubmit />} />
