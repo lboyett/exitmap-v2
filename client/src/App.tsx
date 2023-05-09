@@ -31,6 +31,7 @@ import ReviewExits from "./pages/admin/review-exits/ReviewExits";
 import AdminHome from "./pages/admin/admin-home/AdminHome";
 import ReviewUsers from "./pages/admin/review-users/ReviewUsers";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
+import ResetPassword from "./pages/reset-password/ResetPassword"
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -95,6 +96,7 @@ function App() {
           <Route path="countries/:country_code/:exit_id" element={<Exit />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="change-password" element={<ChangePassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
           <Route path="admin" element={<AdminPage />}>
             <Route path="" element={<AdminHome />} />
             <Route path="review-exits" element={<ReviewExits />} />

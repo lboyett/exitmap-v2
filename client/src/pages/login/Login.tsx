@@ -28,7 +28,7 @@ function Login() {
   const navigate = useNavigate();
   const [userContext, setUserContext] = useContext(UserContext);
   const [loading, setLoading] = useState(false);
-  const [showForgotPass, setShowForgotPass] = useState(false);
+  const [showForgotPass, setShowForgotPass] = useState(true);
   const { colorMode, toggleColorMode } = useColorMode();
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";

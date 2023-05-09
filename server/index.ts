@@ -11,7 +11,6 @@ import indexRouter from "./routes/index";
 import utilitiesRouter from "./routes/utilities";
 import loginRouter from "./routes/login";
 import logoutRouter from "./routes/logout";
-import forgotPasswordRouter from "./routes/forgot-password"
 
 const app = express();
 const port = 8000;
@@ -37,7 +36,6 @@ app.use(flash());
 
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
-app.use("/forgot-password", forgotPasswordRouter)
 app.use("/", indexRouter);
 app.use("/utilities", utilitiesRouter);
 

@@ -28,6 +28,7 @@ function ForgotPassword() {
   const navigate = useNavigate();
   const [userContext, setUserContext] = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const lightMode = useColorModeValue(true, false);
   const inputColorMode = lightMode ? "input-light" : "input-dark";
@@ -46,6 +47,9 @@ function ForgotPassword() {
         url,
         {email: inputs.email.value},
       )
+      console.log('YOU FUCKING CUNT')
+      setLoading(false)
+      setSubmitted(true)
     } catch (err: any) {
     } finally {
     }
@@ -65,13 +69,27 @@ function ForgotPassword() {
     );
   }
 
+  if (submitted) {
+    return (
+        <div className="forgot-pass-submitted-page">
+          <Text
+            fontSize="3xl !important"
+            onClick={() => {
+              toggleColorMode();
+            }}
+          >
+            Please check your email for the link to reset your password. 
+          </Text>
+        </div>
+    )
+  } else {
   return (
     <div className="forgot-password-page">
       <div className={`forgot-password-box ${inputColorMode}`}>
         <form className="forgot-password-form" onSubmit={(e) => handleSubmit(e)}>
           <Heading
             as="h2"
-            fontSize="5xl !important"
+            fontSize="2.5rem !important"
             onClick={() => {
               toggleColorMode();
             }}
@@ -104,6 +122,7 @@ function ForgotPassword() {
       </div>
     </div>
   );
+            }
 }
 
 export default ForgotPassword;
