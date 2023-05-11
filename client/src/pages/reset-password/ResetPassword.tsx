@@ -9,12 +9,19 @@ import {
   Box,
   Heading,
   Flex,
+  useToast
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import NavBar from "../../components/navbar/NavBar";
 import "./reset-password.css";
 import { UserContext } from "../../context/UserContext";
-import axios from "axios";
+import axios, { AxiosResponse} from "axios";
+import { useSearchParams } from "react-router-dom";
+
+interface FormInputs extends HTMLFormControlsCollection {
+  password: HTMLInputElement;
+  confirmPassword: HTMLInputElement;
+}
 
 export default function ChangePassword() {
   const [user, setUser] = useContext(UserContext);
@@ -22,43 +29,46 @@ export default function ChangePassword() {
   const inputColorMode = lightMode ? "input-light" : "input-dark";
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [errorMessage, setErrorMessage] = useState("");
+  const toast = useToast();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // setLoading(true);
-    // setErrorMessage("");
-    // const target = e.target;
-    // const inputs = (target as any).elements;
-    // if (!validateForm(inputs)) {
-    //   setLoading(false);
-    //   return;
-    // }
-    // const data = {
-    //   user: user._id,
-    //   old_password: inputs.old_password.value,
-    //   new_password: inputs.new_password.value,
-    // };
-    // const url = `http://localhost:8000/users/${user._id}/change-password`;
-    // try {
-    //   await axios.put(url, data, { withCredentials: true });
-    //   //setSuccess(true);
-    // } catch (err) {
-    //   console.log(err);
-    // } finally {
-    //   setLoading(false);
-    // }
+    const uuid = searchParams.get('uuid')
+    const url = `http://localhost:8000/reset-password/${uuid}`;
+    const target = e.target as HTMLFormElement;
+    const inputs = target.elements as FormInputs;
+    console.log('These are the inputs')
+    if (inputs.password.value !== inputs.confirmPassword.value) {
+      toast({
+        title: "Error",
+        description: "The passwords do not match",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
+      return
+    }
+    try {
+      const response = (await axios.post(url, {
+        password: inputs.password.value
+      })) as AxiosResponse;
+    } catch (err: any) {
+      console.log(err)
+    }
   }
 
-  function validateForm(inputs: any) {
-    if (!inputs.old_password.value) {
-      setErrorMessage("Must provide your old password.");
-      return false;
-    } else if (!inputs.new_password.value) {
-      setErrorMessage("Must provide your new password.");
-      return false;
-    } else return true;
-  }
+  // function validateForm(inputs: any) {
+  //   if (!inputs.old_password.value) {
+  //     setErrorMessage("Must provide your old password.");
+  //     return false;
+  //   } else if (!inputs.new_password.value) {
+  //     setErrorMessage("Must provide your new password.");
+  //     return false;
+  //   } else return true;
+  // }
+
   return (
     <div className="reset-password">
       {success ? (
@@ -76,7 +86,7 @@ export default function ChangePassword() {
             <FormLabel>New Password</FormLabel>
             <Input
               type="password"
-              name="old_password"
+              name="password"
               className={inputColorMode}
             />
           </FormControl>
@@ -85,7 +95,7 @@ export default function ChangePassword() {
             <FormLabel marginTop={'8px'}>Confirm Password</FormLabel>
             <Input
               type="password"
-              name="new_password"
+              name="confirmPassword"
               className={inputColorMode}
             />
           </FormControl>

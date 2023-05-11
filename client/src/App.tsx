@@ -7,7 +7,7 @@ import DashCountries from "./pages/dash-countries/DashCountries";
 import Country from "./pages/country/Country";
 import Exit from "./pages/exit/Exit";
 import ContactUs from "./pages/contact-us/ContactUs";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./app.css";
 import { ExitDataContext } from "./context/ExitDataContext";
 import { UserContext } from "./context/UserContext";
@@ -39,6 +39,7 @@ function App() {
   const [modalErrorMessage, setModalErrorMessage] = useState("");
   const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
+  let location = useLocation();
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
@@ -48,7 +49,12 @@ function App() {
         const user = await getCurrentUser();
         setUser(user);
       } catch (err) {
+        console.log(location)
+        if (location.pathname == "/reset-password") {
+          navigate(`${location.pathname}${location.search}`)
+        } else {
         navigate("/login");
+        }
       }
     })();
   }, []);

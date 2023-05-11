@@ -12,6 +12,7 @@ export interface UserData extends Object {
   is_admin: boolean;
   is_deleted?: boolean;
   password: string;
+  _id?: string;
 }
 
 export async function addUser({
@@ -175,5 +176,25 @@ export async function changeUserPassword(
 ) {
   return new Promise((resolve, reject) => {
     resolve("works");
+  });
+}
+
+export async function resetUserPassword(user_id: string, new_password: string) {
+  console.log('resetUserPassword function called')
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "UPDATE users SET hashed_password = $1 WHERE _id = $2;",
+      [new_password, user_id],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        if (results && results.rows) {
+          console.log(user_id)
+          resolve(results.rows)
+          console.log(results.rows)
+        };
+      }
+    );
   });
 }
