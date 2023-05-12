@@ -15,7 +15,8 @@ router.post("/:uuid", async (req, res, next) => {
     const user = await getUserByEmail(redis_value.email) as UserData;
     console.log(user)
     if (user._id) {
-    const resetPassword = await resetUserPassword(user._id, req.body.password)
+    const resetPassword = await resetUserPassword(user._id, req.body.password);
+    res.send(200)
     } else {
       return res.send(500).send('Internal server error')
     }

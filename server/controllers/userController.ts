@@ -180,11 +180,13 @@ export async function changeUserPassword(
 }
 
 export async function resetUserPassword(user_id: string, new_password: string) {
-  console.log('resetUserPassword function called')
+  console.log('resetUserPassword function called');
+  let salt = crypto.randomBytes(16);
+  let hashed_password = crypto.pbkdf2Sync(new_password, salt, 310000, 32, "sha256");
   return new Promise((resolve, reject) => {
     pool.query(
-      "UPDATE users SET hashed_password = $1 WHERE _id = $2;",
-      [new_password, user_id],
+      "UPDATE users SET hashed_password = $1, salt = $2 WHERE _id = $3;",
+      [hashed_password, salt, user_id],
       (err, results) => {
         if (err) {
           reject(err);

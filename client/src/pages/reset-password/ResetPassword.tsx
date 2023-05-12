@@ -17,6 +17,7 @@ import "./reset-password.css";
 import { UserContext } from "../../context/UserContext";
 import axios, { AxiosResponse} from "axios";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface FormInputs extends HTMLFormControlsCollection {
   password: HTMLInputElement;
@@ -32,6 +33,7 @@ export default function ChangePassword() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [errorMessage, setErrorMessage] = useState("");
   const toast = useToast();
+  const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,7 +41,6 @@ export default function ChangePassword() {
     const url = `http://localhost:8000/reset-password/${uuid}`;
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
-    console.log('These are the inputs')
     if (inputs.password.value !== inputs.confirmPassword.value) {
       toast({
         title: "Error",
@@ -54,7 +55,17 @@ export default function ChangePassword() {
       const response = (await axios.post(url, {
         password: inputs.password.value
       })) as AxiosResponse;
+      navigate("/login")
     } catch (err: any) {
+      if (err.response.status === 404) {
+        toast({
+          title: "Error",
+          description: "Please click the password reset link sent to your email.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
       console.log(err)
     }
   }
