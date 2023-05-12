@@ -10,10 +10,14 @@ const exits_1 = __importDefault(require("./exits"));
 const images_1 = __importDefault(require("./images"));
 const comments_1 = __importDefault(require("./comments"));
 const users_1 = __importDefault(require("./users"));
+const forgot_password_1 = __importDefault(require("./forgot-password"));
+const reset_password_1 = __importDefault(require("./reset-password"));
 const router = express_1.default.Router();
 // =========================== ROUTES ===========================
 router.use("/exits", exits_1.default);
 router.use("/images", images_1.default);
 router.use("/comments", comments_1.default);
 router.use("/users", users_1.default);
+router.use("/forgot-password", forgot_password_1.default);
+router.use("/reset-password", reset_password_1.default);
 exports.default = router;

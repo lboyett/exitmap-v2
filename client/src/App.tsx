@@ -7,7 +7,7 @@ import DashCountries from "./pages/dash-countries/DashCountries";
 import Country from "./pages/country/Country";
 import Exit from "./pages/exit/Exit";
 import ContactUs from "./pages/contact-us/ContactUs";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./app.css";
 import { ExitDataContext } from "./context/ExitDataContext";
 import { UserContext } from "./context/UserContext";
@@ -30,6 +30,8 @@ import AdminPage from "./pages/admin/AdminPage";
 import ReviewExits from "./pages/admin/review-exits/ReviewExits";
 import AdminHome from "./pages/admin/admin-home/AdminHome";
 import ReviewUsers from "./pages/admin/review-users/ReviewUsers";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
+import ResetPassword from "./pages/reset-password/ResetPassword"
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -37,6 +39,7 @@ function App() {
   const [modalErrorMessage, setModalErrorMessage] = useState("");
   const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
+  let location = useLocation();
 
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
 
@@ -46,7 +49,12 @@ function App() {
         const user = await getCurrentUser();
         setUser(user);
       } catch (err) {
+        console.log(location)
+        if (location.pathname == "/reset-password") {
+          navigate(`${location.pathname}${location.search}`)
+        } else {
         navigate("/login");
+        }
       }
     })();
   }, []);
@@ -85,6 +93,7 @@ function App() {
         <Routes>
           <Route path="" element={<Domain />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="login" element={<Login />} />
           <Route path="home" element={<DashHome />} />
           <Route path="submit" element={<DashSubmit />} />
@@ -93,6 +102,7 @@ function App() {
           <Route path="countries/:country_code/:exit_id" element={<Exit />} />
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="change-password" element={<ChangePassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
           <Route path="admin" element={<AdminPage />}>
             <Route path="" element={<AdminHome />} />
             <Route path="review-exits" element={<ReviewExits />} />

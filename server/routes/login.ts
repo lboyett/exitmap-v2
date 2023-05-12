@@ -11,6 +11,7 @@ router.post("/", async (req, res, next) => {
   try {
     if (!email) throw { status: 400, message: "Must input email" };
     const user = (await getUserByEmail(email)) as any;
+    console.log(user)
     await validatePassword(password, user.hashed_password, user.salt);
     delete user.hashed_password;
     delete user.salt;
