@@ -8,18 +8,76 @@ import {
   approveUser,
 } from "../controllers/userController";
 import authorizeUser from "../utils/authorizeUser";
+import redisClient from "../redis-config"
+import nodemailer from "nodemailer"
+import crypto from "crypto"
+import { UserData } from "../controllers/userController";
+
+// interface RedisUserData {
+//   first_name: string,
+//   last_name: string,
+//   username: string,
+//   email: string,
+//   password: string
+// }
 
 const router = express.Router();
 
+const uuid = crypto.randomUUID();
+
 router.post("/", async (req, res) => {
   const user_data = req.body.headers;
+  const email = user_data.email;
   try {
-    const response = await addUser(user_data);
-    res.send("OK");
-  } catch (err) {
-    res.status(400).send(err);
+    const redis_response = await redisClient.hSet(uuid, user_data)
+    const expiry_response = await redisClient.expire(uuid, 60*60*24)
+		const redis_value = await redisClient.hGetAll(uuid);
+  } catch (err: any) {
+    console.log(err)
   }
+
+  async function main() {
+    let transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "exitmap.jump@gmail.com",
+        pass: "kaylfjugkuehguye",
+      },
+    });
+
+    let info = await transporter.sendMail({
+      from: '"ExitMap" <exitmap.jump@gmail.com>', // sender address
+      to: `${email}`, // list of receivers
+      subject: "ExitMap Email Verification", // Subject line
+      text: `This message was sent to you by ExitMap. To verify your email, please click the following link, http://localhost:5174/verify-user?uuid=${uuid}.`, // plain text body
+      html: `<h1>Hello!</h1><br><p>This message was sent to you by ExitMap.</p><br><p>To verify your email, please click the following link:</p><br><h2>http://localhost:5174/verify-user?uuid=${uuid}</h2>`, // html body
+    });
+  }
+
+  main().catch(console.error);
 });
+
+router.post("/verify-user/:uuid", async (req, res) => {
+  console.log('Verify user backend called')
+  try {
+    const redis_user = await redisClient.hGetAll(req.params.uuid);
+    const userData: UserDataType = {
+      first_name: redis_user.first_name,
+      last_name: redis_user.last_name,
+      username: redis_user.username,
+      email: redis_user.email,
+      password: redis_user.password,
+      is_approved: false,
+      is_admin: false
+    }
+    console.log('ADD USER FUNCTION IS ABOUT TO BE CALLED')
+    const addUser_response = await addUser(userData)
+    res.send("OK");
+  } catch (err: any) {
+    console.log(err)
+    res.status(500).send(err.code);
+  }
+})
 
 router.get("/unreviewed", async (req, res) => {
   try {

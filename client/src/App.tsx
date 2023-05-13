@@ -31,7 +31,8 @@ import ReviewExits from "./pages/admin/review-exits/ReviewExits";
 import AdminHome from "./pages/admin/admin-home/AdminHome";
 import ReviewUsers from "./pages/admin/review-users/ReviewUsers";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
-import ResetPassword from "./pages/reset-password/ResetPassword"
+import ResetPassword from "./pages/reset-password/ResetPassword";
+import VerifyUser from "./pages/verify-user/VerifyUser";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
@@ -49,10 +50,11 @@ function App() {
         const user = await getCurrentUser();
         setUser(user);
       } catch (err) {
-        console.log(location)
         if (location.pathname == "/reset-password") {
           navigate(`${location.pathname}${location.search}`)
-        } else {
+        } else if (location.pathname == "/verify-user") {
+          navigate(`${location.pathname}${location.search}`)
+        }else {
         navigate("/login");
         }
       }
@@ -103,6 +105,7 @@ function App() {
           <Route path="contact-us" element={<ContactUs />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="verify-user" element={<VerifyUser />} />
           <Route path="admin" element={<AdminPage />}>
             <Route path="" element={<AdminHome />} />
             <Route path="review-exits" element={<ReviewExits />} />

@@ -46,7 +46,6 @@ export async function addUser({
           console.log(
             "!!! There was an error attempting to add a new user !!!"
           );
-          console.log(err);
           reject(err);
         }
         resolve(results);

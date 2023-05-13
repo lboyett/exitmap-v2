@@ -47,11 +47,19 @@ function ForgotPassword() {
         url,
         {email: inputs.email.value},
       )
-      console.log('YOU FUCKING CUNT')
       setLoading(false)
       setSubmitted(true)
     } catch (err: any) {
-    } finally {
+      if (err.response.status === 404) {
+      setLoading(false)
+      toast({
+        title: "Error",
+        description: "This email is not registered with ExitMap.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
     }
   }
 
