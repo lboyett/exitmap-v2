@@ -4,7 +4,9 @@ import uniqid from "uniqid";
 import redisClient from "../redis-config";
 import { getUserByEmail } from "../controllers/userController";
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const router = express.Router();
 
@@ -37,7 +39,7 @@ router.post("/", async (req, res, next) => {
       service: "Gmail",
       auth: {
         user: "exitmap.jump@gmail.com",
-        pass: "kaylfjugkuehguye",
+        pass: process.env.GMAIL_APP_PASSWORD,
       },
     });
 

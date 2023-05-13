@@ -12,14 +12,9 @@ import redisClient from "../redis-config"
 import nodemailer from "nodemailer"
 import crypto from "crypto"
 import { UserData } from "../controllers/userController";
+import dotenv from "dotenv";
 
-// interface RedisUserData {
-//   first_name: string,
-//   last_name: string,
-//   username: string,
-//   email: string,
-//   password: string
-// }
+dotenv.config();
 
 const router = express.Router();
 
@@ -32,6 +27,8 @@ router.post("/", async (req, res) => {
     const redis_response = await redisClient.hSet(uuid, user_data)
     const expiry_response = await redisClient.expire(uuid, 60*60*24)
 		const redis_value = await redisClient.hGetAll(uuid);
+    console.log('User added to redis database')
+    res.send('OK')
   } catch (err: any) {
     console.log(err)
   }
@@ -41,7 +38,7 @@ router.post("/", async (req, res) => {
       service: "Gmail",
       auth: {
         user: "exitmap.jump@gmail.com",
-        pass: "kaylfjugkuehguye",
+        pass: process.env.GMAIL_APP_PASSWORD,
       },
     });
 

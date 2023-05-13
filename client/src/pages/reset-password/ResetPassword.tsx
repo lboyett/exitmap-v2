@@ -55,6 +55,13 @@ export default function ChangePassword() {
       const response = (await axios.post(url, {
         password: inputs.password.value
       })) as AxiosResponse;
+      toast({
+        title: "Thanks!",
+        description: "You have successfully changed your password.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
       navigate("/login")
     } catch (err: any) {
       if (err.response.status === 404) {

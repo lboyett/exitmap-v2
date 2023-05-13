@@ -36,6 +36,7 @@ function Signup() {
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const [capState, setCapState] = useState<boolean>(false);
 
@@ -64,7 +65,7 @@ function Signup() {
     };
     try {
       const userRes = await axios.post(url, { headers });
-      navigate("/login");
+      setSubmitted(true);
     } catch (err: any) {
       console.log(err);
       handleError(err.response.data.constraint);
@@ -103,99 +104,107 @@ function Signup() {
     navigate("/login");
   }
 
-  return (
-    <div className="signup-page">
-      <div className={`signup-box ${inputColorMode}`}>
-        <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
-          <Heading
-            as="h2"
-            fontSize="5xl !important"
-            onClick={() => {
-              toggleColorMode();
-            }}
-          >
-            Sign Up
-          </Heading>
+  if (submitted) {
+    return (
+      <Heading className="verified-page" as={"h3"}>
+        Please check your email for the verification link. 
+      </Heading>
+    )
+  } else {
+    return (
+      <div className="signup-page">
+        <div className={`signup-box ${inputColorMode}`}>
+          <form className="signup-form" onSubmit={(e) => handleSubmit(e)}>
+            <Heading
+              as="h2"
+              fontSize="5xl !important"
+              onClick={() => {
+                toggleColorMode();
+              }}
+            >
+              Sign Up
+            </Heading>
 
-          <FormControl>
-            <FormLabel>First Name</FormLabel>
-            <Input
-              type="text"
-              className={inputColorMode}
-              name="first_name"
-              maxLength={20}
+            <FormControl>
+              <FormLabel>First Name</FormLabel>
+              <Input
+                type="text"
+                className={inputColorMode}
+                name="first_name"
+                maxLength={20}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Last Name</FormLabel>
+              <Input
+                type="text"
+                className={inputColorMode}
+                name="last_name"
+                maxLength={20}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Username</FormLabel>
+              <Input
+                type="text"
+                className={inputColorMode}
+                name="username"
+                maxLength={16}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                className={inputColorMode}
+                name="email"
+                maxLength={100}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                className={inputColorMode}
+                name="password"
+                maxLength={100}
+              />
+            </FormControl>
+
+            <ReCAPTCHA
+              className="recaptcha"
+              sitekey={import.meta.env.VITE_SITE}
+              theme="dark"
+              size="normal"
+              onChange={validateRecaptcha}
             />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Last Name</FormLabel>
-            <Input
-              type="text"
-              className={inputColorMode}
-              name="last_name"
-              maxLength={20}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Username</FormLabel>
-            <Input
-              type="text"
-              className={inputColorMode}
-              name="username"
-              maxLength={16}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input
-              type="email"
-              className={inputColorMode}
-              name="email"
-              maxLength={100}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              className={inputColorMode}
-              name="password"
-              maxLength={100}
-            />
-          </FormControl>
-
-          <ReCAPTCHA
-            className="recaptcha"
-            sitekey={import.meta.env.VITE_SITE}
-            theme="dark"
-            size="normal"
-            onChange={validateRecaptcha}
-          />
-          {/* <Recaptcha
+            {/* <Recaptcha
             sitekey={import.meta.env.VITE_SITE}
             onloadCallback={() => console.log("loaded")}
           /> */}
-          {loading ? (
-            <Flex justifyContent="center">
-              <Spinner size="lg" />
-            </Flex>
-          ) : (
-            <Flex className="register-user-button-container">
-              <Button type="submit" bg={txt_500} color={out_500}>
-                SUBMIT
-              </Button>
-              <Text onClick={navigateToLogin} className="already-registered">
-                Already registered?
-              </Text>
-            </Flex>
-          )}
-        </form>
+            {loading ? (
+              <Flex justifyContent="center">
+                <Spinner size="lg" />
+              </Flex>
+            ) : (
+              <Flex className="register-user-button-container">
+                <Button type="submit" bg={txt_500} color={out_500}>
+                  SUBMIT
+                </Button>
+                <Text onClick={navigateToLogin} className="already-registered">
+                  Already registered?
+                </Text>
+              </Flex>
+            )}
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Signup;
