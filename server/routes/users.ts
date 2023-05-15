@@ -34,16 +34,19 @@ router.post("/", async (req, res) => {
   }
 
   async function main() {
+    console.log('TRYING TO SEND WITH ZOHO')
     let transporter = nodemailer.createTransport({
-      service: "Gmail",
+      host: "smtp.zoho.eu",
+      port: 465,
+      secure: true,
       auth: {
-        user: "exitmap.jump@gmail.com",
-        pass: process.env.GMAIL_APP_PASSWORD,
+        user: "exitmap@exit-map.com",
+        pass: process.env.ZOHO_PASSWORD,
       },
     });
 
     let info = await transporter.sendMail({
-      from: '"ExitMap" <exitmap.jump@gmail.com>', // sender address
+      from: '"ExitMap" <exitmap@exit-map.com>', // sender address
       to: `${email}`, // list of receivers
       subject: "ExitMap Email Verification", // Subject line
       text: `This message was sent to you by ExitMap. To verify your email, please click the following link, http://localhost:5174/verify-user?uuid=${uuid}.`, // plain text body

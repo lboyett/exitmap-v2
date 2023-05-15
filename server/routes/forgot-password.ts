@@ -36,15 +36,16 @@ router.post("/", async (req, res, next) => {
 
   async function main() {
     let transporter = nodemailer.createTransport({
-      service: "Gmail",
+      service: "smtp.zoho.eu",
+      port: 465,
       auth: {
-        user: "exitmap.jump@gmail.com",
-        pass: process.env.GMAIL_APP_PASSWORD,
+        user: "exitmap@exit-map.com",
+        pass: process.env.ZOHO_PASSWORD,
       },
     });
 
     let info = await transporter.sendMail({
-      from: '"ExitMap" <exitmap.jump@gmail.com>', // sender address
+      from: '"ExitMap" <exitmap@exit-map.com>', // sender address
       to: `${email}`, // list of receivers
       subject: "Reset ExitMap Password", // Subject line
       text: `This message was sent to you by ExitMap. To reset your password, please click the following link, http://localhost:5174/reset-password?uuid=${uuid}.`, // plain text body

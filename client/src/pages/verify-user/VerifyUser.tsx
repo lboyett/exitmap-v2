@@ -31,28 +31,24 @@ function VerifyUser() {
   const effectRan = useRef(false);
   const [error, setError] = useState(false);
   const [errorCode, setErrorCode] = useState(0);
-  
 
   useEffect(() => {
     if (effectRan.current === false) {
-    postUUID();
+      postUUID();
     }
     effectRan.current = true;
-    console.log(error)
+    console.log(error);
   }, []);
 
   async function postUUID() {
-    const uuid = searchParams.get('uuid')
+    const uuid = searchParams.get("uuid");
     const url = `http://localhost:8000/users/verify-user/${uuid}`;
     try {
-      console.log('POSTING TO /VERIFY-USER')
-      const { data } = await axios.post(
-        url,
-        {uuid: uuid},
-      )
+      console.log("POSTING TO /VERIFY-USER");
+      const { data } = await axios.post(url, { uuid: uuid });
     } catch (err: any) {
-      setError(true)
-      setErrorCode(err.response.data)
+      setError(true);
+      setErrorCode(err.response.data);
     }
   }
 
@@ -62,25 +58,30 @@ function VerifyUser() {
 
   if (error) {
     if (errorCode === 23505) {
-    return (
-      <Heading className="verified-page" as={"h3"}>
-        This email has already been verified.
-      </Heading>
-    )
+      return (
+        <div className="verified-page">
+          <Heading as={"h3"}>This email has already been verified.</Heading>
+          <Button onClick={navigateToLogin} bg={txt_500} color={out_500} marginTop={'12px'}>
+            Sign In
+          </Button>
+        </div>
+      );
     } else {
       return (
-        <Heading className="verified-page" as={"h3"}>
-          There was an error verifying your email.
-        </Heading>
+        <div className="verified-page">
+          <Heading as={"h3"}>There was an error verifying your email.</Heading>
+        </div>
       );
     }
   } else {
-  return (
-    <Heading className="verified-page" as={"h3"}>
-			Thanks! Your email has been verified.
-			<Button onClick={navigateToLogin} marginTop={'12px'}>Proceed to ExitMap</Button>
-    </Heading>
-  );
+    return (
+      <div className="verified-page">
+          <Heading as={"h3"}>Thanks! Your email has been verified.</Heading>
+          <Button onClick={navigateToLogin} bg={txt_500} color={out_500} marginTop={'12px'}>
+            Sign In
+          </Button>
+        </div>
+    );
   }
 }
 
