@@ -46,7 +46,9 @@ export default function AvatarComp(props: AvatarCompProps) {
   async function handleSubmit(formData: FormData, user_id: string) {
     setErrorMessage("");
     setLoading(true);
-    const avatarUrl = `http://localhost:8000/images/avatars/${user_id}`;
+    const avatarUrl = `${
+      import.meta.env.VITE_SERVER_DOMAIN
+    }/images/avatars/${user_id}`;
     const file = formData.get("image") as File;
     try {
       const compressedFile = (await compressImage(file)) as File;
@@ -84,7 +86,7 @@ export default function AvatarComp(props: AvatarCompProps) {
   }, [user, props.userId]);
 
   async function updateUserByUserId(user_id: string) {
-    const userUrl = `http://localhost:8000/users/${user_id}`;
+    const userUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/users/${user_id}`;
     try {
       const { data } = await axios.get(userUrl);
       setAvatarUrl(

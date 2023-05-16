@@ -9,13 +9,13 @@ import {
   Box,
   Heading,
   Flex,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import NavBar from "../../components/navbar/NavBar";
 import "./reset-password.css";
 import { UserContext } from "../../context/UserContext";
-import axios, { AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -37,8 +37,8 @@ export default function ChangePassword() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const uuid = searchParams.get('uuid')
-    const url = `http://localhost:8000/reset-password/${uuid}`;
+    const uuid = searchParams.get("uuid");
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/reset-password/${uuid}`;
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     if (inputs.password.value !== inputs.confirmPassword.value) {
@@ -49,11 +49,11 @@ export default function ChangePassword() {
         duration: 1000,
         isClosable: true,
       });
-      return
+      return;
     }
     try {
       const response = (await axios.post(url, {
-        password: inputs.password.value
+        password: inputs.password.value,
       })) as AxiosResponse;
       toast({
         title: "Thanks!",
@@ -62,18 +62,19 @@ export default function ChangePassword() {
         duration: 2000,
         isClosable: true,
       });
-      navigate("/login")
+      navigate("/login");
     } catch (err: any) {
       if (err.response.status === 404) {
         toast({
           title: "Error",
-          description: "Please click the password reset link sent to your email.",
+          description:
+            "Please click the password reset link sent to your email.",
           status: "error",
           duration: 3000,
           isClosable: true,
         });
       }
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -102,15 +103,11 @@ export default function ChangePassword() {
         >
           <FormControl>
             <FormLabel>New Password</FormLabel>
-            <Input
-              type="password"
-              name="password"
-              className={inputColorMode}
-            />
+            <Input type="password" name="password" className={inputColorMode} />
           </FormControl>
 
           <FormControl>
-            <FormLabel marginTop={'8px'}>Confirm Password</FormLabel>
+            <FormLabel marginTop={"8px"}>Confirm Password</FormLabel>
             <Input
               type="password"
               name="confirmPassword"
@@ -121,7 +118,9 @@ export default function ChangePassword() {
             <Spinner />
           ) : (
             <Flex alignItems="center" gap="1rem">
-              <Button type="submit" marginTop={'12px'}>Submit</Button>
+              <Button type="submit" marginTop={"12px"}>
+                Submit
+              </Button>
               <Box color="red">{errorMessage}</Box>
             </Flex>
           )}

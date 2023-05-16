@@ -38,34 +38,31 @@ function ForgotPassword() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
-    const url = "http://localhost:8000/forgot-password";
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/forgot-password`;
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     try {
-      const { data } = await axios.post(
-        url,
-        {email: inputs.email.value},
-      )
-      setLoading(false)
-      setSubmitted(true)
+      const { data } = await axios.post(url, { email: inputs.email.value });
+      setLoading(false);
+      setSubmitted(true);
     } catch (err: any) {
       if (err.response.status === 404) {
-      setLoading(false)
-      toast({
-        title: "Error",
-        description: "This email is not registered with ExitMap.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+        setLoading(false);
+        toast({
+          title: "Error",
+          description: "This email is not registered with ExitMap.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
   }
 
   async function populateUser() {
     const userRes = await axios.post(
-      "http://localhost:8000/populate-test-users",
+      `${import.meta.env.VITE_SERVER_DOMAIN}/populate-test-users`,
       {
         username: "j",
         first_name: "j",
@@ -79,58 +76,66 @@ function ForgotPassword() {
 
   if (submitted) {
     return (
-        <div className="forgot-pass-submitted-page">
-          <Text
-            fontSize="3xl !important"
-            onClick={() => {
-              toggleColorMode();
-            }}
-          >
-            Please check your email for the link to reset your password. 
-          </Text>
-        </div>
-    )
-  } else {
-  return (
-    <div className="forgot-password-page">
-      <div className={`forgot-password-box ${inputColorMode}`}>
-        <form className="forgot-password-form" onSubmit={(e) => handleSubmit(e)}>
-          <Heading
-            as="h2"
-            fontSize="2.5rem !important"
-            onClick={() => {
-              toggleColorMode();
-            }}
-          >
-            Forgot password?
-          </Heading>
-
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input
-              type="email"
-              className={inputColorMode}
-              name="email"
-              required
-            />
-          </FormControl>
-
-          <Flex className="register-user-button-container">
-            {loading ? (
-              <Spinner />
-            ) : (
-              <>
-                <Button type="submit" className="reset-password" bg={txt_500} color={out_500}>
-                  Reset password
-                </Button>
-              </>
-            )}
-          </Flex>
-        </form>
+      <div className="forgot-pass-submitted-page">
+        <Text
+          fontSize="3xl !important"
+          onClick={() => {
+            toggleColorMode();
+          }}
+        >
+          Please check your email for the link to reset your password.
+        </Text>
       </div>
-    </div>
-  );
-            }
+    );
+  } else {
+    return (
+      <div className="forgot-password-page">
+        <div className={`forgot-password-box ${inputColorMode}`}>
+          <form
+            className="forgot-password-form"
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <Heading
+              as="h2"
+              fontSize="2.5rem !important"
+              onClick={() => {
+                toggleColorMode();
+              }}
+            >
+              Forgot password?
+            </Heading>
+
+            <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                className={inputColorMode}
+                name="email"
+                required
+              />
+            </FormControl>
+
+            <Flex className="register-user-button-container">
+              {loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <Button
+                    type="submit"
+                    className="reset-password"
+                    bg={txt_500}
+                    color={out_500}
+                  >
+                    Reset password
+                  </Button>
+                </>
+              )}
+            </Flex>
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default ForgotPassword;

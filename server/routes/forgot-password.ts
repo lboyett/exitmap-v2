@@ -48,8 +48,8 @@ router.post("/", async (req, res, next) => {
       from: '"ExitMap" <exitmap@exit-map.com>', // sender address
       to: `${email}`, // list of receivers
       subject: "Reset ExitMap Password", // Subject line
-      text: `This message was sent to you by ExitMap. To reset your password, please click the following link, http://localhost:5174/reset-password?uuid=${uuid}.`, // plain text body
-      html: `<h1>Hello!</h1><br><p>This message was sent to you by ExitMap.</p><br><p>To reset your password, please click the following link:</p><br><h2>http://localhost:5174/reset-password?uuid=${uuid}</h2>`, // html body
+      text: `This message was sent to you by ExitMap. To reset your password, please click the following link, import.meta.env.VITE_CLIENT_DOMAIN/reset-password?uuid=${uuid}.`, // plain text body
+      html: `<h1>Hello!</h1><br><p>This message was sent to you by ExitMap.</p><br><p>To reset your password, please click the following link:</p><br><h2>import.meta.env.VITE_CLIENT_DOMAIN/reset-password?uuid=${uuid}</h2>`, // html body
     });
   }
 

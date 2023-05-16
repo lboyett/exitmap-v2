@@ -27,8 +27,12 @@ export default function CountryCard({ country }: CountryCardProps) {
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
   const [image, setImage] = useState<any>(null);
-  const url = `http://localhost:8000/country-images/${country.code}.webp`;
-  const flagUrl = `http://localhost:8000/country-flags/${country.code}.svg`;
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/country-images/${
+    country.code
+  }.webp`;
+  const flagUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/country-flags/${
+    country.code
+  }.svg`;
   const [tryFallback, setTryFallback] = useState(true);
 
   function imageFallback(e: SyntheticEvent<HTMLImageElement, Event>) {

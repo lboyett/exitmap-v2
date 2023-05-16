@@ -68,20 +68,22 @@ export default function NavBar(props: NavBarProps) {
 
   async function getUserExits(id: number) {
     if (!id) return;
-    const url = `http://localhost:8000/exits/by-user-id/${id}`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits/by-user-id/${id}`;
     const { data } = (await axios.get(url)) as AxiosResponse;
     setUserExits(data);
   }
   async function getUserComments(id: number) {
     if (!id) return;
-    const url = `http://localhost:8000/comments/by-user-id/${id}`;
+    const url = `${
+      import.meta.env.VITE_SERVER_DOMAIN
+    }/comments/by-user-id/${id}`;
     const { data } = (await axios.get(url)) as AxiosResponse;
     setUserComments(data);
   }
 
   async function logoutUser() {
     setErrorMessage("");
-    const url = `http://localhost:8000/logout`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/logout`;
     try {
       await axios.get(url, { withCredentials: true });
       navigate("/login");

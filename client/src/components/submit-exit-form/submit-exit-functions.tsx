@@ -93,7 +93,7 @@ export function compileExitData(
   return exit_data;
 }
 export async function submitExitDataWithoutImage(exit_data: any) {
-  const url = "http://localhost:8000/exits";
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits`;
   try {
     const { data } = await axios.post(url, exit_data);
     return data._id;
@@ -115,7 +115,7 @@ export async function submitExitDataWithImage(
 }
 
 async function postExit(exit_data: any) {
-  const exitUrl = "http://localhost:8000/exits";
+  const exitUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/exits`;
   try {
     const { data } = await axios.post(exitUrl, exit_data);
     return data._id;
@@ -125,7 +125,7 @@ async function postExit(exit_data: any) {
 }
 
 export async function getSignedUrl() {
-  const url = "http://localhost:8000/images/signed-url";
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/images/signed-url`;
   try {
     const { data } = await axios.get(url);
     return data;
@@ -139,8 +139,8 @@ export async function postImage(
   exit_id: any,
   user_id: number
 ) {
-  const exitUrl = "http://localhost:8000/exits";
-  const imageUrl = "http://localhost:8000/images";
+  const exitUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/exits`;
+  const imageUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/images`;
   try {
     const { signedUrl, key } = await getSignedUrl();
     const file = formData.get("image") as File;

@@ -6,7 +6,7 @@ export default async function getCurrentUser() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/users/current-user",
+        `${import.meta.env.VITE_SERVER_DOMAIN}/users/current-user`,
         {
           withCredentials: true,
         }

@@ -39,7 +39,9 @@ export default function ChangePassword() {
       old_password: inputs.old_password.value,
       new_password: inputs.new_password.value,
     };
-    const url = `http://localhost:8000/users/${user._id}/change-password`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/users/${
+      user._id
+    }/change-password`;
     try {
       await axios.put(url, data, { withCredentials: true });
       //setSuccess(true);

@@ -40,7 +40,7 @@ function Signup() {
 
   const [capState, setCapState] = useState<boolean>(false);
 
-  const url = "http://localhost:8000/users";
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/users`;
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!capState) {
@@ -107,9 +107,9 @@ function Signup() {
   if (submitted) {
     return (
       <Heading className="verified-page" as={"h3"}>
-        Please check your email for the verification link. 
+        Please check your email for the verification link.
       </Heading>
-    )
+    );
   } else {
     return (
       <div className="signup-page">

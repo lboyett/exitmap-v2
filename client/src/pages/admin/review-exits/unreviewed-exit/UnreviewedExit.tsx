@@ -16,7 +16,7 @@ export default function UnreviewedExit({ exit }: UnreviewedExitProps) {
 
   async function approveExit(id: number) {
     setLoading(true);
-    const url = "http://localhost:8000/exits/unreviewed";
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits/unreviewed`;
     try {
       const response = await axios.post(`${url}/${id}`, { id: id });
       setError("");

@@ -51,11 +51,11 @@ function App() {
         setUser(user);
       } catch (err) {
         if (location.pathname == "/reset-password") {
-          navigate(`${location.pathname}${location.search}`)
+          navigate(`${location.pathname}${location.search}`);
         } else if (location.pathname == "/verify-user") {
-          navigate(`${location.pathname}${location.search}`)
-        }else {
-        navigate("/login");
+          navigate(`${location.pathname}${location.search}`);
+        } else {
+          navigate("/login");
         }
       }
     })();
@@ -64,7 +64,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const url = `http://localhost:8000/exits/reviewed`;
+        const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits/reviewed`;
         const { data } = (await axios.get(url)) as AxiosResponse;
         setExitDataContext(data);
       } catch (err: any) {

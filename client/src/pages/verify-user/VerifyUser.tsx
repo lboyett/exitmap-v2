@@ -42,7 +42,9 @@ function VerifyUser() {
 
   async function postUUID() {
     const uuid = searchParams.get("uuid");
-    const url = `http://localhost:8000/users/verify-user/${uuid}`;
+    const url = `${
+      import.meta.env.VITE_SERVER_DOMAIN
+    }/users/verify-user/${uuid}`;
     try {
       console.log("POSTING TO /VERIFY-USER");
       const { data } = await axios.post(url, { uuid: uuid });
@@ -61,7 +63,12 @@ function VerifyUser() {
       return (
         <div className="verified-page">
           <Heading as={"h3"}>This email has already been verified.</Heading>
-          <Button onClick={navigateToLogin} bg={txt_500} color={out_500} marginTop={'12px'}>
+          <Button
+            onClick={navigateToLogin}
+            bg={txt_500}
+            color={out_500}
+            marginTop={"12px"}
+          >
             Sign In
           </Button>
         </div>
@@ -76,11 +83,16 @@ function VerifyUser() {
   } else {
     return (
       <div className="verified-page">
-          <Heading as={"h3"}>Thanks! Your email has been verified.</Heading>
-          <Button onClick={navigateToLogin} bg={txt_500} color={out_500} marginTop={'12px'}>
-            Sign In
-          </Button>
-        </div>
+        <Heading as={"h3"}>Thanks! Your email has been verified.</Heading>
+        <Button
+          onClick={navigateToLogin}
+          bg={txt_500}
+          color={out_500}
+          marginTop={"12px"}
+        >
+          Sign In
+        </Button>
+      </div>
     );
   }
 }
