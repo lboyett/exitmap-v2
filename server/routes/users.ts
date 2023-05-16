@@ -8,9 +8,9 @@ import {
   approveUser,
 } from "../controllers/userController";
 import authorizeUser from "../utils/authorizeUser";
-import redisClient from "../redis-config"
-import nodemailer from "nodemailer"
-import crypto from "crypto"
+import redisClient from "../redis-config";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
 import { UserData } from "../controllers/userController";
 import dotenv from "dotenv";
 
@@ -24,21 +24,23 @@ router.post("/", async (req, res) => {
   const user_data = req.body.headers;
   const email = user_data.email;
   try {
-    const redis_response = await redisClient.hSet(uuid, user_data)
-    const expiry_response = await redisClient.expire(uuid, 60*60*24)
-		const redis_value = await redisClient.hGetAll(uuid);
-    console.log('User added to redis database')
-    res.send('OK')
+    const redis_response = await redisClient.hSet(uuid, user_data);
+    const expiry_response = await redisClient.expire(uuid, 60 * 60 * 24);
+    const redis_value = await redisClient.hGetAll(uuid);
+    console.log("User added to redis database");
+    res.send("OK");
   } catch (err: any) {
-    console.log(err)
+    console.log("There is an error is the user posting to redis");
+    console.log(err);
   }
 
   async function main() {
+    console.log("The main function is being called");
     let transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
         user: "exitmap.jump@gmail.com",
-        pass: process.env.GMAIL_APP_PASSWORD,
+        pass: "dmhuzilbaqqmxnde",
       },
     });
 
@@ -50,12 +52,11 @@ router.post("/", async (req, res) => {
       html: `<h1>Hello!</h1><br><p>This message was sent to you by ExitMap.</p><br><p>To verify your email, please click the following link:</p><br><h2>http://localhost:5174/verify-user?uuid=${uuid}</h2>`, // html body
     });
   }
-
   main().catch(console.error);
 });
 
 router.post("/verify-user/:uuid", async (req, res) => {
-  console.log('Verify user backend called')
+  console.log("Verify user backend called");
   try {
     const redis_user = await redisClient.hGetAll(req.params.uuid);
     const userData: UserDataType = {
@@ -65,16 +66,16 @@ router.post("/verify-user/:uuid", async (req, res) => {
       email: redis_user.email,
       password: redis_user.password,
       is_approved: false,
-      is_admin: false
-    }
-    console.log('ADD USER FUNCTION IS ABOUT TO BE CALLED')
-    const addUser_response = await addUser(userData)
+      is_admin: false,
+    };
+    console.log("ADD USER FUNCTION IS ABOUT TO BE CALLED");
+    const addUser_response = await addUser(userData);
     res.send("OK");
   } catch (err: any) {
-    console.log(err)
+    console.log(err);
     res.status(500).send(err.code);
   }
-})
+});
 
 router.get("/unreviewed", async (req, res) => {
   try {

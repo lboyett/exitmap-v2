@@ -13,33 +13,33 @@ const router = express.Router();
 router.post("/", async (req, res, next) => {
   const { email } = req.body;
 
-	const uuid = crypto.randomUUID();
+  const uuid = crypto.randomUUID();
 
-	try {
-  const user = await getUserByEmail(email);
-	res.status(200).send()
-	} catch (err: any) {
-		console.log(err.message)
-		res.status(404).send(err.message)
-	}
+  try {
+    const user = await getUserByEmail(email);
+    res.status(200).send();
+  } catch (err: any) {
+    console.log(err.message);
+    res.status(404).send(err.message);
+  }
 
-	try {
-		const redis_response = await redisClient.hSet( uuid, {
-			email: email,
-			uuid: uuid
-		})
-		const expiry_response = await redisClient.expire(uuid, 60*60)
-		// const redis_value = await redisClient.hGetAll(uuid);
-	} catch (err: any) {
-    res.status(err.status).send(err.message)
-	}
+  try {
+    const redis_response = await redisClient.hSet(uuid, {
+      email: email,
+      uuid: uuid,
+    });
+    const expiry_response = await redisClient.expire(uuid, 60 * 60);
+    // const redis_value = await redisClient.hGetAll(uuid);
+  } catch (err: any) {
+    res.status(err.status).send(err.message);
+  }
 
   async function main() {
     let transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
         user: "exitmap.jump@gmail.com",
-        pass: process.env.GMAIL_APP_PASSWORD,
+        pass: "dmhuzilbaqqmxnde",
       },
     });
 
