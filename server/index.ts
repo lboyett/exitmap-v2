@@ -11,12 +11,14 @@ import indexRouter from "./routes/index";
 import utilitiesRouter from "./routes/utilities";
 import loginRouter from "./routes/login";
 import logoutRouter from "./routes/logout";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const port = 8000;
 const corsOptions = {
   credentials: true,
-  origin: "http://localhost:5174",
+  origin: process.env.CLIENT_DOMAIN,
 };
 
 app.use(cors(corsOptions));

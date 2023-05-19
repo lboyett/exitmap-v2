@@ -15,11 +15,13 @@ const index_1 = __importDefault(require("./routes/index"));
 const utilities_1 = __importDefault(require("./routes/utilities"));
 const login_1 = __importDefault(require("./routes/login"));
 const logout_1 = __importDefault(require("./routes/logout"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = 8000;
 const corsOptions = {
     credentials: true,
-    origin: "http://localhost:5174",
+    origin: process.env.CLIENT_DOMAIN,
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use((0, cookie_parser_1.default)(process.env.COOKIE_SECRET));

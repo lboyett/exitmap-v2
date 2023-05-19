@@ -1,7 +1,6 @@
 import "./login.css";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { ExitDataContext } from "../../context/ExitDataContext";
 import {
   Heading,
   FormControl,
@@ -15,7 +14,6 @@ import {
   Spinner,
   useToast,
 } from "@chakra-ui/react";
-import { EventType } from "@testing-library/react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../context/UserContext";
 
