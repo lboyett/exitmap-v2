@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
       secure: true,
       auth: {
         user: "exitmap.jump@gmail.com",
-        pass: process.env.GMAIL_APP_PASSWORD,
+        pass: process.env.ZOHO_PASSWORD,
       },
     });
 
