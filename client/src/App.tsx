@@ -49,6 +49,7 @@ function App() {
       try {
         const user = await getCurrentUser();
         setUser(user);
+        navigate("/home");
       } catch (err) {
         if (location.pathname == "/reset-password") {
           navigate(`${location.pathname}${location.search}`);
