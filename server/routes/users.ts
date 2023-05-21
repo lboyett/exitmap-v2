@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: "exitmap.jump@gmail.com",
+        user: "exitmap@exit-map.com",
         pass: process.env.ZOHO_PASSWORD,
       },
     });
