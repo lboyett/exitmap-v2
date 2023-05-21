@@ -35,7 +35,6 @@ router.post("/", async (req, res) => {
   }
 
   async function main() {
-    console.log('TRYING TO SEND WITH ZOHO')
     let transporter = nodemailer.createTransport({
       host: "smtp.zoho.eu",
       port: 465,
