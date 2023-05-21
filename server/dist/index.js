@@ -21,7 +21,7 @@ const app = (0, express_1.default)();
 const port = 8000;
 const corsOptions = {
     credentials: true,
-    origin: process.env.CLIENT_DOMAIN,
+    origin: "*",
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use((0, cookie_parser_1.default)(process.env.COOKIE_SECRET));
