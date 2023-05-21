@@ -8,14 +8,13 @@ import commentsRouter from "./comments";
 import usersRouter from "./users";
 import forgotPasswordRouter from "./forgot-password";
 import resetPasswordRouter from "./reset-password";
+import serverTestRouter from "./server-test";
 
 const router = express.Router();
 
 // =========================== ROUTES ===========================
 
-router.get("/test-server", (req, res) => {
-  res.status(200).send("Server is up and running!");
-});
+router.use("/server-test", serverTestRouter);
 
 router.use("/exits", exitsRouter);
 router.use("/images", imagesRouter);
