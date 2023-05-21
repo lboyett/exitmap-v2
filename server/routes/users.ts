@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
       from: '"ExitMap" <exitmap@exit-map.com>', // sender address
       to: `${email}`, // list of receivers
       subject: "ExitMap Email Verification", // Subject line
-      text: `This message was sent to you by ExitMap. To verify your email, please click the following link, http://localhost:5174/verify-user?uuid=${uuid}.`, // plain text body
+      text: `This message was sent to you by ExitMap. To verify your email, please click the following link, http://${process.env.CLIENT_DOMAIN}/verify-user?uuid=${uuid}.`, // plain text body
       html: `<h1>Hello!</h1><br><p>This message was sent to you by ExitMap.</p><br><p>To verify your email, please click the following link:</p><br><h2>http://localhost:5174/verify-user?uuid=${uuid}</h2>`, // html body
     });
   }
