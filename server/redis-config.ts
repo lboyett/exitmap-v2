@@ -5,6 +5,9 @@ redisClient.connect();
 redisClient.on("connect", () => [
   console.log("\x1b[41m Redis connected\x1b[0m"),
 ]);
-redisClient.on("error", () => [console.log("\x1b[41m REDIS ERROR\x1b[0m")]);
+redisClient.on("error", () => {
+  console.log("\x1b[41m REDIS ERROR\x1b[0m");
+  redisClient.disconnect();
+});
 
 export default redisClient;
