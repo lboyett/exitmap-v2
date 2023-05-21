@@ -22,4 +22,5 @@ router.use("/comments", comments_1.default);
 router.use("/users", users_1.default);
 router.use("/forgot-password", forgot_password_1.default);
 router.use("/reset-password", reset_password_1.default);
+router.get("/", (req, res) => res.send("This is ExitMap's backend"));
 exports.default = router;

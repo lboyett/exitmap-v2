@@ -11,6 +11,7 @@ router.get("/test-connection", async (req, res) => {
     const results = await new Promise((resolve, reject) =>
       pool.query("SELECT * FROM users;", [], (err, results) => {
         if (err) {
+          console.log(err);
           reject(err);
         }
         if (results && results.rows) resolve(results.rows);
