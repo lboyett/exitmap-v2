@@ -14,6 +14,9 @@ const forgot_password_1 = __importDefault(require("./forgot-password"));
 const reset_password_1 = __importDefault(require("./reset-password"));
 const router = express_1.default.Router();
 // =========================== ROUTES ===========================
+router.get("/test-server", (req, res) => {
+    res.status(200).send("Server is up and running!");
+});
 router.use("/exits", exits_1.default);
 router.use("/images", images_1.default);
 router.use("/comments", comments_1.default);
