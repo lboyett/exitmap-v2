@@ -49,12 +49,8 @@ function App() {
       try {
         const user = await getCurrentUser();
         setUser(user);
-        // if (location.pathname === "/") {
-        //   navigate("/home");
-        // } else {
-        //   navigate(location.pathname);
-        // }
       } catch (err) {
+        console.log(err);
         if (location.pathname == "/reset-password") {
           navigate(`${location.pathname}${location.search}`);
         } else if (location.pathname == "/verify-user") {
