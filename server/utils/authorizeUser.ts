@@ -7,11 +7,18 @@ export default async function authorizeUser(
   next: NextFunction
 ) {
   try {
+    console.log(req.signedCookies.token);
     if (req.signedCookies.token) {
+      console.log("1");
       const response = await redisClient.get(
         req.signedCookies.token.toString()
       );
-      if (!response) throw { code: 401, message: "No active session" };
+      if (!response) {
+        console.log("no response from Redis");
+        throw { code: 401, message: "No active session" };
+      }
+      console.log("2");
+      console.log(response);
       res.locals = response as any;
       next();
     } else {

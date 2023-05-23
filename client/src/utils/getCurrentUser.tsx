@@ -14,8 +14,6 @@ export default async function getCurrentUser() {
       if (!response.data) throw Error("No active session");
       resolve(response.data);
     } catch (err) {
-      console.log("error with getCurrentUser");
-      console.log(err);
       reject(err);
     }
   });
