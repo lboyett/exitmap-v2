@@ -26,6 +26,7 @@ router.post("/", async (req, res, next) => {
         secure: true,
         maxAge: 1000 * 60 * 60 * 48,
         signed: true,
+        domain: "exitmap-v2-uo5wn.ondigitalocean.app/",
       })
       .send(user);
   } catch (err: any) {
