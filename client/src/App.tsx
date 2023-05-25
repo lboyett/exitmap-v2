@@ -66,7 +66,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits/reviewed`;
+        const url = `https://api.exit-map.com/users/current-user`;
         const { data } = (await axios.get(url)) as AxiosResponse;
         setExitDataContext(data);
       } catch (err: any) {
