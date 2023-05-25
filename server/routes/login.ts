@@ -26,7 +26,6 @@ router.post("/", async (req, res, next) => {
         secure: true,
         maxAge: 1000 * 60 * 60 * 48,
         signed: true,
-        domain: process.env.SERVER_DOMAIN,
       })
       .send(user);
   } catch (err: any) {
