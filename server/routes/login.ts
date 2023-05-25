@@ -21,12 +21,12 @@ router.post("/", async (req, res, next) => {
       .setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
       .setHeader("Access-Control-Allow-Headers", "Content-Type, *")
       .cookie("token", session_id, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none", //FixThis
         secure: true,
         maxAge: 1000 * 60 * 60 * 48,
         signed: true,
-        domain: "exitmap-v2-uo5wn.ondigitalocean.app/",
+        domain: process.env.SERVER_DOMAIN,
       })
       .send(user);
   } catch (err: any) {
