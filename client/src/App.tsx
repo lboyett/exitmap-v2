@@ -50,7 +50,6 @@ function App() {
         const user = await getCurrentUser();
         setUser(user);
       } catch (err) {
-        console.log("error with getCurrentUser");
         console.log(err);
         if (location.pathname == "/reset-password") {
           navigate(`${location.pathname}${location.search}`);
@@ -66,7 +65,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const url = `https://api.exit-map.com/users/current-user`;
+        const url = `https://api.exit-map.com/exits/reviewed`;
         const { data } = (await axios.get(url)) as AxiosResponse;
         setExitDataContext(data);
       } catch (err: any) {
