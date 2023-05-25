@@ -7,7 +7,7 @@ export default async function getCurrentUser() {
     try {
       console.log(import.meta.env.VITE_SERVER_DOMAIN);
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_DOMAIN}/users/current-user`,
+        `https://api.exit-map.com/users/current-user`,
         {
           withCredentials: true,
         }
