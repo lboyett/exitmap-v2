@@ -36,7 +36,7 @@ function Login() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/login`;
+    const url = `${import.meta.env.VITE_TEST_ENV}/login`;
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
