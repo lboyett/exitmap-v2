@@ -68,14 +68,16 @@ export default function NavBar(props: NavBarProps) {
 
   async function getUserExits(id: number) {
     if (!id) return;
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits/by-user-id/${id}`;
+    const url = `${
+      import.meta.env.VITE_SERVER_DOMAIN_NAME
+    }/exits/by-user-id/${id}`;
     const { data } = (await axios.get(url)) as AxiosResponse;
     setUserExits(data);
   }
   async function getUserComments(id: number) {
     if (!id) return;
     const url = `${
-      import.meta.env.VITE_SERVER_DOMAIN
+      import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/comments/by-user-id/${id}`;
     const { data } = (await axios.get(url)) as AxiosResponse;
     setUserComments(data);
@@ -83,7 +85,7 @@ export default function NavBar(props: NavBarProps) {
 
   async function logoutUser() {
     setErrorMessage("");
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/logout`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/logout`;
     try {
       await axios.get(url, { withCredentials: true });
       navigate("/login");

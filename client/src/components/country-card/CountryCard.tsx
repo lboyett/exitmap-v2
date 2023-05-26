@@ -27,10 +27,10 @@ export default function CountryCard({ country }: CountryCardProps) {
   const txt_300 = useColorModeValue("txt_light.300", "txt_dark.300");
   const out_500 = useColorModeValue("out_light.500", "out_dark.500");
   const [image, setImage] = useState<any>(null);
-  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/country-images/${
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/country-images/${
     country.code
   }.webp`;
-  const flagUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/country-flags/${
+  const flagUrl = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/country-flags/${
     country.code
   }.svg`;
   const [tryFallback, setTryFallback] = useState(true);

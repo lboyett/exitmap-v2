@@ -38,7 +38,9 @@ export default function ChangePassword() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const uuid = searchParams.get("uuid");
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/reset-password/${uuid}`;
+    const url = `${
+      import.meta.env.VITE_SERVER_DOMAIN_NAME
+    }/reset-password/${uuid}`;
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
     if (inputs.password.value !== inputs.confirmPassword.value) {

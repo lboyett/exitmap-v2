@@ -7,7 +7,7 @@ export default function useUnreviewedUsersFetch() {
   const [data, setData] = useState<object[]>(); //FixThis
   const [error, setError] = useState<any>();
 
-  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/users/unreviewed`;
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/users/unreviewed`;
   useEffect(() => {
     (async () => {
       try {

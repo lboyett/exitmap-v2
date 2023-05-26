@@ -43,7 +43,7 @@ function VerifyUser() {
   async function postUUID() {
     const uuid = searchParams.get("uuid");
     const url = `${
-      import.meta.env.VITE_SERVER_DOMAIN
+      import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/users/verify-user/${uuid}`;
     try {
       console.log("POSTING TO /VERIFY-USER");

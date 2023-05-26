@@ -59,7 +59,7 @@ function Exit() {
   const txt_500 = useColorModeValue("txt_light.500", "txt_dark.500");
   const bg_500 = useColorModeValue("bg_light.500", "bg_dark.500");
   const lightMode = useColorModeValue(true, false);
-  const exitsUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/exits`;
+  const exitsUrl = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits`;
   useEffect(() => {
     getExit(exitsUrl);
   }, []);
@@ -71,7 +71,7 @@ function Exit() {
   async function submitExitImage(formData: FormData) {
     setUploadingImage(true);
     setUploadError("");
-    const imageUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/images`;
+    const imageUrl = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/images`;
     try {
       const { signedUrl, key } = await getSignedUrl();
       const file = formData.get("image") as File;

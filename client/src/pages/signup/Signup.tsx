@@ -40,7 +40,7 @@ function Signup() {
 
   const [capState, setCapState] = useState<boolean>(false);
 
-  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/users`;
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/users`;
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!capState) {

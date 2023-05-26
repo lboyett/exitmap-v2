@@ -39,7 +39,7 @@ export default function ChangePassword() {
       old_password: inputs.old_password.value,
       new_password: inputs.new_password.value,
     };
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/users/${
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/users/${
       user._id
     }/change-password`;
     try {

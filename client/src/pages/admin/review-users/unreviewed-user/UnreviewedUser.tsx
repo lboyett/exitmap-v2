@@ -16,7 +16,7 @@ export default function UnreviewedUser({ user }: UnreviewedExitProps) {
 
   async function approveUser(id: number) {
     setLoading(true);
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/users/unreviewed`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/users/unreviewed`;
     try {
       const response = await axios.post(`${url}/${id}`, { id: id });
       setError("");

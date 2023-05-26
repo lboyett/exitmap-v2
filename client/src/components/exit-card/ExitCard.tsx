@@ -31,7 +31,9 @@ function ExitCard({ exit, isDisplayed }: ExitCardProps) {
   const [imageUrl, setImageUrl] = useState<string>();
 
   useEffect(() => {
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/images/${exit._id}/main`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/images/${
+      exit._id
+    }/main`;
     (async () => {
       const { data } = await axios.get(url);
       const imageKitUrl = `https://ik.imagekit.io/lboyett/${data}?tr=w-300`;

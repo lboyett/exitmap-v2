@@ -47,7 +47,7 @@ export default function AvatarComp(props: AvatarCompProps) {
     setErrorMessage("");
     setLoading(true);
     const avatarUrl = `${
-      import.meta.env.VITE_SERVER_DOMAIN
+      import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/images/avatars/${user_id}`;
     const file = formData.get("image") as File;
     try {
@@ -86,7 +86,9 @@ export default function AvatarComp(props: AvatarCompProps) {
   }, [user, props.userId]);
 
   async function updateUserByUserId(user_id: string) {
-    const userUrl = `${import.meta.env.VITE_SERVER_DOMAIN}/users/${user_id}`;
+    const userUrl = `${
+      import.meta.env.VITE_SERVER_DOMAIN_NAME
+    }/users/${user_id}`;
     try {
       const { data } = await axios.get(userUrl);
       setAvatarUrl(

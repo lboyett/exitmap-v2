@@ -70,7 +70,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
     setSubmitting(true);
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/comments`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/comments`;
     try {
       if (!inputs.new_comment.value) throw Error("Please type a comment.");
       await axios.post(url, {
@@ -98,7 +98,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
 
   async function deleteComment(id: number) {
     setLoading(true);
-    const url = `${import.meta.env.VITE_SERVER_DOMAIN}/comments/${id}`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/comments/${id}`;
     try {
       await axios.delete(url);
       props.getExit();

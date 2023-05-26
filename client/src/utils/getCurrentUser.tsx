@@ -5,9 +5,9 @@ import { UserContext } from "../context/UserContext";
 export default async function getCurrentUser() {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(import.meta.env.VITE_SERVER_DOMAIN);
+      console.log(import.meta.env.VITE_SERVER_DOMAIN_NAME);
       const response = await axios.get(
-        `https://api.exit-map.com/users/current-user`,
+        `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/users/current-user`,
         {
           withCredentials: true,
         }

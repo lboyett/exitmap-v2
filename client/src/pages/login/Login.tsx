@@ -36,7 +36,7 @@ function Login() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
-    const url = `${import.meta.env.VITE_TEST_ENV}/login`;
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/login`;
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const inputs = target.elements as FormInputs;
@@ -94,7 +94,7 @@ function Login() {
 
   async function populateUser() {
     const userRes = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/populate-test-users`,
+      `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/populate-test-users`,
       {
         username: "j",
         first_name: "j",

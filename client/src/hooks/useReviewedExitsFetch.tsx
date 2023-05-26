@@ -7,7 +7,7 @@ export default function useReviewedExitsFetch() {
   const [data, setData] = useState<Exit[]>();
   const [error, setError] = useState<any>();
 
-  const url = `${import.meta.env.VITE_SERVER_DOMAIN}/exits/reviewed`;
+  const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/reviewed`;
   useEffect(() => {
     (async () => {
       try {
