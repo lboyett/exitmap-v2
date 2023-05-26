@@ -11,7 +11,7 @@ useEffect(() => {
 	navigate("/home");
 }, [userContext]);
 
-	return ( <div className="domain">Domain</div> );
+	return ( <div className="domain">ExitMap</div> );
 }
 
 export default Domain;
