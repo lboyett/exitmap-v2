@@ -78,7 +78,7 @@ router.delete("/:id", async (req, res, next) => {
   try {
     const response = (await deleteExit(+req.params.id)) as QueryResult | number;
     if (response === 0) throw new Error("Delete failed");
-    res.status(200).send(response.toString()); //FixThis
+    res.status(200).send(response.toString());
   } catch (err: any) {
     console.log(err);
     res.status(500).send(err.message);

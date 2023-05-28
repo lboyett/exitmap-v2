@@ -5,7 +5,7 @@ import useUnreviewedUsersFetch from "../../../hooks/useUnreviewedUsersFetch";
 import UnreviewedUser from "./unreviewed-user/UnreviewedUser";
 
 export default function ReviewUsers() {
-  const { data, error, loading } = useUnreviewedUsersFetch(); //FixThis
+  const { data, error, loading } = useUnreviewedUsersFetch();
   const [users, setUsers] = useState<object[]>();
 
   useEffect(() => {
