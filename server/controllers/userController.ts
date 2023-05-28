@@ -168,20 +168,15 @@ export async function putUserAvatar(user_id: string, key: string) {
   });
 }
 
-export async function changeUserPassword(
-  user_id: string,
-  old_password: string,
-  new_password: string
-) {
-  return new Promise((resolve, reject) => {
-    resolve("works");
-  });
-}
-
 export async function resetUserPassword(user_id: string, new_password: string) {
-  console.log('resetUserPassword function called');
   let salt = crypto.randomBytes(16);
-  let hashed_password = crypto.pbkdf2Sync(new_password, salt, 310000, 32, "sha256");
+  let hashed_password = crypto.pbkdf2Sync(
+    new_password,
+    salt,
+    310000,
+    32,
+    "sha256"
+  );
   return new Promise((resolve, reject) => {
     pool.query(
       "UPDATE users SET hashed_password = $1, salt = $2 WHERE _id = $3;",
@@ -191,10 +186,10 @@ export async function resetUserPassword(user_id: string, new_password: string) {
           reject(err);
         }
         if (results && results.rows) {
-          console.log(user_id)
-          resolve(results.rows)
-          console.log(results.rows)
-        };
+          console.log(user_id);
+          resolve(results.rows);
+          console.log(results.rows);
+        }
       }
     );
   });

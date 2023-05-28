@@ -1,5 +1,5 @@
 import express from "express";
-import crypto from "crypto";
+import { validatePassword } from "./utilities";
 import uniqid from "uniqid";
 import redisClient from "../redis-config";
 import { getUserByEmail } from "../controllers/userController";
@@ -52,25 +52,6 @@ async function storeSessionInRedis(session_id: string, user_id: string) {
       console.log(err);
       reject("not added");
     }
-  });
-}
-
-async function validatePassword(
-  password: string,
-  storedHash: Buffer,
-  salt: Buffer
-) {
-  return new Promise((resolve, reject) => {
-    crypto.pbkdf2(password, salt, 310000, 32, "sha256", (err, derivedKey) => {
-      if (err) reject(err);
-      if (storedHash.length !== derivedKey.length) {
-        reject({ status: 401, message: "Incorrect password" });
-        return;
-      }
-      if (!crypto.timingSafeEqual(storedHash, derivedKey))
-        reject({ status: 401, message: "Incorrect password" });
-      else resolve(true);
-    });
   });
 }
 

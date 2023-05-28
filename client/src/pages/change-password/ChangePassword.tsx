@@ -2,7 +2,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
+  useToast,
   useColorModeValue,
   Button,
   Spinner,
@@ -23,6 +23,7 @@ export default function ChangePassword() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const toast = useToast();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,9 +45,26 @@ export default function ChangePassword() {
     }/change-password`;
     try {
       await axios.put(url, data, { withCredentials: true });
-      //setSuccess(true);
-    } catch (err) {
+      setSuccess(true);
+    } catch (err: any) {
       console.log(err);
+      if (err.response.status && err.response.status === 401) {
+        toast({
+          title: "Error",
+          description: "Incorrect old password",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Error changing password",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } finally {
       setLoading(false);
     }

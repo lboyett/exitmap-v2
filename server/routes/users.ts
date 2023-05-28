@@ -3,9 +3,9 @@ import {
   addUser,
   UserData as UserDataType,
   getUserById,
-  changeUserPassword,
   getUnreviewedUsers,
   approveUser,
+  resetUserPassword,
 } from "../controllers/userController";
 import authorizeUser from "../utils/authorizeUser";
 import redisClient from "../redis-config";
@@ -13,6 +13,7 @@ import nodemailer from "nodemailer";
 import crypto from "crypto";
 import { UserData } from "../controllers/userController";
 import dotenv from "dotenv";
+import { validatePassword } from "./utilities";
 
 dotenv.config();
 
@@ -128,14 +129,17 @@ router.put("/:user_id/change-password", async (req, res) => {
   const user_id = req.params.user_id;
   const { old_password, new_password } = req.body;
   try {
-    const response = await changeUserPassword(
-      user_id,
-      old_password,
-      new_password
-    );
-    console.log(response);
-    res.send("ok");
-  } catch (err) {}
+    const user = (await getUserById(user_id)) as any;
+    await validatePassword(old_password, user.hashed_password, user.salt);
+    await resetUserPassword(user_id, new_password);
+    res.status(200).send("ok");
+  } catch (err: any) {
+    if (err.status && err.status === 401) {
+      res.status(401).send("Incorrect old password");
+    } else {
+      res.status(500).send("Unknown server error");
+    }
+  }
 });
 
 export default router;
