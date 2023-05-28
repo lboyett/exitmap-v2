@@ -60,6 +60,7 @@ export default function CountryCard({ country }: CountryCardProps) {
         loading="lazy"
         crossOrigin="anonymous"
         onError={imageFallback}
+        className="country-image"
       />
       <Flex direction="column">
         <Flex alignItems="center">

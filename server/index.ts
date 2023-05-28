@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "keyboard cat", //FixThis
     resave: false,
     saveUninitialized: false,
   })
