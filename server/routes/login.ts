@@ -11,6 +11,10 @@ router.post("/", async (req, res, next) => {
   try {
     if (!email) throw { status: 400, message: "Must input email" };
     const user = (await getUserByEmail(email)) as any;
+    if (!user.is_approved) {
+      res.status(403).send("User not approved");
+      return;
+    }
     await validatePassword(password, user.hashed_password, user.salt);
     delete user.hashed_password;
     delete user.salt;

@@ -69,6 +69,15 @@ function Login() {
           duration: 3000,
           isClosable: true,
         });
+      } else if (err.response && err.response.status === 403) {
+        forgotPassword();
+        toast({
+          title: "Error",
+          description: "You are not approved yet",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       } else {
         console.log(err);
         toast({
