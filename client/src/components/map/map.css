@@ -14,7 +14,8 @@
   position: absolute;
   z-index: 1;
   top: 10px;
-  left: 178px;
+  left: 190px;
+  width: clamp(150px, 40%, 250px);
 }
 .search-box input {
   border-radius: 3px;
@@ -22,7 +23,7 @@
   background: white;
   color: black;
   padding-left: 0.5rem;
-  width: 165px;
+  width: 100%;
   border: 1px solid gray;
 }
 .search-box input::placeholder {
