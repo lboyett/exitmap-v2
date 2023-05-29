@@ -95,7 +95,9 @@ export function compileExitData(
 export async function submitExitDataWithoutImage(exit_data: any) {
   const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits`;
   try {
-    const { data } = await axios.post(url, exit_data);
+    const { data } = await axios.post(url, exit_data, {
+      withCredentials: true,
+    });
     return data._id;
   } catch (err) {
     return err;
@@ -117,7 +119,9 @@ export async function submitExitDataWithImage(
 async function postExit(exit_data: any) {
   const exitUrl = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits`;
   try {
-    const { data } = await axios.post(exitUrl, exit_data);
+    const { data } = await axios.post(exitUrl, exit_data, {
+      withCredentials: true,
+    });
     return data._id;
   } catch (err) {
     throw err; //FixThis

@@ -80,13 +80,17 @@ function Exit() {
           "Content-Type": file.type,
         },
       });
-      await axios.post(imageUrl, {
-        submitted_by: user._id,
-        exit: exit_id,
-        url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
-        key: key,
-        is_main: false,
-      });
+      await axios.post(
+        imageUrl,
+        {
+          submitted_by: user._id,
+          exit: exit_id,
+          url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
+          key: key,
+          is_main: false,
+        },
+        { withCredentials: true }
+      );
       onClose();
       getExit(exitsUrl);
     } catch (err: any) {

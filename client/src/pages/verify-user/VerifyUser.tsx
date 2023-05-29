@@ -46,7 +46,6 @@ function VerifyUser() {
       import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/users/verify-user/${uuid}`;
     try {
-      console.log("POSTING TO /VERIFY-USER");
       const { data } = await axios.post(url, { uuid: uuid });
     } catch (err: any) {
       setError(true);

@@ -73,11 +73,15 @@ function ExitComments(props: ExitCommentsPropTypes) {
     const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/comments`;
     try {
       if (!inputs.new_comment.value) throw Error("Please type a comment.");
-      await axios.post(url, {
-        comment: inputs.new_comment.value,
-        exit_id: props.exit_id,
-        author_id: user[0]._id,
-      });
+      await axios.post(
+        url,
+        {
+          comment: inputs.new_comment.value,
+          exit_id: props.exit_id,
+          author_id: user[0]._id,
+        },
+        { withCredentials: true }
+      );
       props.getExit();
       showAddCommentButton();
       inputs.new_comment.value = "";
