@@ -107,10 +107,9 @@ function Login() {
           withCredentials: true,
         }
       );
-      console.log("This is the demo user response");
-      console.log(data);
       setUserContext(data);
       navigate("/home");
+      window.location.reload()
     } catch (err: any) {
       console.log(err);
     }
