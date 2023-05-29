@@ -104,7 +104,7 @@ function ExitComments(props: ExitCommentsPropTypes) {
     setLoading(true);
     const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/comments/${id}`;
     try {
-      await axios.delete(url);
+      await axios.delete(url, {withCredentials: true});
       props.getExit();
     } catch (err) {
       toast({
