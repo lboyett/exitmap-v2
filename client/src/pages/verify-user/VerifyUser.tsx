@@ -82,7 +82,7 @@ function VerifyUser() {
   } else {
     return (
       <div className="verified-page">
-        <Heading as={"h3"}>Thanks! Your email has been verified.</Heading>
+        <Heading as={"h3"}>Thanks! Your email has been verified. Please wait for an admin to approve your account.</Heading>
         <Button
           onClick={navigateToLogin}
           bg={txt_500}
