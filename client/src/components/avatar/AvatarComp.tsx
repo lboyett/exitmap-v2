@@ -58,9 +58,13 @@ export default function AvatarComp(props: AvatarCompProps) {
           "Content-Type": compressedFile.type,
         },
       });
-      await axios.put(avatarUrl, {
-        key: key,
-      });
+      await axios.put(
+        avatarUrl,
+        {
+          key: key,
+        },
+        { withCredentials: true }
+      );
       setLoading(false);
       onClose();
       const newUser = user;

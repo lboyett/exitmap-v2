@@ -18,7 +18,11 @@ export default function UnreviewedExit({ exit }: UnreviewedExitProps) {
     setLoading(true);
     const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/unreviewed`;
     try {
-      const response = await axios.post(`${url}/${id}`, { id: id });
+      const response = await axios.post(
+        `${url}/${id}`,
+        { id: id },
+        { withCredentials: true }
+      );
       setError("");
       setSuccess(true);
     } catch (err) {
