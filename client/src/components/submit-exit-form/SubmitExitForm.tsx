@@ -14,7 +14,8 @@ import {
   Box,
   useColorModeValue,
   Spinner,
-  useToast
+  useToast,
+  Text
 } from "@chakra-ui/react";
 import { useState, useEffect, useContext } from "react";
 import "./submit-exit-form.css";
@@ -166,6 +167,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
         )
       }
     >
+      {(user[0]._id === 18) ? <Text>*Demo users are not allowed to submit exits</Text> : null}
       <FormControl>
         <FormLabel>Exit Name</FormLabel>
         <Input
