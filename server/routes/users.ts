@@ -70,7 +70,6 @@ router.post("/verify-user/:uuid", async (req, res) => {
       is_approved: false,
       is_admin: false,
     };
-    console.log("ADD USER FUNCTION IS ABOUT TO BE CALLED");
     const addUser_response = await addUser(userData);
     res.send("OK");
   } catch (err: any) {

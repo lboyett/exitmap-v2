@@ -7,7 +7,6 @@ export default async function authorizeUser(
   next: NextFunction
 ) {
   try {
-    console.log(req.signedCookies);
     if (req.signedCookies.token) {
       const response = await redisClient.get(
         req.signedCookies.token.toString()

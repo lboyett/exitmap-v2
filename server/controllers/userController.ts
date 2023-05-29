@@ -186,7 +186,6 @@ export async function resetUserPassword(user_id: string, new_password: string) {
           reject(err);
         }
         if (results && results.rows) {
-          console.log(user_id);
           resolve(results.rows);
           console.log(results.rows);
         }
