@@ -1,6 +1,6 @@
 # **ExitMap**
 
-### _Created by_ [Luke Boyett](https://lboyett.com) _and_ Jackson Boyett
+### Created by [Luke Boyett](https://lboyett.com) and Jackson Boyett
 
 1. [Introduction](#introduction)
 2. [Stack](#stack)
