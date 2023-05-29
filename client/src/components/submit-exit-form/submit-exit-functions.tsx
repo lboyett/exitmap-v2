@@ -155,17 +155,23 @@ export async function postImage(
         "Content-Type": file.type,
       },
     });
-    await axios.post(imageUrl, {
-      submitted_by: user_id,
-      exit: exit_id,
-      url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
-      key: key,
-      is_main: true,
-    });
+    await axios.post(
+      imageUrl,
+      {
+        submitted_by: user_id,
+        exit: exit_id,
+        url: `https://lboyett-exitmap-v2.s3.eu-central-1.amazonaws.com/${key}`,
+        key: key,
+        is_main: true,
+      },
+      { withCredentials: true }
+    );
   } catch (err) {
     console.log(err);
     try {
-      const res = await axios.delete(`${exitUrl}/${exit_id}`, {withCredentials: true});
+      const res = await axios.delete(`${exitUrl}/${exit_id}`, {
+        withCredentials: true,
+      });
       throw err;
     } catch (err) {
       throw err; //FixThis
