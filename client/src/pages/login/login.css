@@ -9,7 +9,7 @@
 .login-box {
   color: white;
   background-color: rgb(32, 33, 36);
-  height: 380px;
+  height: 390px;
   width: 400px;
   border-radius: 1rem;
   padding-left: 3%;
@@ -24,4 +24,14 @@
 
 .login-form .chakra-form-control > input {
 	margin-bottom: 1rem;
+}
+
+.demo-user-link {
+  margin-top: 1rem;
+  opacity: 30%;
+}
+
+.demo-user-link:hover  {
+  cursor: pointer;
+  text-decoration: underline;
 }

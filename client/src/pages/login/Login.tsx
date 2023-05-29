@@ -177,6 +177,7 @@ function Login() {
               </>
             )}
           </Flex>
+          <Text className="demo-user-link">Sign in as a demo user</Text>
         </form>
       </div>
     </div>

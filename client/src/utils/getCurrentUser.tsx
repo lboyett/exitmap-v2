@@ -17,4 +17,25 @@ export default async function getCurrentUser() {
       reject(err);
     }
   });
+  // return new Promise(async (resolve, reject) => {
+  //   try {
+  //     const response = {
+  //       avatar_key: "",
+  //       created_at: "2023-05-26T07:50:14.000Z",
+  //       email: "demo@demo.com",
+  //       hashed_password: "",
+  //       is_admin: false,
+  //       is_approved: true,
+  //       is_deleted: false,
+  //       salt: "",
+  //       _id: 10000,
+  //       first_name: "Demo",
+  //       last_name: "User",
+  //       username: "demo_user"
+  //     }
+  //     resolve(response);
+  //   } catch (err) {
+  //     reject(err);
+  //   }
+  // })
 }
