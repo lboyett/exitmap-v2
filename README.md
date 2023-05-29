@@ -94,5 +94,5 @@ We've utilized multple APIs in ExitMap to include:
 
 If you are looking to hire one of us, we hope you are impressed with ExitMap. We put months of work into it. If you are a BASE jumper, we hope you enjoy ExitMap and find new jumps because of it. ExitMap is still an active project that we are working on every day, so if you have any questions or recommendations, feel free to contact us.
 
-lboyett@gmail.com
-jackson.boyett@gmail.com
+- lboyett@gmail.com
+- jackson.boyett@gmail.com
