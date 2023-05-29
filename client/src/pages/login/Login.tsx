@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../context/UserContext";
+import getCurrentUser from "../../utils/getCurrentUser";
 
 interface FormInputs extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -46,6 +47,7 @@ function Login() {
         {
           email: inputs.email.value,
           password: inputs.password.value,
+          demo: false,
         },
         { withCredentials: true }
       );
@@ -90,6 +92,26 @@ function Login() {
       }
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function LoginAsDemo() {
+    const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/login`;
+    try {
+      const data = await axios.post(
+        url,
+        {
+          demo: true,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setUserContext(data);
+      navigate("/home");
+      window.location.reload()
+    } catch (err: any) {
+      console.log(err);
     }
   }
 
@@ -177,6 +199,9 @@ function Login() {
               </>
             )}
           </Flex>
+          <Text className="demo-user-link" onClick={LoginAsDemo}>
+            Sign in as a demo user
+          </Text>
         </form>
       </div>
     </div>

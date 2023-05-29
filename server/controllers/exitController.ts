@@ -48,6 +48,20 @@ export async function getReviewedExits() {
   });
 }
 
+export async function getDemoReviewedExits() {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM exits WHERE is_reviewed = true AND legality = $1;", ['legal'],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(results.rows);
+      }
+    );
+  });
+}
+
 export async function getUnreviewedExits() {
   return new Promise((resolve, reject) => {
     pool.query(

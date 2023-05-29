@@ -121,10 +121,12 @@ function ExitComments(props: ExitCommentsPropTypes) {
     return (
       <div className="comments">
         <Flex className="comments-title-container">
-          <BiCommentAdd
-            className={`add-comment-icon  ${hideIcon}`}
-            onClick={showAddCommentButton}
-          />
+          {user[0]._id === 18 ? null : (
+            <BiCommentAdd
+              className={`add-comment-icon  ${hideIcon}`}
+              onClick={showAddCommentButton}
+            />
+          )}
           <Flex className={`comment-button-container  ${addCommentButton}`}>
             {submitting ? <Spinner /> : null}
             <Text color="red">{errorMessage ? errorMessage : null}</Text>

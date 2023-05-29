@@ -49,6 +49,7 @@ function App() {
     (async () => {
       try {
         const user = await getCurrentUser();
+        console.log(user)
         setUser(user);
       } catch (err) {
         if (location.pathname == "/reset-password") {
