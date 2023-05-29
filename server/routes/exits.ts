@@ -7,6 +7,7 @@ import {
   addExit,
   deleteExit,
   getExitsByUser,
+  getDemoReviewedExits
 } from "../controllers/exitController";
 import { getExitImages } from "../controllers/imageController";
 import { getExitComments } from "../controllers/commentController";
@@ -17,6 +18,15 @@ const router = express.Router();
 router.get("/reviewed", async (req, res, next) => {
   try {
     const response = await getReviewedExits();
+    res.status(200).send(response);
+  } catch (err) {
+    res.status(500).send("error");
+  }
+});
+
+router.get("/reviewed-demo", async (req, res, next) => {
+  try {
+    const response = await getDemoReviewedExits();
     res.status(200).send(response);
   } catch (err) {
     res.status(500).send("error");

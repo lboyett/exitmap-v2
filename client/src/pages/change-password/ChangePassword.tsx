@@ -26,11 +26,23 @@ export default function ChangePassword() {
   const toast = useToast();
 
   async function handleSubmit(e: React.FormEvent) {
+    console.log(user)
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
     const target = e.target;
     const inputs = (target as any).elements;
+    if (user._id === 18) {
+      toast({
+        title: "Sorry!",
+        description: "Demo users cannot change the account password",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setLoading(false)
+      return
+    }
     if (!validateForm(inputs)) {
       setLoading(false);
       return;

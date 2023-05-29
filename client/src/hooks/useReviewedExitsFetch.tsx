@@ -12,12 +12,24 @@ export default function useReviewedExitsFetch() {
   const [exitDataContext, setExitDataContext] = useState(null);
 
   useEffect(() => {
-    if (user._id === 18) {
-      setExitDataContext(null)
-      console.log('You do not have access to these exits')
-    } else {
-  const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/reviewed`;
+  if (user._id && user._id != 18) {
     (async () => {
+      const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/reviewed`;
+      try {
+        setLoading(true);
+        const response = (await axios.get(url, {
+          withCredentials: true,
+        })) as AxiosResponse;
+        setData(response.data);
+      } catch (err: any) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  } else {
+    (async () => {
+      const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/reviewed-demo`;
       try {
         setLoading(true);
         const response = (await axios.get(url, {

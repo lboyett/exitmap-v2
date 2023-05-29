@@ -14,9 +14,9 @@ import {
   Box,
   useColorModeValue,
   Spinner,
+  useToast
 } from "@chakra-ui/react";
 import { useState, useEffect, useContext } from "react";
-
 import "./submit-exit-form.css";
 import FileInput from "./file-input/FileInput";
 import { countriesCodesJson } from "../../data/countries-with-codes";
@@ -68,6 +68,7 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     },
   };
   const user = useContext(UserContext);
+  const toast = useToast();
 
   useEffect(() => {
     if (!props.latLng) return;
@@ -84,6 +85,16 @@ export default function SubmitExitForm(props: SubmitFormProps) {
     units: string
   ) {
     e.preventDefault();
+    if (user[0]._id === 18) {
+      toast({
+        title: "Sorry!",
+        description: "Demo users cannot submit exits",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return
+    }
     setErrorMessage(undefined);
     setSuccessMessage(undefined);
     if (!validateCheckboxes(checkboxes)) {
