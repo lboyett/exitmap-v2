@@ -10,6 +10,7 @@ export default function useReviewedExitsFetch() {
   const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/reviewed`;
   useEffect(() => {
     (async () => {
+    console.log('useReviewedExitsFetch is running!!!!!!!!')
       try {
         setLoading(true);
         const response = (await axios.get(url)) as AxiosResponse;
