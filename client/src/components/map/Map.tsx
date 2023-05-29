@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   GoogleMap,
@@ -22,7 +22,8 @@ import {
 import "./map.css";
 import { darkMapStyle } from "./map-styles";
 import Exit from "../../type-definitions/exit";
-import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
+import { ExitDataContext } from "../../context/ExitDataContext";
+import { UserContext } from "../../context/UserContext";
 
 interface Coordinate {
   lat: number;
@@ -60,7 +61,8 @@ export default function Map(props: MapProps) {
   const [activeMarker, setActiveMarker] = useState<number>(0);
   const [addedMarker, setAddedMarker] = useState<Coordinate>();
   const [searchBox, setSearchBox] = useState<SearchBox>();
-  const { data, error, loading } = useReviewedExitsFetch(); //FixThis
+  const { exitDataContext, setExitDataContext } = useContext(ExitDataContext);
+  const user = useContext(UserContext);
   const [modalErrorMessage, setModalErrorMessage] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
@@ -84,8 +86,8 @@ export default function Map(props: MapProps) {
   }, [loadError]);
 
   useEffect(() => {
-    if (data !== undefined) setExits(data);
-  }, [data]);
+    if (exitDataContext !== undefined) setExits(exitDataContext);
+  }, [exitDataContext, user]);
 
   useEffect(() => {
     if (props.exit_location) {

@@ -12,7 +12,9 @@ export default function useUnreviewedUsersFetch() {
     (async () => {
       try {
         setLoading(true);
-        const response = (await axios.get(url)) as AxiosResponse;
+        const response = (await axios.get(url, {
+          withCredentials: true,
+        })) as AxiosResponse;
         setData(response.data);
       } catch (err: any) {
         setError(err);

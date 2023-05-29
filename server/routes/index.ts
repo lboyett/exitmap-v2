@@ -16,9 +16,9 @@ const router = express.Router();
 // =========================== ROUTES ===========================
 
 router.use("/server-test", serverTestRouter);
-router.use("/exits", exitsRouter);
-router.use("/images", imagesRouter);
-router.use("/comments", commentsRouter);
+router.use("/exits", authorizeUser, exitsRouter);
+router.use("/images", authorizeUser, imagesRouter);
+router.use("/comments", authorizeUser, commentsRouter);
 router.use("/users", usersRouter);
 router.use("/forgot-password", forgotPasswordRouter);
 router.use("/reset-password", resetPasswordRouter);

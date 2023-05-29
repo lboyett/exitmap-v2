@@ -8,7 +8,6 @@ import {
 import "./dash-countries.css";
 import { useNavigate } from "react-router-dom";
 import CountryCard from "../../components/country-card/CountryCard";
-import useReviewedExitsFetch from "../../hooks/useReviewedExitsFetch";
 import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
 import { ExitDataContext } from "../../context/ExitDataContext";
 import { getCountriesFromExits } from "../../utils/getCountriesFromExits";
@@ -16,7 +15,6 @@ import Country from "../../type-definitions/country-type";
 
 function DashCountries() {
   const navigate = useNavigate();
-  const { data, error, loading } = useReviewedExitsFetch();
   const { exitDataContext, setExitDataContext } = useContext(ExitDataContext);
   const [countries, setCountries] = useState<Country[]>();
 

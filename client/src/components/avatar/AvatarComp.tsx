@@ -90,7 +90,9 @@ export default function AvatarComp(props: AvatarCompProps) {
       import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/users/${user_id}`;
     try {
-      const { data } = await axios.get(userUrl);
+      const { data } = await axios.get(userUrl, {
+        withCredentials: true,
+      });
       setAvatarUrl(
         `https://ik.imagekit.io/lboyett/${data.avatar_key}?tr=w-200`
       );

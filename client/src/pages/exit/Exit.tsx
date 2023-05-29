@@ -98,7 +98,9 @@ function Exit() {
 
   async function getExit(exitsUrl: string) {
     try {
-      const res = await axios.get(`${exitsUrl}/${exit_id}`);
+      const res = await axios.get(`${exitsUrl}/${exit_id}`, {
+        withCredentials: true,
+      });
       setExitRes(res.data.data[0]);
       setExitImages(res.data.images);
       setExitComments(res.data.comments); // Look into promise.all

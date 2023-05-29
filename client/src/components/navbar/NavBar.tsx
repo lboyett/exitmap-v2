@@ -71,7 +71,9 @@ export default function NavBar(props: NavBarProps) {
     const url = `${
       import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/exits/by-user-id/${id}`;
-    const { data } = (await axios.get(url)) as AxiosResponse;
+    const { data } = (await axios.get(url, {
+      withCredentials: true,
+    })) as AxiosResponse;
     setUserExits(data);
   }
   async function getUserComments(id: number) {
@@ -79,7 +81,9 @@ export default function NavBar(props: NavBarProps) {
     const url = `${
       import.meta.env.VITE_SERVER_DOMAIN_NAME
     }/comments/by-user-id/${id}`;
-    const { data } = (await axios.get(url)) as AxiosResponse;
+    const { data } = (await axios.get(url, {
+      withCredentials: true,
+    })) as AxiosResponse;
     setUserComments(data);
   }
 

@@ -13,7 +13,6 @@ import { ExitDataContext } from "./context/ExitDataContext";
 import { UserContext } from "./context/UserContext";
 import getCurrentUser from "./utils/getCurrentUser";
 import { useState, useMemo, useEffect, useContext } from "react";
-import axios, { AxiosResponse } from "axios";
 import {
   Modal,
   ModalOverlay,
@@ -65,7 +64,7 @@ function App() {
 
   useEffect(() => {
     setExitDataContext(data as any);
-  }, [user]);
+  }, [data]);
 
   const exitsData = useMemo(
     () => ({ exitDataContext, setExitDataContext }),

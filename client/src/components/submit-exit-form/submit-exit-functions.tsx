@@ -127,7 +127,9 @@ async function postExit(exit_data: any) {
 export async function getSignedUrl() {
   const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/images/signed-url`;
   try {
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, {
+      withCredentials: true,
+    });
     return data;
   } catch (err) {
     throw err;

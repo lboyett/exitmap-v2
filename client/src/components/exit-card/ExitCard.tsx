@@ -35,7 +35,9 @@ function ExitCard({ exit, isDisplayed }: ExitCardProps) {
       exit._id
     }/main`;
     (async () => {
-      const { data } = await axios.get(url);
+      const { data } = await axios.get(url, {
+        withCredentials: true,
+      });
       const imageKitUrl = `https://ik.imagekit.io/lboyett/${data}?tr=w-300`;
       setImageUrl(imageKitUrl);
     })();

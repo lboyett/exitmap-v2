@@ -79,7 +79,7 @@ router.post("/verify-user/:uuid", async (req, res) => {
   }
 });
 
-router.get("/unreviewed", async (req, res) => {
+router.get("/unreviewed", authorizeUser, async (req, res) => {
   try {
     const users = (await getUnreviewedUsers()) as UserDataType[];
     users.forEach((user) => {
@@ -93,7 +93,7 @@ router.get("/unreviewed", async (req, res) => {
   }
 });
 
-router.post("/unreviewed/:id", async (req, res, next) => {
+router.post("/unreviewed/:id", authorizeUser, async (req, res, next) => {
   try {
     const response = await approveUser(req.params.id);
     res.status(200).send(response);
@@ -113,7 +113,7 @@ router.get("/current-user", authorizeUser, async (req, res) => {
   }
 });
 
-router.get("/:user_id", async (req, res) => {
+router.get("/:user_id", authorizeUser, async (req, res) => {
   const id = req.params.user_id;
   try {
     const user = (await getUserById(id)) as UserDataType;
@@ -125,7 +125,7 @@ router.get("/:user_id", async (req, res) => {
   }
 });
 
-router.put("/:user_id/change-password", async (req, res) => {
+router.put("/:user_id/change-password", authorizeUser, async (req, res) => {
   const user_id = req.params.user_id;
   const { old_password, new_password } = req.body;
   try {
