@@ -165,7 +165,7 @@ export async function postImage(
   } catch (err) {
     console.log(err);
     try {
-      const res = await axios.delete(`${exitUrl}/${exit_id}`);
+      const res = await axios.delete(`${exitUrl}/${exit_id}`, {withCredentials: true});
       throw err;
     } catch (err) {
       throw err; //FixThis
