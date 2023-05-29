@@ -33,12 +33,14 @@ import ReviewUsers from "./pages/admin/review-users/ReviewUsers";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/reset-password/ResetPassword";
 import VerifyUser from "./pages/verify-user/VerifyUser";
+import useReviewedExitsFetch from "./hooks/useReviewedExitsFetch";
 
 function App() {
   const [exitDataContext, setExitDataContext] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalErrorMessage, setModalErrorMessage] = useState("");
   const [user, setUser] = useContext(UserContext);
+  const { data, error, loading } = useReviewedExitsFetch();
   const navigate = useNavigate();
   let location = useLocation();
 
@@ -50,7 +52,6 @@ function App() {
         const user = await getCurrentUser();
         setUser(user);
       } catch (err) {
-        console.log(err);
         if (location.pathname == "/reset-password") {
           navigate(`${location.pathname}${location.search}`);
         } else if (location.pathname == "/verify-user") {
@@ -63,18 +64,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const url = `${import.meta.env.VITE_SERVER_DOMAIN_NAME}/exits/reviewed`;
-        const { data } = (await axios.get(url)) as AxiosResponse;
-        setExitDataContext(data);
-      } catch (err: any) {
-        console.log(err);
-        onOpen();
-        setModalErrorMessage("Please try again or contact us.");
-      }
-    })();
-  }, []);
+    setExitDataContext(data as any);
+  }, [user]);
 
   const exitsData = useMemo(
     () => ({ exitDataContext, setExitDataContext }),

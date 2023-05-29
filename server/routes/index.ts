@@ -9,6 +9,7 @@ import usersRouter from "./users";
 import forgotPasswordRouter from "./forgot-password";
 import resetPasswordRouter from "./reset-password";
 import serverTestRouter from "./server-test";
+import authorizeUser from "../utils/authorizeUser";
 
 const router = express.Router();
 
