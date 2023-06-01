@@ -26,7 +26,7 @@ router.post("/", async (req, res, next) => {
         .setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
         .setHeader("Access-Control-Allow-Headers", "Content-Type, *")
         .cookie("token", session_id, {
-          httpOnly: false,
+          httpOnly: true,
           sameSite: "none", //FixThis
           secure: true,
           maxAge: 1000 * 60 * 60 * 48,
