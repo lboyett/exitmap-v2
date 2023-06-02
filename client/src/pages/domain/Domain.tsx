@@ -8,7 +8,7 @@ function Domain() {
 	const navigate = useNavigate();
 useEffect(() => {
 	console.log(userContext)
-	navigate("/home");
+	navigate("/login");
 }, [userContext]);
 
 	return ( <div className="domain">ExitMap</div> );
