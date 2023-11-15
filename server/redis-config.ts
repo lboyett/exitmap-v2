@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-dotenv.config();
 import * as Redis from "redis";
+dotenv.config();
 
 const redisClient = Redis.createClient({
   password: process.env.REDIS_PASSWORD,
@@ -9,7 +9,13 @@ const redisClient = Redis.createClient({
     port: +(process.env.REDIS_PORT as string),
   },
 });
-redisClient.connect();
+(async () => {
+  try {
+    await redisClient.connect();
+  } catch {
+    console.log("there is an error connecting to redis");
+  }
+})();
 redisClient.on("connect", () => [
   console.log("\x1b[41m Redis connected\x1b[0m"),
 ]);
